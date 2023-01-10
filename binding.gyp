@@ -1,10 +1,10 @@
 {
   "targets": [
     {
-      "target_name": "hello",
+      "target_name": "zic",
       "cflags!": [ "-fno-exceptions" ],
       "cflags_cc!": [ "-fno-exceptions" ],
-      "sources": [ "src/hello.cc" ],
+      "sources": [ "src/zic.cc" ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")"
       ],
