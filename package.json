@@ -1,6 +1,6 @@
 {
   "name": "zic_node",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Node addon implementation of ZIC synth engine",
   "main": "dist/lib.js",
   "types": "dist/lib.d.ts",
@@ -8,7 +8,8 @@
     "test": "node src/main.js",
     "ts-test": "ts-node src/main.ts",
     "cc-build": "node-gyp rebuild",
-    "build": "npm run cc-build && tsc"
+    "build": "npm run cc-build && tsc",
+    "build-test": "npm run build && npm run ts-test"
   },
   "gypfile": true,
   "dependencies": {
