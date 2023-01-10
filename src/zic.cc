@@ -41,10 +41,37 @@ Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
     return devices;
 }
 
+Napi::Value asyncStart(const Napi::CallbackInfo& info)
+{
+    RtAudio audio;
+
+    unsigned int deviceCount = audio.getDeviceCount();
+    if (deviceCount < 1) {
+        throw Napi::Error::New(info.Env(), "No audio devices found");
+        return info.Env().Undefined();
+    }
+
+    unsigned int deviceId = 0;
+    if (info.Length() > 0 && info[1].IsNumber()) {
+        deviceId = info[0].As<Napi::Number>().Uint32Value();
+        if (deviceId > deviceCount - 1) {
+            deviceId = audio.getDefaultOutputDevice();
+        }
+    } else {
+        deviceId = audio.getDefaultOutputDevice();
+    }
+
+    Napi::Function callback = info[1].As<Napi::Function>();
+    ZicWorker* worker = new ZicWorker(callback, deviceId);
+    worker->Queue();
+    return info.Env().Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
-    exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, syncStart));
+    exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, asyncStart));
+    exports.Set(Napi::String::New(env, "getCounter"), Napi::Function::New(env, getCounter));
     return exports;
 }
 
