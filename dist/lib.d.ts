@@ -1,2 +1,2 @@
-export declare const hello: () => void;
+export declare const getAudoDeviceInfo: () => void;
 //# sourceMappingURL=lib.d.ts.map

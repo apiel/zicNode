@@ -1,3 +1,3 @@
-var addon = require('bindings')('hello');
+var addon = require('bindings')('getAudoDeviceInfo');
 
-console.log(addon.hello()); // 'world'
+console.log(addon.getAudoDeviceInfo());

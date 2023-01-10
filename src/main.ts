@@ -1,3 +1,3 @@
-import { hello } from './lib';
+import { getAudoDeviceInfo } from './lib';
 
-console.log(hello());
+console.log(getAudoDeviceInfo());

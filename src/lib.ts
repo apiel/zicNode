@@ -1,3 +1,3 @@
 import bindings from 'bindings';
 
-export const hello: () => void = bindings('zic').hello;
+export const getAudoDeviceInfo: () => void = bindings('zic').getAudoDeviceInfo;

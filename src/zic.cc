@@ -3,7 +3,7 @@
 #include <RtAudio.h>
 #include <iostream>
 
-Napi::String Method(const Napi::CallbackInfo& info)
+Napi::String getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
     RtAudio audio;
     // Determine the number of devices available
@@ -15,6 +15,7 @@ Napi::String Method(const Napi::CallbackInfo& info)
         if (rtInfo.probed == true) {
             // Print, for example, the maximum number of output channels for each device
             std::cout << "device = " << i;
+            std::cout << ": name = " << rtInfo.name << " ";
             std::cout << ": maximum output channels = " << rtInfo.outputChannels << "\n";
         }
     }
@@ -25,7 +26,7 @@ Napi::String Method(const Napi::CallbackInfo& info)
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
-    exports.Set(Napi::String::New(env, "hello"), Napi::Function::New(env, Method));
+    exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
     return exports;
 }
 
