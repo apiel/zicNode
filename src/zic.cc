@@ -1,5 +1,5 @@
-#include <napi.h>
 #include <RtAudio.h>
+#include <napi.h>
 
 Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
@@ -21,9 +21,16 @@ Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
             device.Set("duplexChannels", rtInfo.duplexChannels);
             device.Set("isDefaultOutput", rtInfo.isDefaultOutput);
             device.Set("isDefaultInput", rtInfo.isDefaultInput);
-            // device.Set("sampleRates", rtInfo.sampleRates);
+
+            Napi::Array sampleRates = Napi::Array::New(env);
+            unsigned int vecSize = rtInfo.sampleRates.size();
+            for (unsigned int i = 0; i < vecSize; i++) {
+                sampleRates.Set(i, rtInfo.sampleRates[i]);
+            }
+            device.Set("sampleRates", sampleRates);
+
             device.Set("preferredSampleRate", rtInfo.preferredSampleRate);
-            // device.Set("nativeFormats", rtInfo.nativeFormats);
+            device.Set("nativeFormats", rtInfo.nativeFormats);
 
             devices.Set(i, device);
         }
@@ -38,17 +45,4 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     return exports;
 }
 
-NODE_API_MODULE(hello, Init)
-
-// typedef struct RtAudio::DeviceInfo {
-//   bool probed;                           // true if the device capabilities were successfully probed.
-//   std::string name;                      // Character string device identifier.
-//   unsigned int outputChannels;           // Maximum output channels supported by device.
-//   unsigned int inputChannels;            // Maximum input channels supported by device.
-//   unsigned int duplexChannels;           // Maximum simultaneous input/output channels supported by device.
-//   bool isDefaultOutput;                  // true if this is the default output device.
-//   bool isDefaultInput;                   // true if this is the default input device.
-//   std::vector<unsigned int> sampleRates; // Supported sample rates.
-//   unsigned int preferredSampleRate;      // Preferred sample rate, e.g. for WASAPI the system sample rate.
-//   RtAudioFormat nativeFormats;           // Bit mask of supported data formats.
-// };
+NODE_API_MODULE(zic, Init)
