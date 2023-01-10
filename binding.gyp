@@ -12,6 +12,7 @@
       ],
       "sources": [ "src/zic.cc" ],
       "include_dirs": [
+        "zic",
         "<!@(node -p \"require('node-addon-api').include\")",
         '<!@(pkg-config rtaudio --cflags-only-I | sed s/-I//g)'
       ],

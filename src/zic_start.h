@@ -1,14 +1,23 @@
 #ifndef ZIC_MAIN_H
 #define ZIC_MAIN_H
 
+// TODO rename to ZIC_AUDIO_CHUNK
+#define APP_AUDIO_CHUNK 512
+
+// TODO rename to ZIC_AUDIO_CHANNELS
+#define APP_CHANNELS 1 // Might want to use only one channel
+
+// TODO rename to ZIC_AUDIO_SAMPLE_RATE
+#ifndef SAMPLE_RATE
+#define SAMPLE_RATE 44100
+#endif
+
 #include <RtAudio.h>
 #include <napi.h>
 
 #include <unistd.h> // usleep
 
-#ifndef SAMPLE_RATE
-#define SAMPLE_RATE 44100
-#endif
+#include "zic_server.h"
 
 #define FORMAT RTAUDIO_FLOAT32
 
@@ -42,6 +51,8 @@ int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBuffe
         }
     }
     counter++;
+
+    Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);
     return 0;
 }
 
@@ -67,14 +78,11 @@ public:
     {
         RtAudio audio;
 
-        unsigned int bufferFrames = 512;
+        unsigned int bufferFrames = APP_AUDIO_CHUNK;
         RtAudio::StreamParameters oParams;
         oParams.deviceId = deviceId;
 
-        // RtAudio::DeviceInfo rtInfo = audio.getDeviceInfo(oParams.deviceId);
-        // std::cout << "rtInfo.name: " << rtInfo.name << std::endl;
-        // oParams.nChannels = rtInfo.outputChannels;
-        oParams.nChannels = 1; // Might want to use only one channel
+        oParams.nChannels = APP_CHANNELS; 
 
         channels = oParams.nChannels;
 
