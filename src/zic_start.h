@@ -4,7 +4,7 @@
 #include <RtAudio.h>
 #include <napi.h>
 
-#include <unistd.h>
+#include <unistd.h> // usleep
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE 44100
@@ -18,8 +18,6 @@ int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBuffe
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
     unsigned int i, j;
-    // extern unsigned int channels;
-    // unsigned int channels = 2; // FIXME
     float* buffer = (float*)outputBuffer;
     double* lastValues = (double*)data;
 
@@ -40,68 +38,64 @@ int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBuffe
     return 0;
 }
 
-class ZicWorker : public Napi::AsyncWorker {
-protected:
-    RtAudio::StreamOptions options;
-    unsigned int deviceId;
-
-public:
-    ZicWorker(Napi::Function& callback, unsigned int deviceId)
-        : Napi::AsyncWorker(callback)
-        , deviceId(deviceId)
-    {
+Napi::Value syncStart(const Napi::CallbackInfo& info)
+{
+    RtAudio audio;
+    unsigned int deviceCount = audio.getDeviceCount();
+    if (deviceCount < 1) {
+        // SetError("No audio devices found");
+        throw Napi::Error::New(info.Env(), "No audio devices found");
+        return info.Env().Undefined();
     }
-    ~ZicWorker() { }
 
-    void Execute()
-    {
-        RtAudio audio;
-        unsigned int deviceCount = audio.getDeviceCount();
-        if (deviceCount < 1) {
-            SetError("No audio devices found");
-            return;
-        }
+    RtAudio::StreamOptions options;
 
+    Napi::Env env = info.Env();
+    Napi::Function emit = info[0].As<Napi::Function>();
+
+    unsigned int deviceId = 0;
+    if (info.Length() > 1 && info[1].IsNumber()) {
+        deviceId = info[1].As<Napi::Number>().Uint32Value();
         if (deviceId > deviceCount - 1) {
             deviceId = audio.getDefaultOutputDevice();
-            // std::cout << "get default device: " << deviceId << std::endl;
         }
+    } else {
+        deviceId = audio.getDefaultOutputDevice();
+    }
 
-        unsigned int bufferFrames = 512;
-        RtAudio::StreamParameters oParams;
-        oParams.deviceId = 0;
+    unsigned int bufferFrames = 512;
+    RtAudio::StreamParameters oParams;
+    oParams.deviceId = 0;
 
-        // RtAudio::DeviceInfo rtInfo = audio.getDeviceInfo(oParams.deviceId);
-        // std::cout << "rtInfo.name: " << rtInfo.name << std::endl;
-        // oParams.nChannels = rtInfo.outputChannels;
-        oParams.nChannels = 1; // Might want to use only one channel
+    // RtAudio::DeviceInfo rtInfo = audio.getDeviceInfo(oParams.deviceId);
+    // std::cout << "rtInfo.name: " << rtInfo.name << std::endl;
+    // oParams.nChannels = rtInfo.outputChannels;
+    oParams.nChannels = 1; // Might want to use only one channel
 
-        channels = oParams.nChannels;
+    channels = oParams.nChannels;
 
-        double* data = (double*)calloc(oParams.nChannels, sizeof(double));
-        try {
-            audio.openStream(&oParams, NULL, FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback, (void*)data);
-            audio.startStream();
-        } catch (RtAudioError& e) {
-            e.printMessage();
-            goto cleanup;
-        }
+    double* data = (double*)calloc(oParams.nChannels, sizeof(double));
+    try {
+        audio.openStream(&oParams, NULL, FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback, (void*)data);
+        audio.startStream();
+    } catch (RtAudioError& e) {
+        e.printMessage();
+        goto cleanup;
+    }
 
-        while (audio.isStreamRunning() == true) {
-            usleep(100000);
-        }
+    while (audio.isStreamRunning() == true) {
+        std::cout << "isStreamRunning" << std::endl;
+        emit.Call({ Napi::String::New(env, "data"), Napi::String::New(env, "data ...") });
+        usleep(1000000);
+    }
 
     cleanup:
         if (audio.isStreamOpen()) {
             audio.closeStream();
         }
         free(data);
-    }
 
-    void OnOK()
-    {
-        Callback().Call({ Env().Undefined(), Napi::Number::New(Env(), 23) }); // 23 Just because I can
-    }
-};
+    return info.Env().Undefined();
+}
 
 #endif

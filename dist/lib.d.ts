@@ -11,7 +11,6 @@ interface AudioDeviceInfo {
     nativeFormats: number;
 }
 export declare const getAudoDeviceInfo: () => AudioDeviceInfo[];
-export declare const asyncStart: (n: number, cb: (err: any, result: any) => void) => void;
-export declare const start: (arg1: number) => Promise<any>;
+export declare const start: (emitter: Function, deviceId?: number) => void;
 export {};
 //# sourceMappingURL=lib.d.ts.map
