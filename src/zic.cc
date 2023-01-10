@@ -1,6 +1,8 @@
 #include <RtAudio.h>
 #include <napi.h>
 
+#include "zic_start.h"
+
 Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -39,9 +41,19 @@ Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
     return devices;
 }
 
+Napi::Value asyncStart(const Napi::CallbackInfo& info)
+{
+    int points = info[0].As<Napi::Number>().Uint32Value();
+    Napi::Function callback = info[1].As<Napi::Function>();
+    ZicWorker* worker = new ZicWorker(callback, points);
+    worker->Queue();
+    return info.Env().Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
+    exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, asyncStart));
     return exports;
 }
 

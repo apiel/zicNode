@@ -14,3 +14,4 @@ interface AudioDeviceInfo {
 }
 
 export const getAudoDeviceInfo: () => AudioDeviceInfo[] = bindings('zic').getAudoDeviceInfo;
+export const start: (n: number, cb: (err: any, result: any) => void) => void = bindings('zic').start;
