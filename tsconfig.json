@@ -1,0 +1,15 @@
+{
+    "ts-node": {
+        "files": true
+    },
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "declarationMap": true
+    }
+}
