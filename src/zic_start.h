@@ -16,8 +16,6 @@
 
 unsigned int channels;
 
-Napi::Function emit;
-
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
@@ -29,6 +27,8 @@ class ZicWorker : public Napi::AsyncWorker {
 protected:
     RtAudio::StreamOptions options;
     unsigned int deviceId;
+    RtAudio audio;
+    double* data;
 
 public:
     ZicWorker(Napi::Function& callback, unsigned int deviceId)
@@ -36,11 +36,16 @@ public:
         , deviceId(deviceId)
     {
     }
-    ~ZicWorker() { }
+    ~ZicWorker()
+    {
+        if (audio.isStreamOpen()) {
+            audio.closeStream();
+        }
+        free(data);
+    }
 
     void Execute()
     {
-        RtAudio audio;
 
         unsigned int bufferFrames = APP_AUDIO_CHUNK;
         RtAudio::StreamParameters oParams;
@@ -50,24 +55,18 @@ public:
 
         channels = oParams.nChannels;
 
-        double* data = (double*)calloc(oParams.nChannels, sizeof(double));
+        data = (double*)calloc(oParams.nChannels, sizeof(double));
         try {
             audio.openStream(&oParams, NULL, FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback, (void*)data);
             audio.startStream();
         } catch (RtAudioError& e) {
             e.printMessage();
-            goto cleanup;
+            return;
         }
 
         while (audio.isStreamRunning() == true) {
             usleep(100000);
         }
-
-    cleanup:
-        if (audio.isStreamOpen()) {
-            audio.closeStream();
-        }
-        free(data);
     }
 
     void OnOK()
