@@ -1,16 +1,7 @@
 #ifndef ZIC_MAIN_H
 #define ZIC_MAIN_H
 
-// TODO rename to ZIC_AUDIO_CHUNK
-#define APP_AUDIO_CHUNK 512
-
-// TODO rename to ZIC_AUDIO_CHANNELS
-#define APP_CHANNELS 1 // Might want to use only one channel
-
-// TODO rename to ZIC_AUDIO_SAMPLE_RATE
-#ifndef SAMPLE_RATE
-#define SAMPLE_RATE 44100
-#endif
+#include "./zic_server_def.h"
 
 #include <RtAudio.h>
 #include <napi.h>

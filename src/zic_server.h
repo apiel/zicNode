@@ -6,7 +6,7 @@
 
 #include "./zic_util.h"
 // #include "./zic_midi.h"
-// #include "./zic_tracks.h"
+#include "./zic_audio_tracks.h"
 
 class Zic_Server {
 

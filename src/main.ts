@@ -1,6 +1,7 @@
 import { getAudoDeviceInfo, start, getCounter } from './lib';
 import { EventEmitter } from 'events';
 
+console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 
 async function main() {
