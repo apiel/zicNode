@@ -67,11 +67,28 @@ Napi::Value asyncStart(const Napi::CallbackInfo& info)
     return info.Env().Undefined();
 }
 
+Napi::Number getBpm(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    return Napi::Number::New(env, Zic_Server::getInstance()->tempo.getBpm());
+}
+
+Napi::Value setBpm(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        throw Napi::Error::New(env, "Missing bpm arguments");
+    }
+    Zic_Server::getInstance()->tempo.set(info[0].As<Napi::Number>().Uint32Value());
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, asyncStart));
-    exports.Set(Napi::String::New(env, "getCounter"), Napi::Function::New(env, getCounter));
+    exports.Set(Napi::String::New(env, "getBpm"), Napi::Function::New(env, getBpm));
+    exports.Set(Napi::String::New(env, "setBpm"), Napi::Function::New(env, setBpm));
     return exports;
 }
 

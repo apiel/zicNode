@@ -4,15 +4,12 @@
 #include <stdlib.h>
 #include <zic_seq_tempo.h>
 
-#include "./zic_util.h"
-#include "./zic_midi.h"
 #include "./zic_audio_tracks.h"
+#include "./zic_midi.h"
+#include "./zic_util.h"
 
 class Zic_Server {
-
 protected:
-    Zic_Seq_Tempo<> tempo;
-
     Zic_Server()
     {
         tracks = Zic_Audio_Tracks::getInstance();
@@ -21,7 +18,9 @@ protected:
     }
 
 public:
-    Zic_Audio_Tracks * tracks;
+    Zic_Seq_Tempo<> tempo;
+
+    Zic_Audio_Tracks* tracks;
 
     static Zic_Server* instance;
 

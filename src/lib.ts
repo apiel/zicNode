@@ -19,4 +19,5 @@ export const getAudoDeviceInfo: () => AudioDeviceInfo[] = bindings('zic').getAud
 export const asyncStart: (deviceId: number, cb: (err: any, result: any) => void) => void = bindings('zic').start;
 export const start = promisify(asyncStart);
 
-export const getCounter: () => void = bindings('zic').getCounter;
+export const getBpm: () => number = bindings('zic').getBpm;
+export const setBpm: (bpm: number) => void = bindings('zic').setBpm;

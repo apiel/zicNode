@@ -18,18 +18,11 @@ unsigned int channels;
 
 Napi::Function emit;
 
-int counter = 0;
-
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
     Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);
     return 0;
-}
-
-Napi::Number getCounter(const Napi::CallbackInfo& info)
-{
-    return Napi::Number::New(info.Env(), counter);
 }
 
 class ZicWorker : public Napi::AsyncWorker {
