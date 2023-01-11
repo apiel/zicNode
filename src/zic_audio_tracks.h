@@ -5,7 +5,6 @@
 #include "./zic_audio_trackMidi.h"
 #include "./zic_audio_trackPd.h"
 #include "./zic_audio_trackSynth.h"
-// #include "./zic_audio_trackDumb.h"
 #include "./zic_audio_track_def.h"
 
 #include <stdlib.h>
@@ -15,6 +14,7 @@
 #include <zic_synth_file.h>
 
 Zic_Seq_Pattern demoPattern;
+Zic_Seq_Pattern demoPattern2;
 
 class Zic_Audio_Tracks {
 protected:
@@ -46,8 +46,13 @@ protected:
         track0.looper.nextState.pattern = &demoPattern;
         track0.looper.nextState.play();
 
-        // track0.looper.state.pattern = &demoPattern;
-        // track0.looper.state.play();
+        demoPattern2.stepCount = 4;
+        demoPattern2.steps[0][0].note = 44;
+        demoPattern2.steps[0][1].note = 45;
+        demoPattern2.steps[0][2].note = 46;
+        demoPattern2.steps[0][3].note = 47;
+        track1.looper.nextState.pattern = &demoPattern2;
+        track1.looper.nextState.play();
     }
 
 public:
@@ -56,14 +61,9 @@ public:
     uint8_t TRACK_AUDIO_COUNT = 0;
     uint8_t TRACK_MIDI_COUNT = 0;
 
-#if ZIC_TRACK_LAYOUT == 1
-    Zic_Audio_TrackPd track0;
+    Zic_Audio_TrackPd track0; // TODO fix puredata multi instance
     Zic_Audio_TrackSynth track1, track2, track3;
-#else
-    Zic_Audio_TrackPd track0, track1;
-    // Zic_Audio_TrackSynth track2, track3;
-    Zic_Audio_TrackPd track2, track3;
-#endif
+
     Zic_Audio_TrackMidi track4, track5, track6, track7;
 
     Zic_Audio_Track* tracks[TRACK_COUNT] = { &track0, &track1, &track2, &track3,
@@ -88,26 +88,26 @@ public:
 
     void sample(float* buf, int len)
     {
-        // tracks[0]->sample(buf, len);
+        // track0.sample(buf, len);
+        track1.sample(buf, len);
 
-        // Set buf to 0 else we will sum up the samples
-        // over the previous chunck
-        for (int j = 0; j < len; j++) {
-            buf[j] = 0.0f;
-        }
-
-        // NOTE should dynamic data allocation?
-        // float buffer[APP_AUDIO_CHUNK];
-        float* buffer = new float[len];
-        // Skip MIDI tracks, only return audio tracks samples
-        // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
-        //     tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there
-            tracks[0]->sample(buffer, len); // TODO could apply the mixerDivider directly there
-            for (int j = 0; j < len; j++) {
-                buf[j] += buffer[j] * mixerDivider;
-            }
+        // // Set buf to 0 else we will sum up the samples
+        // // over the previous chunck
+        // for (int j = 0; j < len; j++) {
+        //     buf[j] = 0.0f;
         // }
-        delete[] buffer;
+
+        // // float buffer[APP_AUDIO_CHUNK];
+        // float* buffer = new float[len];
+        // // Skip MIDI tracks, only return audio tracks samples
+        // // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
+        // for (uint8_t i = 0; i < 2; i++) {
+        //     tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there but might be difficult with PD
+        //     for (int j = 0; j < len; j++) {
+        //         buf[j] += buffer[j] * mixerDivider;
+        //     }
+        // }
+        // delete[] buffer;
     }
 
     // void togglePlay()

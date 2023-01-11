@@ -17,6 +17,7 @@ public:
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
+        printf("[track %d] noteOn %d %d %d\n", id, note, velocity, voice);
         synth.noteOn(note, velocity);
     }
 
@@ -27,22 +28,20 @@ public:
 
     void sample(float* buf, int len)
     {
-        // int count = len / 4;
-        // // FIXME
-        //         for (int i = 0; i < count; i++) {
-        //             buf[i] = synth.sample();
-        // #if APP_CHANNELS == 2
-        //             // TODO
-        //             // FIXME
-        //             // or not ?? if sample is mono, then it's ok
-        //             // but if it's stereo, then it's not :p
-        //             buf[i + 1] = buf[i];
-        //             i++;
-        // #endif
-        //         }
-
-        for (int i = 0; i < len; i++) {
-            buf[i] = 0.0f;
+        // printf("[track %d] get sample\n", id);
+        int count = len / 4;
+        // FIXME
+        for (int i = 0; i < count; i++) {
+            // printf("sample loop %d\n", i);
+            buf[i] = synth.sample();
+#if APP_CHANNELS == 2
+            // TODO
+            // FIXME
+            // or not ?? if sample is mono, then it's ok
+            // but if it's stereo, then it's not :p
+            buf[i + 1] = buf[i];
+            i++;
+#endif
         }
     }
 

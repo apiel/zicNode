@@ -10,6 +10,7 @@
       ],
       "cflags_cc!": [ 
         "-fno-exceptions",
+        # '-DPDINSTANCE'
         # '<!@(pkg-config rtaudio --cflags --libs)'
       ],
       "sources": [ "src/zic.cc" ],

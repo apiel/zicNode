@@ -35,7 +35,7 @@ public:
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
-        printf("noteOn %d %d %d\n", note, velocity, voice);
+        // printf("[track %d] noteOn %d %d %d\n", id, note, velocity, voice);
         pd.sendNoteOn(voice + 1, note, velocity);
     }
 
@@ -71,8 +71,13 @@ public:
 
         char path[256];
         // sprintf(path, "%s/%s", getPatchDirectory(), state[currentState].patchFilename);
+        if (id == 1) {
+            sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
+        } else {
+            sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
+        }
         // sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
-        sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
+        // sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
         pd.computeAudio(true);
         patch = pd.openPatch("main.pd", path);
         // patch = pd.openPatch("main.pd", "instruments/pd/02_kick");
