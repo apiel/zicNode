@@ -12,7 +12,8 @@ class Zic_Audio_Wavetable : public Zic_Wavetable_File {
 public:
     Zic_Audio_Wavetable()
     {
-        open("/home/alex/Music/zicJs/zicNode/data/wavetables/ADDITIVE.WAV");
+        // open("/home/alex/Music/zicJs/zicNode/data/wavetables/ADDITIVE.WAV");
+        open("/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav");
     }
 };
 

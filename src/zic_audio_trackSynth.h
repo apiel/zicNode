@@ -17,7 +17,7 @@ public:
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
-        printf("[track %d] noteOn %d %d %d\n", id, note, velocity, voice);
+        // printf("[track %d] noteOn %d %d %d\n", id, note, velocity, voice);
         synth.noteOn(note, velocity);
     }
 
@@ -28,11 +28,7 @@ public:
 
     void sample(float* buf, int len)
     {
-        // printf("[track %d] get sample\n", id);
-        int count = len / 4;
-        // FIXME
-        for (int i = 0; i < count; i++) {
-            // printf("sample loop %d\n", i);
+        for (int i = 0; i < len; i++) {
             buf[i] = synth.sample();
 #if APP_CHANNELS == 2
             // TODO

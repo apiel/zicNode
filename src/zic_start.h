@@ -1,6 +1,8 @@
 #ifndef ZIC_MAIN_H
 #define ZIC_MAIN_H
 
+#include <zic_file_linux.h> // Must be included on top
+
 #include "./zic_server_def.h"
 
 #include <RtAudio.h>

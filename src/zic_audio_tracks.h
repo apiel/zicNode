@@ -46,11 +46,11 @@ protected:
         track0.looper.nextState.pattern = &demoPattern;
         track0.looper.nextState.play();
 
-        demoPattern2.stepCount = 4;
+        demoPattern2.stepCount = 8;
         demoPattern2.steps[0][0].note = 44;
-        demoPattern2.steps[0][1].note = 45;
-        demoPattern2.steps[0][2].note = 46;
-        demoPattern2.steps[0][3].note = 47;
+        demoPattern2.steps[0][2].note = 45;
+        demoPattern2.steps[0][4].note = 46;
+        demoPattern2.steps[0][6].note = 47;
         track1.looper.nextState.pattern = &demoPattern2;
         track1.looper.nextState.play();
     }
@@ -88,26 +88,26 @@ public:
 
     void sample(float* buf, int len)
     {
-        // track0.sample(buf, len);
-        track1.sample(buf, len);
+        // // track0.sample(buf, len);
+        // track1.sample(buf, len);
 
-        // // Set buf to 0 else we will sum up the samples
-        // // over the previous chunck
-        // for (int j = 0; j < len; j++) {
-        //     buf[j] = 0.0f;
-        // }
+        // Set buf to 0 else we will sum up the samples
+        // over the previous chunck
+        for (int j = 0; j < len; j++) {
+            buf[j] = 0.0f;
+        }
 
-        // // float buffer[APP_AUDIO_CHUNK];
-        // float* buffer = new float[len];
-        // // Skip MIDI tracks, only return audio tracks samples
-        // // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
-        // for (uint8_t i = 0; i < 2; i++) {
-        //     tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there but might be difficult with PD
-        //     for (int j = 0; j < len; j++) {
-        //         buf[j] += buffer[j] * mixerDivider;
-        //     }
-        // }
-        // delete[] buffer;
+        // float buffer[APP_AUDIO_CHUNK];
+        float* buffer = new float[len];
+        // Skip MIDI tracks, only return audio tracks samples
+        // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
+        for (uint8_t i = 0; i < 2; i++) {
+            tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there but might be difficult with PD
+            for (int j = 0; j < len; j++) {
+                buf[j] += buffer[j] * mixerDivider;
+            }
+        }
+        delete[] buffer;
     }
 
     // void togglePlay()

@@ -76,8 +76,8 @@ public:
 
     Zic_Audio_Synth()
     {
-        setModIntensity(MOD_SRC_LFO_1, MOD_TARGET_RES, 1.0);
-        lfo[0].setFrequency(0.5);
+        // setModIntensity(MOD_SRC_LFO_1, MOD_TARGET_RES, 1.0);
+        // lfo[0].setFrequency(0.5);
     }
 
     void setModIntensity(uint8_t src, uint8_t target, float intensity)
