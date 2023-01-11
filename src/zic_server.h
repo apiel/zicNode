@@ -15,7 +15,6 @@ protected:
 
     Zic_Server()
     {
-        // tempo = new App_Tempo();
         // tracks = App_Tracks::getInstance();
 
         // App_Midi::getInstance();
@@ -36,7 +35,7 @@ public:
 
     void sample(float* buf, int len)
     {
-        if (tempo.next(timeMs())) {
+        if (tempo.next(timeMs()))
         // if (tempo.next()) // Using sample rate instead of time
         {
             // tracks->next();
