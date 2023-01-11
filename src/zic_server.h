@@ -35,12 +35,14 @@ public:
 
     void sample(float* buf, int len)
     {
+        // printf("sample time %ld\n", timeMs());
+        // std::cout << "sample time " << timeMs() << std::endl;
         if (tempo.next(timeMs()))
         // if (tempo.next()) // Using sample rate instead of time
         {
-            // tracks->next();
+            tracks->next();
         }
-        // tracks->sample(buf, len);
+        tracks->sample(buf, len);
     }
 };
 

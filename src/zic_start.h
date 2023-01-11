@@ -23,24 +23,24 @@ int counter = 0;
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
-    unsigned int i, j;
-    float* buffer = (float*)outputBuffer;
-    double* lastValues = (double*)data;
+    // unsigned int i, j;
+    // float* buffer = (float*)outputBuffer;
+    // double* lastValues = (double*)data;
 
-    if (status)
-        std::cout << "Stream underflow detected!" << std::endl;
+    // if (status)
+    //     std::cout << "Stream underflow detected!" << std::endl;
 
-    const float BASE_RATE = 0.005;
-    double increment;
-    for (j = 0; j < channels; j++) {
-        increment = BASE_RATE * (j + 1 + (j * 0.1));
-        for (i = 0; i < nBufferFrames; i++) {
-            *buffer++ = (float)(lastValues[j] * 0.5);
-            lastValues[j] += increment;
-            if (lastValues[j] >= 1.0)
-                lastValues[j] -= 2.0;
-        }
-    }
+    // const float BASE_RATE = 0.005;
+    // double increment;
+    // for (j = 0; j < channels; j++) {
+    //     increment = BASE_RATE * (j + 1 + (j * 0.1));
+    //     for (i = 0; i < nBufferFrames; i++) {
+    //         *buffer++ = (float)(lastValues[j] * 0.5);
+    //         lastValues[j] += increment;
+    //         if (lastValues[j] >= 1.0)
+    //             lastValues[j] -= 2.0;
+    //     }
+    // }
     counter++;
 
     Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);

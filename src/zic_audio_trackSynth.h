@@ -1,8 +1,8 @@
 #ifndef ZIC_AUDIO_TRACK_SYNTH_H_
 #define ZIC_AUDIO_TRACK_SYNTH_H_
 
-#include "./zic_audio_track.h"
 #include "./zic_audio_synth.h"
+#include "./zic_audio_track.h"
 
 #include <zic_note.h>
 
@@ -10,7 +10,7 @@ class Zic_Audio_TrackSynth : public Zic_Audio_Track {
 public:
     Zic_Audio_Synth synth;
 
-    Zic_Audio_TrackSynth(uint8_t _id = 0, const char * _name = NULL)
+    Zic_Audio_TrackSynth(uint8_t _id = 0, const char* _name = NULL)
         : Zic_Audio_Track(_id, _name)
     {
     }
@@ -28,16 +28,21 @@ public:
     void sample(float* buf, int len)
     {
         int count = len / 4;
-        for (int i = 0; i < count; i++) {
-            buf[i] = synth.sample();
-#if APP_CHANNELS == 2
-            // TODO
-            // FIXME
-            // or not ?? if sample is mono, then it's ok
-            // but if it's stereo, then it's not :p
-            buf[i + 1] = buf[i];
-            i++;
-#endif
+        // FIXME
+        //         for (int i = 0; i < count; i++) {
+        //             buf[i] = synth.sample();
+        // #if APP_CHANNELS == 2
+        //             // TODO
+        //             // FIXME
+        //             // or not ?? if sample is mono, then it's ok
+        //             // but if it's stereo, then it's not :p
+        //             buf[i + 1] = buf[i];
+        //             i++;
+        // #endif
+        //         }
+
+        for (int i = 0; i < len; i++) {
+            buf[i] = 0.0f;
         }
     }
 

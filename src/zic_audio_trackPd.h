@@ -36,6 +36,7 @@ public:
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
+        printf("noteOn %d %d %d\n", note, velocity, voice);
         pd.sendNoteOn(voice + 1, note, velocity);
     }
 
@@ -68,7 +69,7 @@ public:
         //     pd.computeAudio(false);
         //     return;
         // }
-        
+
         char path[256];
         // sprintf(path, "%s/%s", getPatchDirectory(), state[currentState].patchFilename);
         sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
