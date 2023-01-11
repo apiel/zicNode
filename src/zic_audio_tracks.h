@@ -38,8 +38,8 @@ protected:
             }
         }
         mixerDivider = 1.0f / TRACK_AUDIO_COUNT;
-        APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
-            TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
+        // APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
+        //     TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
 
         demoPattern.stepCount = 4;
         demoPattern.steps[0][0].note = 60;

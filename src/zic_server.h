@@ -17,7 +17,7 @@ protected:
     {
         tracks = Zic_Audio_Tracks::getInstance();
 
-        // Zic_Midi::getInstance();
+        Zic_Midi::getInstance();
     }
 
 public:

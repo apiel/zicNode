@@ -73,7 +73,7 @@ public:
         port = (port + direction + portCount) % portCount;
         midiout->closePort();
         midiout->openPort(port);
-        printf("set MIDI out port %d\n", port);
+        // printf("set MIDI out port %d\n", port);
     }
 };
 
