@@ -60,11 +60,6 @@ public:
     {
     }
 
-    const char* getPatchDirectory() override
-    {
-        return "instruments/midi";
-    }
-
     void setMidiOut(RtMidiOut* _midiout)
     {
         delete midiout;

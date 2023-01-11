@@ -112,13 +112,6 @@ public:
     // {
     //     return tracks[0]->looper.isPlaying();
     // }
-
-    void quit()
-    {
-        // for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-        //     tracks[i]->saveState();
-        // }
-    }
 };
 
 Zic_Audio_Tracks* Zic_Audio_Tracks::instance = NULL;

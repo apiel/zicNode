@@ -36,11 +36,6 @@ public:
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
     }
-
-    const char* getPatchDirectory() override
-    {
-        return "";
-    }
 };
 
 #endif

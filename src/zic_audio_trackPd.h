@@ -54,35 +54,32 @@ public:
     {
         pd.sendControlChange(voice + 1, num, val);
     }
-
-    const char * getPatchDirectory() override
-    {
-        return "instruments/pd";
-    }
-
+    
     void loadPatch()
     {
-        // // TODO skip if different... valid if last one
-        // // or if changing of row
-        // if (patch.isValid()) {
-        //     pd.closePatch(patch);
-        // }
+        // TODO skip if different... valid if last one
+        // or if changing of row
+        if (patch.isValid()) {
+            pd.closePatch(patch);
+        }
 
         // uint8_t currentState = looper.getCurrentComponent();
         // if (state[currentState].isPatchEmpty()) {
         //     pd.computeAudio(false);
         //     return;
         // }
-        // char path[256];
+        
+        char path[256];
         // sprintf(path, "%s/%s", getPatchDirectory(), state[currentState].patchFilename);
-        // pd.computeAudio(true);
-        // patch = pd.openPatch("main.pd", path);
-        // // patch = pd.openPatch("main.pd", "instruments/pd/02_kick");
-        // // pd.openPatch("main.pd", "instruments/pd/01_synth");
+        sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
+        pd.computeAudio(true);
+        patch = pd.openPatch("main.pd", path);
+        // patch = pd.openPatch("main.pd", "instruments/pd/02_kick");
+        // pd.openPatch("main.pd", "instruments/pd/01_synth");
 
-        // // FIXME if patch does not exist then crash!!
+        // FIXME if patch does not exist then crash!!
 
-        // // TODO load preset!!
+        // TODO load preset!!
     }
 };
 

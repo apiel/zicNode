@@ -18,25 +18,11 @@ enum {
 };
 
 enum {
-    // TODO rename this to voice
     VOICE_1,
     VOICE_2,
     VOICE_3,
     VOICE_4,
     VOICE_COUNT
-};
-
-enum {
-    EVENT_VIEW_ON_TEMPO,
-};
-
-enum {
-    DELAY_1,
-    DELAY_2,
-    DELAY_3,
-    DELAY_4,
-    DELAY_5,
-    DELAY_COUNT
 };
 
 #endif
