@@ -3,9 +3,11 @@
 
 // TODO rename to ZIC_AUDIO_CHUNK
 #define APP_AUDIO_CHUNK 512
+// #define APP_AUDIO_CHUNK 2024
 
 // TODO rename to ZIC_AUDIO_CHANNELS
 #define APP_CHANNELS 1 // Might want to use only one channel
+// #define APP_CHANNELS 2
 
 // TODO rename to ZIC_AUDIO_SAMPLE_RATE
 #ifndef SAMPLE_RATE

@@ -1,15 +1,14 @@
 #ifndef ZIC_AUDIO_TRACK_PD_H_
 #define ZIC_AUDIO_TRACK_PD_H_
 
-#include "./zic_server_def.h"
 #include "./zic_audio_track.h"
+#include "./zic_server_def.h"
 
-#include <PdBase.hpp>
 #include "./zic_PdObject.h"
+#include <PdBase.hpp>
 
 class Zic_Audio_TrackPd : public Zic_Audio_Track {
 protected:
-    const float tickDivider = 1.0f / (256.0f * APP_CHANNELS);
     Zic_PdObject pdObject;
 
 public:
@@ -47,7 +46,7 @@ public:
 
     void sample(float* buf, int len)
     {
-        int ticks = len * tickDivider;
+        int ticks = len / libpd_blocksize();
         pd.processFloat(ticks, NULL, buf);
     }
 
@@ -55,7 +54,7 @@ public:
     {
         pd.sendControlChange(voice + 1, num, val);
     }
-    
+
     void loadPatch()
     {
         // TODO skip if different... valid if last one
@@ -72,7 +71,8 @@ public:
 
         char path[256];
         // sprintf(path, "%s/%s", getPatchDirectory(), state[currentState].patchFilename);
-        sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
+        // sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
+        sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
         pd.computeAudio(true);
         patch = pd.openPatch("main.pd", path);
         // patch = pd.openPatch("main.pd", "instruments/pd/02_kick");

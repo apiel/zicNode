@@ -10,7 +10,9 @@
 
 #include "zic_server.h"
 
+// #define FORMAT RTAUDIO_FLOAT64
 #define FORMAT RTAUDIO_FLOAT32
+// #define FORMAT RTAUDIO_SINT16
 
 unsigned int channels;
 
@@ -18,17 +20,12 @@ Napi::Function emit;
 
 int counter = 0;
 
-
-
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
     // unsigned int i, j;
     // float* buffer = (float*)outputBuffer;
     // double* lastValues = (double*)data;
-
-    // if (status)
-    //     std::cout << "Stream underflow detected!" << std::endl;
 
     // const float BASE_RATE = 0.005;
     // double increment;
@@ -41,9 +38,18 @@ int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBuffe
     //             lastValues[j] -= 2.0;
     //     }
     // }
-    counter++;
+    // counter++;
 
     Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);
+
+    // int16_t* buf = (int16_t*)outputBuffer;
+    // float* buffer = new float[nBufferFrames];
+    // Zic_Server::getInstance()->sample((float*)buffer, nBufferFrames);
+    // for (unsigned int j = 0; j < nBufferFrames; j++) {
+    //     buf[j] += buffer[j] * 16384;
+    // }
+    // delete[] buffer;
+
     return 0;
 }
 
@@ -73,7 +79,7 @@ public:
         RtAudio::StreamParameters oParams;
         oParams.deviceId = deviceId;
 
-        oParams.nChannels = APP_CHANNELS; 
+        oParams.nChannels = APP_CHANNELS;
 
         channels = oParams.nChannels;
 
