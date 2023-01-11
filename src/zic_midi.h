@@ -37,16 +37,16 @@ public:
     {
         currentApi = (currentApi + direction + apis.size()) % apis.size();
 
-        App_Tracks* tracks = App_Tracks::getInstance();
-        // FIXME use loop to set midiout for all midi tracks
-        // for (uint8_t i = tracks->TRACK_AUDIO_COUNT; i < tracks->TRACK_MIDI_COUNT; i++)
-        // {
-        //     /* code */
-        // }
-        tracks->track4.setMidiOut(new RtMidiOut(apis[currentApi]));
-        tracks->track5.setMidiOut(new RtMidiOut(apis[currentApi]));
-        tracks->track6.setMidiOut(new RtMidiOut(apis[currentApi]));
-        tracks->track7.setMidiOut(new RtMidiOut(apis[currentApi]));
+        Zic_Audio_Tracks* tracks = Zic_Audio_Tracks::getInstance();
+        // // FIXME use loop to set midiout for all midi tracks
+        // // for (uint8_t i = tracks->TRACK_AUDIO_COUNT; i < tracks->TRACK_MIDI_COUNT; i++)
+        // // {
+        // //     /* code */
+        // // }
+        // tracks->track4.setMidiOut(new RtMidiOut(apis[currentApi]));
+        // tracks->track5.setMidiOut(new RtMidiOut(apis[currentApi]));
+        // tracks->track6.setMidiOut(new RtMidiOut(apis[currentApi]));
+        // tracks->track7.setMidiOut(new RtMidiOut(apis[currentApi]));
     }
 };
 

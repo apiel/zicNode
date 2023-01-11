@@ -5,7 +5,7 @@
 #include <zic_seq_tempo.h>
 
 #include "./zic_util.h"
-// #include "./zic_midi.h"
+#include "./zic_midi.h"
 #include "./zic_audio_tracks.h"
 
 class Zic_Server {
@@ -15,13 +15,13 @@ protected:
 
     Zic_Server()
     {
-        // tracks = App_Tracks::getInstance();
+        tracks = Zic_Audio_Tracks::getInstance();
 
-        // App_Midi::getInstance();
+        // Zic_Midi::getInstance();
     }
 
 public:
-    // App_Tracks * tracks;
+    Zic_Audio_Tracks * tracks;
 
     static Zic_Server* instance;
 

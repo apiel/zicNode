@@ -6,7 +6,7 @@
         "-fno-exceptions",
         '<!@(pkg-config rtaudio --cflags --libs)',
         '<!@(pkg-config rtmidi --cflags --libs)',
-        './libpd/libs/libpd.so -DPDINSTANCE'
+        '-DPDINSTANCE'
       ],
       "cflags_cc!": [ 
         "-fno-exceptions",
@@ -26,7 +26,8 @@
       'libraries': [
           # '-lrtaudio'
           '<!@(pkg-config rtaudio --cflags --libs)',
-          '<!@(pkg-config rtmidi --cflags --libs)'
+          '<!@(pkg-config rtmidi --cflags --libs)',
+          '<!@(pwd)/libpd/libs/libpd.so'
       ],
       'defines': [ 'NAPI_DISABLE_CPP_EXCEPTIONS' ],
 

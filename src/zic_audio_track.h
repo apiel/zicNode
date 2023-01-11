@@ -11,12 +11,12 @@ protected:
     Zic_Seq_Step* stepOff[VOICE_COUNT];
     char statePath[50];
 
-    Zic_Seq_PatternComponent* components[TRACK_COUNT] = {
-        // &state[0].component,
-        // &state[1].component,
-        // &state[2].component,
-        // &state[3].component
-    };
+    // Zic_Seq_PatternComponent* components[TRACK_COUNT] = {
+    //     // &state[0].component,
+    //     // &state[1].component,
+    //     // &state[2].component,
+    //     // &state[3].component
+    // };
 
     // void loadState()
     // {
@@ -46,11 +46,11 @@ public:
     const char * name;
 
     // App_State_Track state[TRACK_COUNT];
-    Zic_Seq_LoopMaster looper;
+    // Zic_Seq_LoopMaster looper;
 
     Zic_Audio_Track(uint8_t _id = 0, const char * _name = NULL)
         : name(_name)
-        , looper(components[0], TRACK_COUNT)
+        // , looper(components[0], TRACK_COUNT)
     {
         id = _id;
         sprintf(statePath, "projects/current/track_%d.zic", id);
@@ -94,28 +94,29 @@ public:
 
     bool isCurrentState(uint8_t pos)
     {
-        return looper.getCurrentComponent() == pos;
+        // return looper.getCurrentComponent() == pos;
+        return false;
     }
 
     void next()
     {
-        looper.next();
+        // looper.next();
 
-        // TODO need to handle tie
-        for (uint8_t i = 0; i < VOICE_COUNT; i++) {
-            if (stepOff[i] && !stepOff[i]->tie) {
-                // printf("note off %d\n", stepOff[i]->note);
-                noteOff(stepOff[i]->note, i);
-                stepOff[i] = NULL;
-            }
-            if (looper.state.playing && looper.stepOn != 255) {
-                Zic_Seq_Step* step = &looper.state.pattern->steps[i][looper.stepOn];
-                if (step->note > 0) {
-                    noteOn(step->note, step->velocity, i);
-                    stepOff[i] = step;
-                }
-            }
-        }
+        // // TODO need to handle tie
+        // for (uint8_t i = 0; i < VOICE_COUNT; i++) {
+        //     if (stepOff[i] && !stepOff[i]->tie) {
+        //         // printf("note off %d\n", stepOff[i]->note);
+        //         noteOff(stepOff[i]->note, i);
+        //         stepOff[i] = NULL;
+        //     }
+        //     if (looper.state.playing && looper.stepOn != 255) {
+        //         Zic_Seq_Step* step = &looper.state.pattern->steps[i][looper.stepOn];
+        //         if (step->note > 0) {
+        //             noteOn(step->note, step->velocity, i);
+        //             stepOff[i] = step;
+        //         }
+        //     }
+        // }
     }
 };
 

@@ -5,6 +5,7 @@
 #include "./zic_audio_trackMidi.h"
 #include "./zic_audio_trackPd.h"
 #include "./zic_audio_trackSynth.h"
+// #include "./zic_audio_trackDumb.h"
 #include "./zic_audio_track_def.h"
 
 #include <stdlib.h>
@@ -13,11 +14,11 @@
 #include <zic_seq_loop.h>
 #include <zic_synth_file.h>
 
-class App_Tracks {
+class Zic_Audio_Tracks {
 protected:
     float mixerDivider = 0.0f;
 
-    App_Tracks()
+    Zic_Audio_Tracks()
         : track0(TRACK_1, "Track1")
         , track1(TRACK_2, "Track2")
         , track2(TRACK_3, "Track3")
@@ -55,12 +56,12 @@ public:
     Zic_Audio_Track* tracks[TRACK_COUNT] = { &track0, &track1, &track2, &track3,
         &track4, &track5, &track6, &track7 };
 
-    static App_Tracks* instance;
+    static Zic_Audio_Tracks* instance;
 
-    static App_Tracks* getInstance()
+    static Zic_Audio_Tracks* getInstance()
     {
         if (!instance) {
-            instance = new App_Tracks();
+            instance = new Zic_Audio_Tracks();
         }
         return instance;
     }
@@ -93,31 +94,23 @@ public:
         delete[] buffer;
     }
 
-    void togglePlay()
-    {
-        for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-            tracks[i]->looper.togglePlay();
-        }
-    }
-
-    void reset()
-    {
-        for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-            tracks[i]->looper.reset();
-        }
-    }
-
-    bool isPlaying()
-    {
-        return tracks[0]->looper.isPlaying();
-    }
-
-    // void cc(uint8_t num, uint8_t val, uint8_t voice)
+    // void togglePlay()
     // {
-    //     // TODO should we select the right track?
     //     for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-    //         tracks[i]->cc(num, val, voice);
+    //         tracks[i]->looper.togglePlay();
     //     }
+    // }
+
+    // void reset()
+    // {
+    //     for (uint8_t i = 0; i < TRACK_COUNT; i++) {
+    //         tracks[i]->looper.reset();
+    //     }
+    // }
+
+    // bool isPlaying()
+    // {
+    //     return tracks[0]->looper.isPlaying();
     // }
 
     void quit()
@@ -128,6 +121,6 @@ public:
     }
 };
 
-App_Tracks* App_Tracks::instance = NULL;
+Zic_Audio_Tracks* Zic_Audio_Tracks::instance = NULL;
 
 #endif
