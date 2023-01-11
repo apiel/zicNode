@@ -27,8 +27,8 @@ public:
 
     void sample(float* buf, int len)
     {
-        int count = len / 4;
-        // FIXME
+        // int count = len / 4;
+        // // FIXME
         //         for (int i = 0; i < count; i++) {
         //             buf[i] = synth.sample();
         // #if APP_CHANNELS == 2

@@ -38,6 +38,8 @@ protected:
             }
         }
         mixerDivider = 1.0f / TRACK_AUDIO_COUNT;
+        APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
+            TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
 
         demoPattern.stepCount = 4;
         demoPattern.steps[0][0].note = 60;
@@ -59,7 +61,8 @@ public:
     Zic_Audio_TrackSynth track1, track2, track3;
 #else
     Zic_Audio_TrackPd track0, track1;
-    Zic_Audio_TrackSynth track2, track3;
+    // Zic_Audio_TrackSynth track2, track3;
+    Zic_Audio_TrackPd track2, track3;
 #endif
     Zic_Audio_TrackMidi track4, track5, track6, track7;
 
@@ -85,20 +88,26 @@ public:
 
     void sample(float* buf, int len)
     {
-        tracks[0]->sample(buf, len);
+        // tracks[0]->sample(buf, len);
 
+        // Set buf to 0 else we will sum up the samples
+        // over the previous chunck
+        for (int j = 0; j < len; j++) {
+            buf[j] = 0.0f;
+        }
 
-        // // NOTE should dynamic data allocation?
-        // // float buffer[APP_AUDIO_CHUNK];
-        // float* buffer = new float[len];
-        // // Skip MIDI tracks, only return audio tracks samples
+        // NOTE should dynamic data allocation?
+        // float buffer[APP_AUDIO_CHUNK];
+        float* buffer = new float[len];
+        // Skip MIDI tracks, only return audio tracks samples
         // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
         //     tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there
-        //     for (int j = 0; j < len; j++) {
-        //         buf[j] += buffer[j] * mixerDivider;
-        //     }
+            tracks[0]->sample(buffer, len); // TODO could apply the mixerDivider directly there
+            for (int j = 0; j < len; j++) {
+                buf[j] += buffer[j] * mixerDivider;
+            }
         // }
-        // delete[] buffer;
+        delete[] buffer;
     }
 
     // void togglePlay()

@@ -43,10 +43,10 @@ public:
         // // {
         // //     /* code */
         // // }
-        // tracks->track4.setMidiOut(new RtMidiOut(apis[currentApi]));
-        // tracks->track5.setMidiOut(new RtMidiOut(apis[currentApi]));
-        // tracks->track6.setMidiOut(new RtMidiOut(apis[currentApi]));
-        // tracks->track7.setMidiOut(new RtMidiOut(apis[currentApi]));
+        tracks->track4.setMidiOut(new RtMidiOut(apis[currentApi]));
+        tracks->track5.setMidiOut(new RtMidiOut(apis[currentApi]));
+        tracks->track6.setMidiOut(new RtMidiOut(apis[currentApi]));
+        tracks->track7.setMidiOut(new RtMidiOut(apis[currentApi]));
     }
 };
 

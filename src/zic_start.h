@@ -10,9 +10,7 @@
 
 #include "zic_server.h"
 
-// #define FORMAT RTAUDIO_FLOAT64
 #define FORMAT RTAUDIO_FLOAT32
-// #define FORMAT RTAUDIO_SINT16
 
 unsigned int channels;
 
@@ -23,33 +21,7 @@ int counter = 0;
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
-    // unsigned int i, j;
-    // float* buffer = (float*)outputBuffer;
-    // double* lastValues = (double*)data;
-
-    // const float BASE_RATE = 0.005;
-    // double increment;
-    // for (j = 0; j < channels; j++) {
-    //     increment = BASE_RATE * (j + 1 + (j * 0.1));
-    //     for (i = 0; i < nBufferFrames; i++) {
-    //         *buffer++ = (float)(lastValues[j] * 0.5);
-    //         lastValues[j] += increment;
-    //         if (lastValues[j] >= 1.0)
-    //             lastValues[j] -= 2.0;
-    //     }
-    // }
-    // counter++;
-
     Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);
-
-    // int16_t* buf = (int16_t*)outputBuffer;
-    // float* buffer = new float[nBufferFrames];
-    // Zic_Server::getInstance()->sample((float*)buffer, nBufferFrames);
-    // for (unsigned int j = 0; j < nBufferFrames; j++) {
-    //     buf[j] += buffer[j] * 16384;
-    // }
-    // delete[] buffer;
-
     return 0;
 }
 
