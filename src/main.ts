@@ -1,5 +1,5 @@
 import { exit } from 'process';
-import { getAudoDeviceInfo, getBpm, getPatternLength, isAudioRunning, setBpm, setPatternLength, start } from './lib';
+import { getAudoDeviceInfo, getBpm, getPatternLength, isAudioRunning, setBpm, setPatternLength, setPatternStep, start } from './lib';
 
 console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
@@ -13,8 +13,13 @@ start(123);
 
 console.log('next Bpm', getBpm());
 
-setPatternLength(0, 16);
+setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));
+setPatternStep(0, 0, 60, 100, false);
+setPatternLength(1, 8);
+setPatternStep(1, 2, 70, 100, false);
+setPatternStep(1, 6, 80, 100, false);
+
 try {
     console.log('pattern length', getPatternLength(2000));    
 } catch (error) {

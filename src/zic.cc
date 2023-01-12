@@ -3,7 +3,8 @@
 
 #include "zic_server_audio.h"
 
-Napi::Value error(Napi::Env& env, const std::string& message) {
+Napi::Value error(Napi::Env& env, const std::string& message)
+{
     Napi::TypeError::New(env, message).ThrowAsJavaScriptException();
     return env.Undefined();
 }
@@ -108,10 +109,8 @@ Napi::Value stop(const Napi::CallbackInfo& info)
 Napi::Value setPatternLength(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    if (info.Length() < 1 || !info[0].IsNumber()) {
-        return error(env, "Missing pattern index arguments");
-    } else if (info.Length() < 2 || !info[1].IsNumber()) {
-        return error(env, "Missing pattern length arguments");
+    if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsNumber()) {
+        return error(env, "Invalid arguments: patternIndex, length");
     }
     uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
     uint32_t patternLength = info[1].As<Napi::Number>().Uint32Value();
@@ -130,9 +129,43 @@ Napi::Value getPatternLength(const Napi::CallbackInfo& info)
     }
     uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
     if (patternIndex > ZIC_PATTERN_COUNT - 1) {
-        return error(env, "Pattern index out of range");
+        return error(env, "Pattern index out of range, max: " + std::to_string(ZIC_PATTERN_COUNT - 1));
     }
     return Napi::Number::New(env, patterns[patternIndex].stepCount);
+}
+
+Napi::Value setPatternStep(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 5 || !info[0].IsNumber() || !info[1].IsNumber() || !info[2].IsNumber()
+        || !info[3].IsNumber() || !info[4].IsBoolean() || (info.Length() > 5 && !info[5].IsNumber())) {
+        return error(env, "Invalid arguments: patternIndex, stepIndex, note, velocity, tie, (voice=0)");
+    }
+    uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
+    uint32_t stepIndex = info[1].As<Napi::Number>().Uint32Value();
+    uint32_t note = info[2].As<Napi::Number>().Uint32Value();
+    uint32_t velocity = info[3].As<Napi::Number>().Uint32Value();
+    bool tie = info[4].As<Napi::Boolean>().Value();
+    uint32_t voice = 0;
+    if (info.Length() > 5) {
+        voice = info[5].As<Napi::Number>().Uint32Value();
+    }
+    if (patternIndex > ZIC_PATTERN_COUNT - 1) {
+        return error(env, "Pattern index out of range, max: " + std::to_string(ZIC_PATTERN_COUNT - 1));
+    }
+    if (stepIndex > MAX_STEPS_IN_PATTERN - 1) {
+        return error(env, "Step index out of range, max: " + std::to_string(MAX_STEPS_IN_PATTERN - 1));
+    }
+    if (note > Zic::_NOTE_END || note < Zic::_NOTE_START) {
+        return error(env, "Note out of range (" + std::to_string(Zic::_NOTE_START) + "-" + std::to_string(Zic::_NOTE_END) + ")");
+    }
+
+    Zic_Seq_Step& step = patterns[patternIndex].steps[voice][stepIndex];
+    step.note = note;
+    step.velocity = velocity;
+    step.tie = tie;
+    
+    return env.Undefined();
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
@@ -145,6 +178,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "setBpm"), Napi::Function::New(env, setBpm));
     exports.Set(Napi::String::New(env, "setPatternLength"), Napi::Function::New(env, setPatternLength));
     exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
+    exports.Set(Napi::String::New(env, "setPatternStep"), Napi::Function::New(env, setPatternStep));
     return exports;
 }
 

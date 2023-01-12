@@ -13,8 +13,7 @@
 #include <zic_seq_loop.h>
 #include <zic_synth_file.h>
 
-Zic_Seq_Pattern demoPattern;
-Zic_Seq_Pattern demoPattern2;
+#include "./zic_state.h" // to be removed?
 
 class Zic_Audio_Tracks {
 protected:
@@ -41,17 +40,10 @@ protected:
         // APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
         //     TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
 
-        demoPattern.stepCount = 4;
-        demoPattern.steps[0][0].note = 60;
-        track0.looper.nextState.pattern = &demoPattern;
+        track0.looper.nextState.pattern = &patterns[0];
         track0.looper.nextState.play();
 
-        demoPattern2.stepCount = 8;
-        demoPattern2.steps[0][0].note = 44;
-        demoPattern2.steps[0][2].note = 45;
-        demoPattern2.steps[0][4].note = 46;
-        demoPattern2.steps[0][6].note = 47;
-        track1.looper.nextState.pattern = &demoPattern2;
+        track1.looper.nextState.pattern = &patterns[1];
         track1.looper.nextState.play();
     }
 
