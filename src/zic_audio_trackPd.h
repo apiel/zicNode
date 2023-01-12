@@ -36,23 +36,23 @@ public:
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
         // printf("[track %d] noteOn %d %d %d\n", id, note, velocity, voice);
-        //pd.sendNoteOn(voice + 1, note, velocity);
+        pd.sendNoteOn(voice + 1, note, velocity);
     }
 
     void noteOff(uint8_t note, uint8_t voice)
     {
-        // pd.sendNoteOn(voice + 1, note, 0);
+        pd.sendNoteOn(voice + 1, note, 0);
     }
 
     void sample(float* buf, int len)
     {
-        // int ticks = len / libpd_blocksize();
-        // pd.processFloat(ticks, NULL, buf);
+        int ticks = len / libpd_blocksize();
+        pd.processFloat(ticks, NULL, buf);
     }
 
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
-        // pd.sendControlChange(voice + 1, num, val);
+        pd.sendControlChange(voice + 1, num, val);
     }
 
     void loadPatch()

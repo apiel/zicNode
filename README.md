@@ -19,6 +19,7 @@ Need to install libpd.
 ```sh
 git clone --recurse-submodules https://github.com/libpd/libpd.git
 cd libpd
-make MULTI=true
+# make MULTI=true // not working with multi instance/thread
+make
 cd ..
 ```

@@ -85,9 +85,6 @@ public:
 
     void sample(float* buf, int len)
     {
-        // // track0.sample(buf, len);
-        // track1.sample(buf, len);
-
         // Set buf to 0 else we will sum up the samples
         // over the previous chunck
         for (int j = 0; j < len; j++) {
@@ -97,8 +94,7 @@ public:
         // float buffer[APP_AUDIO_CHUNK];
         float* buffer = new float[len];
         // Skip MIDI tracks, only return audio tracks samples
-        // for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
-        for (uint8_t i = 0; i < 2; i++) {
+        for (uint8_t i = 0; i < TRACK_AUDIO_COUNT; i++) {
             tracks[i]->sample(buffer, len); // TODO could apply the mixerDivider directly there but might be difficult with PD
             for (int j = 0; j < len; j++) {
                 buf[j] += buffer[j] * mixerDivider;

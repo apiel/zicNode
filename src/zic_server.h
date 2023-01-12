@@ -8,27 +8,6 @@
 #include "./zic_midi.h"
 #include "./zic_util.h"
 
-class Zic_State {
-public:
-    static Zic_State& getInstance()
-    {
-        static Zic_State instance;
-        return instance;
-    }
-
-    unsigned int counter = 0;
-
-    void tick(float* buf, int len)
-    {
-        counter++;
-    }
-
-    unsigned int getCounter()
-    {
-        return counter;
-    }
-};
-
 class Zic_Server {
 protected:
     Zic_Server()
