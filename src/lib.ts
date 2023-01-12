@@ -24,3 +24,5 @@ export const safeStart: (cb: () => void, deviceId: number) => void = bindings('z
 
 export const getBpm: () => number = bindings('zic').getBpm;
 export const setBpm: (bpm: number) => void = bindings('zic').setBpm;
+
+export const getCounter: () => number = bindings('zic').getCounter;

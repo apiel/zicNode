@@ -1,4 +1,12 @@
-import { getAudoDeviceInfo, getBpm, safeStart, setBpm, start, promiseStart } from './lib';
+import {
+    getAudoDeviceInfo,
+    getBpm,
+    safeStart,
+    setBpm,
+    start,
+    promiseStart,
+    getCounter,
+} from './lib';
 
 console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
@@ -22,7 +30,12 @@ console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 // }, 1000);
 
 // Using Napi::ThreadSafeFunction
-safeStart((...values) => { console.log('Thread safe callback', values); }, 123);
+safeStart((...values) => {
+    console.log('Thread safe callback', values);
+}, 123);
 
-// console.log('next Bpm', getBpm());
+console.log('next Bpm', getBpm());
 
+setInterval(() => {
+    console.log('Counter', getCounter());
+}, 1000);

@@ -17,5 +17,6 @@ export declare const start: (deviceId: number) => void;
 export declare const safeStart: (cb: () => void, deviceId: number) => void;
 export declare const getBpm: () => number;
 export declare const setBpm: (bpm: number) => void;
+export declare const getCounter: () => number;
 export {};
 //# sourceMappingURL=lib.d.ts.map

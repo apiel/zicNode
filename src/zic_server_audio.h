@@ -13,10 +13,20 @@
 
 #define FORMAT RTAUDIO_FLOAT32
 
+// Zic_Server *global_zic_server = &Zic_Server::getInstance();
+// Zic_State *global_zic_state = &Zic_State::getInstance();
+
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
+    // zic_state.counter++;
+    // Zic_State::getInstance().counter++;
+    Zic_State::getInstance().tick((float*)outputBuffer, nBufferFrames);
+    // global_zic_state->tick();
+
     Zic_Server::getInstance().sample((float*)outputBuffer, nBufferFrames);
+    // extern Zic_Server *global_zic_server;
+    // global_zic_server->sample((float*)outputBuffer, nBufferFrames);
     return 0;
 }
 

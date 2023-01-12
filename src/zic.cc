@@ -4,6 +4,14 @@
 
 #include "zic_server_audio.h"
 
+Napi::Number getCounter(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    // return Napi::Number::New(env, counter);
+    // return Napi::Number::New(env, Zic_State::getInstance().counter);
+    return Napi::Number::New(env, Zic_State::getInstance().getCounter());
+}
+
 Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -195,6 +203,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "safeStart"), Napi::Function::New(env, safeStart));
     exports.Set(Napi::String::New(env, "getBpm"), Napi::Function::New(env, getBpm));
     exports.Set(Napi::String::New(env, "setBpm"), Napi::Function::New(env, setBpm));
+    exports.Set(Napi::String::New(env, "getCounter"), Napi::Function::New(env, getCounter));
     return exports;
 }
 

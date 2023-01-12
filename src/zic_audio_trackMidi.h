@@ -8,7 +8,7 @@
 
 class Zic_Audio_TrackMidi : public Zic_Audio_Track {
 public:
-    RtMidiOut* midiout = 0;
+    RtMidiOut* midiout = NULL;
     uint8_t port = 0;
 
     Zic_Audio_TrackMidi(uint8_t _id = 0, const char* _name = NULL)
@@ -28,6 +28,9 @@ public:
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
     {
+        if (midiout == NULL) {
+            return;
+        }
         // APP_LOG("MIDI note on %d %d %d\n", note, velocity, voice);
         std::vector<unsigned char> message;
         message.push_back(144); // + channel
@@ -38,6 +41,9 @@ public:
 
     void noteOff(uint8_t note, uint8_t voice)
     {
+        if (midiout == NULL) {
+            return;
+        }
         // APP_LOG("MIDI note off %d %d\n", note, voice);
         std::vector<unsigned char> message;
         message.push_back(128); // + channel
@@ -48,6 +54,9 @@ public:
 
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
+        if (midiout == NULL) {
+            return;
+        }
         // APP_LOG("MIDI cc %d %d %d\n", num, val, voice);
         std::vector<unsigned char> message;
         message.push_back(176); // + channel
