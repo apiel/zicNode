@@ -8,14 +8,14 @@ console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 // setBpm(120);
 // console.log('New Bpm', getBpm());
 
-// Using Napi::AsyncWorker
+// // Using Napi::AsyncWorker
 // async function main() {
 //     const result = await promiseStart(123);
 //     console.log('promise result', result);
 // }
 // main();
 
-// Using synchronous Napi::Function
+// // Using synchronous Napi::Function
 // start(123);
 // setInterval(() => {
 //     // keep alive

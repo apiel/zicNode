@@ -18,13 +18,9 @@ public:
     std::vector<RtMidi::Api> apis;
     uint8_t currentApi = 0;
 
-    static Zic_Midi* instance;
-
-    static Zic_Midi* getInstance()
+    static Zic_Midi& getInstance()
     {
-        if (!instance) {
-            instance = new Zic_Midi();
-        }
+        static Zic_Midi instance;
         return instance;
     }
 
@@ -37,7 +33,7 @@ public:
     {
         currentApi = (currentApi + direction + apis.size()) % apis.size();
 
-        Zic_Audio_Tracks* tracks = Zic_Audio_Tracks::getInstance();
+        Zic_Audio_Tracks* tracks = &Zic_Audio_Tracks::getInstance();
         // // FIXME use loop to set midiout for all midi tracks
         // // for (uint8_t i = tracks->TRACK_AUDIO_COUNT; i < tracks->TRACK_MIDI_COUNT; i++)
         // // {
@@ -49,7 +45,5 @@ public:
         tracks->track7.setMidiOut(new RtMidiOut(apis[currentApi]));
     }
 };
-
-Zic_Midi* Zic_Midi::instance = NULL;
 
 #endif

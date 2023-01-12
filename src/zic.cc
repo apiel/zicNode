@@ -45,7 +45,7 @@ Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 Napi::Number getBpm(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    return Napi::Number::New(env, Zic_Server::getInstance()->tempo.getBpm());
+    return Napi::Number::New(env, Zic_Server::getInstance().tempo.getBpm());
 }
 
 Napi::Value setBpm(const Napi::CallbackInfo& info)
@@ -54,7 +54,7 @@ Napi::Value setBpm(const Napi::CallbackInfo& info)
     if (info.Length() < 1 || !info[0].IsNumber()) {
         throw Napi::Error::New(env, "Missing bpm arguments");
     }
-    Zic_Server::getInstance()->tempo.set(info[0].As<Napi::Number>().Uint32Value());
+    Zic_Server::getInstance().tempo.set(info[0].As<Napi::Number>().Uint32Value());
     return env.Undefined();
 }
 
@@ -72,7 +72,7 @@ public:
 
     void Execute()
     {
-        Zic_Server_Audio::getInstance()->initAudio(deviceId);
+        Zic_Server_Audio::getInstance().initAudio(deviceId);
     }
 
     void OnOK()
@@ -129,7 +129,7 @@ Napi::Value start(const Napi::CallbackInfo& info)
         deviceId = audio.getDefaultOutputDevice();
     }
 
-    Zic_Server_Audio::getInstance()->initAudio(deviceId);
+    Zic_Server_Audio::getInstance().initAudio(deviceId);
     return info.Env().Undefined();
 }
 
@@ -175,7 +175,7 @@ Napi::Value safeStart(const Napi::CallbackInfo& info)
             nativeThread.join();
         });
 
-    Zic_Server_Audio * audioServer = Zic_Server_Audio::getInstance();
+    Zic_Server_Audio * audioServer = &Zic_Server_Audio::getInstance();
 
     // Create a native thread
     nativeThread = std::thread([deviceId, audioServer] {

@@ -12,8 +12,7 @@ class Zic_Server {
 protected:
     Zic_Server()
     {
-        tracks = Zic_Audio_Tracks::getInstance();
-
+        tracks = &Zic_Audio_Tracks::getInstance();
         Zic_Midi::getInstance();
     }
 
@@ -22,13 +21,9 @@ public:
 
     Zic_Audio_Tracks* tracks;
 
-    static Zic_Server* instance;
-
-    static Zic_Server* getInstance()
+    static Zic_Server& getInstance()
     {
-        if (!instance) {
-            instance = new Zic_Server();
-        }
+        static Zic_Server instance;
         return instance;
     }
 
@@ -44,7 +39,5 @@ public:
         tracks->sample(buf, len);
     }
 };
-
-Zic_Server* Zic_Server::instance = NULL;
 
 #endif

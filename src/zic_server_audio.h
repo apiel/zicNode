@@ -16,7 +16,7 @@
 int audioCallback(void* outputBuffer, void* /*inputBuffer*/, unsigned int nBufferFrames,
     double /*streamTime*/, RtAudioStreamStatus status, void* data)
 {
-    Zic_Server::getInstance()->sample((float*)outputBuffer, nBufferFrames);
+    Zic_Server::getInstance().sample((float*)outputBuffer, nBufferFrames);
     return 0;
 }
 
@@ -40,13 +40,9 @@ protected:
     }
 
 public:
-    static Zic_Server_Audio* instance;
-
-    static Zic_Server_Audio* getInstance()
+    static Zic_Server_Audio& getInstance()
     {
-        if (!instance) {
-            instance = new Zic_Server_Audio();
-        }
+        static Zic_Server_Audio instance;
         return instance;
     }
 
@@ -72,7 +68,5 @@ public:
         }
     }
 };
-
-Zic_Server_Audio* Zic_Server_Audio::instance = NULL;
 
 #endif

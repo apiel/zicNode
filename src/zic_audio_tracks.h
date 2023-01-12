@@ -69,13 +69,9 @@ public:
     Zic_Audio_Track* tracks[TRACK_COUNT] = { &track0, &track1, &track2, &track3,
         &track4, &track5, &track6, &track7 };
 
-    static Zic_Audio_Tracks* instance;
-
-    static Zic_Audio_Tracks* getInstance()
+    static Zic_Audio_Tracks& getInstance()
     {
-        if (!instance) {
-            instance = new Zic_Audio_Tracks();
-        }
+        static Zic_Audio_Tracks instance;
         return instance;
     }
 
@@ -129,7 +125,5 @@ public:
     //     return tracks[0]->looper.isPlaying();
     // }
 };
-
-Zic_Audio_Tracks* Zic_Audio_Tracks::instance = NULL;
 
 #endif
