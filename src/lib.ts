@@ -30,3 +30,10 @@ export const setPatternStep: (
     tie: boolean,
     voice?: number,
 ) => void = bindings('zic').setPatternStep;
+
+interface PatternStep {
+    note: number;
+    velocity: number;
+    tie: boolean;
+}
+export const getPattern: (index: number) => PatternStep[][] = bindings('zic').getPattern;

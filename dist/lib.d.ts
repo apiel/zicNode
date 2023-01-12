@@ -19,5 +19,11 @@ export declare const setBpm: (bpm: number) => void;
 export declare const setPatternLength: (index: number, length: number) => void;
 export declare const getPatternLength: (index: number) => number;
 export declare const setPatternStep: (index: number, stepIndex: number, note: number, velocity: number, tie: boolean, voice?: number) => void;
+interface PatternStep {
+    note: number;
+    velocity: number;
+    tie: boolean;
+}
+export declare const getPattern: (index: number) => PatternStep[][];
 export {};
 //# sourceMappingURL=lib.d.ts.map

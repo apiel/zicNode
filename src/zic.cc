@@ -156,6 +156,9 @@ Napi::Value setPatternStep(const Napi::CallbackInfo& info)
     if (stepIndex > MAX_STEPS_IN_PATTERN - 1) {
         return error(env, "Step index out of range, max: " + std::to_string(MAX_STEPS_IN_PATTERN - 1));
     }
+    if (voice > MAX_VOICES_IN_PATTERN - 1) {
+        return error(env, "Voice index out of range, max: " + std::to_string(MAX_VOICES_IN_PATTERN - 1));
+    }
     if (note > Zic::_NOTE_END || note < Zic::_NOTE_START) {
         return error(env, "Note out of range (" + std::to_string(Zic::_NOTE_START) + "-" + std::to_string(Zic::_NOTE_END) + ")");
     }
@@ -164,8 +167,36 @@ Napi::Value setPatternStep(const Napi::CallbackInfo& info)
     step.note = note;
     step.velocity = velocity;
     step.tie = tie;
-    
+
     return env.Undefined();
+}
+
+Napi::Value getPattern(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Missing pattern index arguments");
+    }
+    uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
+    if (patternIndex > ZIC_PATTERN_COUNT - 1) {
+        return error(env, "Pattern index out of range, max: " + std::to_string(ZIC_PATTERN_COUNT - 1));
+    }
+    Napi::Object obj = Napi::Object::New(env);
+    obj.Set("stepCount", Napi::Number::New(env, patterns[patternIndex].stepCount));
+    Napi::Array steps = Napi::Array::New(env);
+    for (uint32_t i = 0; i < patterns[patternIndex].stepCount; i++) {
+        Napi::Array voices = Napi::Array::New(env);
+        for (uint32_t j = 0; j < MAX_VOICES_IN_PATTERN; j++) {
+            Napi::Object voice = Napi::Object::New(env);
+            voice.Set("note", Napi::Number::New(env, patterns[patternIndex].steps[j][i].note));
+            voice.Set("velocity", Napi::Number::New(env, patterns[patternIndex].steps[j][i].velocity));
+            voice.Set("tie", Napi::Boolean::New(env, patterns[patternIndex].steps[j][i].tie));
+            voices.Set(j, voice);
+        }
+        steps.Set(i, voices);
+    }
+    obj.Set("steps", steps);
+    return obj;
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
@@ -179,6 +210,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "setPatternLength"), Napi::Function::New(env, setPatternLength));
     exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
     exports.Set(Napi::String::New(env, "setPatternStep"), Napi::Function::New(env, setPatternStep));
+    exports.Set(Napi::String::New(env, "getPattern"), Napi::Function::New(env, getPattern));
     return exports;
 }
 

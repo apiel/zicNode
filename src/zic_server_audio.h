@@ -24,7 +24,6 @@ class Zic_Server_Audio {
 protected:
     RtAudio::StreamOptions options;
     RtAudio::StreamParameters audioParams;
-    // double* data;
 
     Zic_Server_Audio()
     {
@@ -50,7 +49,6 @@ public:
         unsigned int bufferFrames = APP_AUDIO_CHUNK;
         audioParams.deviceId = deviceId;
         audioParams.nChannels = APP_CHANNELS;
-        // data = (double*)calloc(audioParams.nChannels, sizeof(double));
         try {
             audio.openStream(&audioParams, NULL, FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback);
             audio.startStream();
