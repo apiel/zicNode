@@ -16,10 +16,11 @@ interface AudioDeviceInfo {
 
 export const getAudoDeviceInfo: () => AudioDeviceInfo[] = bindings('zic').getAudoDeviceInfo;
 
-// export const asyncStart: (deviceId: number, cb: (err: any, result: any) => void) => void = bindings('zic').start;
-// export const start = promisify(asyncStart);
+export const asyncStart: (deviceId: number, cb: (err: any, result: any) => void) => void = bindings('zic').asyncStart;
+export const promiseStart = promisify(asyncStart);
 
 export const start: (deviceId: number) => void = bindings('zic').start;
+export const safeStart: (cb: () => void, deviceId: number) => void = bindings('zic').safeStart;
 
 export const getBpm: () => number = bindings('zic').getBpm;
 export const setBpm: (bpm: number) => void = bindings('zic').setBpm;

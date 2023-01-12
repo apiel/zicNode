@@ -1,4 +1,4 @@
-import { getAudoDeviceInfo, getBpm, setBpm, start } from './lib';
+import { getAudoDeviceInfo, getBpm, safeStart, setBpm, start, promiseStart } from './lib';
 
 console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
@@ -8,17 +8,21 @@ console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 // setBpm(120);
 // console.log('New Bpm', getBpm());
 
-// https://stackoverflow.com/questions/58960713/how-to-use-napi-threadsafe-function-for-nodejs-native-addon
-// https://github.com/nodejs/node-addon-api/blob/main/doc/threadsafe_function.md
-
+// Using Napi::AsyncWorker
 // async function main() {
-//     const result = await start(123);
+//     const result = await promiseStart(123);
 //     console.log('promise result', result);
 // }
 // main();
 
-start(123);
+// Using synchronous Napi::Function
+// start(123);
+// setInterval(() => {
+//     // keep alive
+// }, 1000);
 
-setInterval(() => {
-    // keep alive
-}, 1000);
+// Using Napi::ThreadSafeFunction
+safeStart((...values) => { console.log('Thread safe callback', values); }, 123);
+
+// console.log('next Bpm', getBpm());
+

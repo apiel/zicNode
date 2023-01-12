@@ -63,10 +63,13 @@ public:
             e.printMessage();
             return;
         }
+    }
 
-        // while (audio.isStreamRunning() == true) {
-        //     usleep(100000);
-        // }
+    void keepAlive()
+    {
+        while (audio.isStreamRunning() == true) {
+            usleep(100000);
+        }
     }
 };
 
