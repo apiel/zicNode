@@ -19,3 +19,5 @@ export const stop: () => void = bindings('zic').stop;
 export const isAudioRunning: () => boolean = bindings('zic').isAudioRunning;
 export const getBpm: () => number = bindings('zic').getBpm;
 export const setBpm: (bpm: number) => void = bindings('zic').setBpm;
+export const setPatternLength: (index: number, length: number) => void = bindings('zic').setPatternLength;
+export const getPatternLength: (index: number) => number = bindings('zic').getPatternLength;

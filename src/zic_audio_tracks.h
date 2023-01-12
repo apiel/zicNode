@@ -102,25 +102,6 @@ public:
         }
         delete[] buffer;
     }
-
-    // void togglePlay()
-    // {
-    //     for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-    //         tracks[i]->looper.togglePlay();
-    //     }
-    // }
-
-    // void reset()
-    // {
-    //     for (uint8_t i = 0; i < TRACK_COUNT; i++) {
-    //         tracks[i]->looper.reset();
-    //     }
-    // }
-
-    // bool isPlaying()
-    // {
-    //     return tracks[0]->looper.isPlaying();
-    // }
 };
 
 #endif

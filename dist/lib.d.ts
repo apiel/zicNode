@@ -16,5 +16,7 @@ export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;
 export declare const getBpm: () => number;
 export declare const setBpm: (bpm: number) => void;
+export declare const setPatternLength: (index: number, length: number) => void;
+export declare const getPatternLength: (index: number) => number;
 export {};
 //# sourceMappingURL=lib.d.ts.map

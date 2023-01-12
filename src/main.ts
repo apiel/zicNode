@@ -1,5 +1,5 @@
 import { exit } from 'process';
-import { getAudoDeviceInfo, getBpm, isAudioRunning, setBpm, start } from './lib';
+import { getAudoDeviceInfo, getBpm, getPatternLength, isAudioRunning, setBpm, setPatternLength, start } from './lib';
 
 console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
@@ -12,6 +12,14 @@ console.log('New Bpm', getBpm());
 start(123);
 
 console.log('next Bpm', getBpm());
+
+setPatternLength(0, 16);
+console.log('pattern length', getPatternLength(0));
+try {
+    console.log('pattern length', getPatternLength(2000));    
+} catch (error) {
+    console.log('error', error);
+}
 
 setInterval(() => {
     if (!isAudioRunning()) {

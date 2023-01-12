@@ -3,6 +3,11 @@
 
 #include "zic_server_audio.h"
 
+Napi::Value error(Napi::Env& env, const std::string& message) {
+    Napi::TypeError::New(env, message).ThrowAsJavaScriptException();
+    return env.Undefined();
+}
+
 Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -51,20 +56,27 @@ Napi::Value setBpm(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
     if (info.Length() < 1 || !info[0].IsNumber()) {
-        throw Napi::Error::New(env, "Missing bpm arguments");
+        return error(env, "Missing bpm arguments");
     }
     Zic_Server::getInstance().tempo.set(info[0].As<Napi::Number>().Uint32Value());
     return env.Undefined();
 }
 
+// Might want to be able to send events from server
+// https://github.com/NickNaso/addon-event-emitter/blob/master/00/index.js
+//
+// or we might need to create a thread safe function and use callbacks
+// https://github.com/nodejs/node-addon-api/blob/main/doc/threadsafe_function.md
+// maybe we creating a keepAlive function where tsfn.BlockingCall( value, callback );
+// would be called from anywhere...
 Napi::Value start(const Napi::CallbackInfo& info)
 {
     RtAudio audio;
+    Napi::Env env = info.Env();
 
     unsigned int deviceCount = audio.getDeviceCount();
     if (deviceCount < 1) {
-        throw Napi::Error::New(info.Env(), "No audio devices found");
-        return info.Env().Undefined();
+        return error(env, "No audio devices found");
     }
 
     unsigned int deviceId = 0;
@@ -78,7 +90,7 @@ Napi::Value start(const Napi::CallbackInfo& info)
     }
 
     Zic_Server_Audio::getInstance().initAudio(deviceId);
-    return info.Env().Undefined();
+    return env.Undefined();
 }
 
 Napi::Boolean isAudioRunning(const Napi::CallbackInfo& info)
@@ -93,6 +105,36 @@ Napi::Value stop(const Napi::CallbackInfo& info)
     return info.Env().Undefined();
 }
 
+Napi::Value setPatternLength(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Missing pattern index arguments");
+    } else if (info.Length() < 2 || !info[1].IsNumber()) {
+        return error(env, "Missing pattern length arguments");
+    }
+    uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
+    uint32_t patternLength = info[1].As<Napi::Number>().Uint32Value();
+    if (patternIndex > ZIC_PATTERN_COUNT - 1) {
+        return error(env, "Pattern index out of range");
+    }
+    patterns[patternIndex].stepCount = patternLength;
+    return env.Undefined();
+}
+
+Napi::Value getPatternLength(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Missing pattern index arguments");
+    }
+    uint32_t patternIndex = info[0].As<Napi::Number>().Uint32Value();
+    if (patternIndex > ZIC_PATTERN_COUNT - 1) {
+        return error(env, "Pattern index out of range");
+    }
+    return Napi::Number::New(env, patterns[patternIndex].stepCount);
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
@@ -101,6 +143,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));
     exports.Set(Napi::String::New(env, "getBpm"), Napi::Function::New(env, getBpm));
     exports.Set(Napi::String::New(env, "setBpm"), Napi::Function::New(env, setBpm));
+    exports.Set(Napi::String::New(env, "setPatternLength"), Napi::Function::New(env, setPatternLength));
+    exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
     return exports;
 }
 
