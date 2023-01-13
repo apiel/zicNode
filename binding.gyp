@@ -14,7 +14,7 @@
         # '-DPDINSTANCE'
         # '<!@(pkg-config rtaudio --cflags --libs)'
       ],
-      "sources": [ "src/zic.cc" ],
+      "sources": [ "src/zic_node.cc" ],
       "include_dirs": [
         "zic",
         "<!@(node -p \"require('node-addon-api').include\")",
