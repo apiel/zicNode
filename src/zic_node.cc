@@ -114,7 +114,7 @@ Napi::Value setPatternLength(const Napi::CallbackInfo& info)
         if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsNumber()) {
             throw Napi::Error::New(env, "Invalid arguments: patternIndex, length");
         }
-        uint32_t patternIndex = getPatternIndex(info, 0);
+        uint32_t patternIndex = argPatternIndex(info, 0);
         uint32_t patternLength = info[1].As<Napi::Number>().Uint32Value();
         patterns[patternIndex].stepCount = patternLength;
         return env.Undefined();
@@ -131,7 +131,7 @@ Napi::Value getPatternLength(const Napi::CallbackInfo& info)
         if (info.Length() < 1) {
             throw Napi::Error::New(env, "Missing pattern index arguments");
         }
-        uint32_t patternIndex = getPatternIndex(info, 0);
+        uint32_t patternIndex = argPatternIndex(info, 0);
         return Napi::Number::New(env, patterns[patternIndex].stepCount);
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();
@@ -147,14 +147,14 @@ Napi::Value setPatternStep(const Napi::CallbackInfo& info)
             || !info[3].IsNumber() || !info[4].IsBoolean() || (info.Length() > 5 && !info[5].IsNumber())) {
             throw Napi::Error::New(env, "Invalid arguments: patternIndex, stepIndex, note, velocity, tie, (voice=0)");
         }
-        uint32_t patternIndex = getPatternIndex(info, 0);
-        uint32_t stepIndex = getStepIndex(info, 1);
-        uint32_t note = getNote(info, 2);
+        uint32_t patternIndex = argPatternIndex(info, 0);
+        uint32_t stepIndex = argStepIndex(info, 1);
+        uint32_t note = argNote(info, 2);
         uint32_t velocity = info[3].As<Napi::Number>().Uint32Value();
         bool tie = info[4].As<Napi::Boolean>().Value();
         uint32_t voice = 0;
         if (info.Length() > 5) {
-            voice = getVoiceIndex(info, 5);
+            voice = argVoiceIndex(info, 5);
         }
         Zic_Seq_Step& step = patterns[patternIndex].steps[voice][stepIndex];
         step.note = note;
@@ -170,7 +170,7 @@ Napi::Value getPattern(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
     try {
-        uint32_t patternIndex = getPatternIndex(info, 0);
+        uint32_t patternIndex = argPatternIndex(info, 0);
         Napi::Object obj = Napi::Object::New(env);
         obj.Set("stepCount", Napi::Number::New(env, patterns[patternIndex].stepCount));
         Napi::Array steps = Napi::Array::New(env);
@@ -202,16 +202,21 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
     try {
         if (info.Length() < 4 || !info[0].IsNumber() || !info[1].IsNumber() || !info[2].IsNumber()
             || !info[3].IsBoolean() || (info.Length() > 4 && !info[4].IsBoolean())) {
-            throw Napi::Error::New(env, "Invalid arguments: trackIndex, patternIndex, detune, playing, (next=false)");
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, patternIndex, detune, playing, (next=true)");
         }
-        uint32_t trackIndex = info[0].As<Napi::Number>().Uint32Value();
-        uint32_t patternIndex = info[1].As<Napi::Number>().Uint32Value();
+        uint32_t trackIndex = argTrackIndex(info, 0);
+        uint32_t patternIndex = argPatternIndex(info, 1);
         uint32_t detune = info[2].As<Napi::Number>().Uint32Value();
         bool playing = info[3].As<Napi::Boolean>().Value();
-        bool next = false;
+        bool next = true;
         if (info.Length() > 4) {
             next = info[4].As<Napi::Boolean>().Value();
         }
+        Zic_Seq_Loop& looper = Zic_Audio_Tracks::getInstance().tracks[trackIndex]->looper;
+        Zic_Seq_LoopState& state = next ? looper.nextState : looper.state;
+        state.pattern = &patterns[patternIndex];
+        state.detune = detune;
+        state.playing = playing;
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();
     }
@@ -230,6 +235,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
     exports.Set(Napi::String::New(env, "setPatternStep"), Napi::Function::New(env, setPatternStep));
     exports.Set(Napi::String::New(env, "getPattern"), Napi::Function::New(env, getPattern));
+    exports.Set(Napi::String::New(env, "setSequencerState"), Napi::Function::New(env, setSequencerState));
     return exports;
 }
 

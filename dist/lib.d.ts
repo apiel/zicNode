@@ -25,5 +25,6 @@ interface PatternStep {
     tie: boolean;
 }
 export declare const getPattern: (index: number) => PatternStep[][];
+export declare const setSequencerState: (trackIndex: number, patternIndex: number, detune: number, playing: boolean, next?: boolean) => void;
 export {};
 //# sourceMappingURL=lib.d.ts.map

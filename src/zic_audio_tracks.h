@@ -39,12 +39,6 @@ protected:
         mixerDivider = 1.0f / TRACK_AUDIO_COUNT;
         // APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
         //     TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
-
-        track0.looper.nextState.pattern = &patterns[0];
-        track0.looper.nextState.play();
-
-        track1.looper.nextState.pattern = &patterns[1];
-        track1.looper.nextState.play();
     }
 
 public:

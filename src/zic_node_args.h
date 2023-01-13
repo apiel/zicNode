@@ -5,56 +5,42 @@
 
 #include "zic_server_audio.h"
 
-uint32_t getPatternIndex(const Napi::CallbackInfo& info, uint32_t pos)
+uint32_t getArgsInRange(const Napi::CallbackInfo& info, uint32_t pos, const std::string& name, uint32_t min, uint32_t max)
 {
     Napi::Env env = info.Env();
     if (!info[pos].IsNumber()) {
-        throw Napi::Error::New(env, "Pattern index must be a number");
+        throw Napi::Error::New(env, name + " must be a number");
     }
-    uint32_t patternIndex = info[pos].As<Napi::Number>().Uint32Value();
-    if (patternIndex > ZIC_PATTERN_COUNT - 1) {
-        throw Napi::Error::New(env, "Pattern index out of range, max: " + std::to_string(ZIC_PATTERN_COUNT - 1));
+    uint32_t value = info[pos].As<Napi::Number>().Uint32Value();
+    if (value < min || value > max) {
+        throw Napi::Error::New(env, name + " out of range , min: " + std::to_string(min) + ", max: " + std::to_string(max));
     }
-    return patternIndex;
+    return value;
 }
 
-uint32_t getStepIndex(const Napi::CallbackInfo& info, uint32_t pos)
+uint32_t argPatternIndex(const Napi::CallbackInfo& info, uint32_t pos)
 {
-    Napi::Env env = info.Env();
-    if (!info[pos].IsNumber()) {
-        throw Napi::Error::New(env, "Step index must be a number");
-    }
-    uint32_t stepIndex = info[pos].As<Napi::Number>().Uint32Value();
-    if (stepIndex > MAX_STEPS_IN_PATTERN - 1) {
-        throw Napi::Error::New(env, "Step index out of range, max: " + std::to_string(MAX_STEPS_IN_PATTERN - 1));
-    }
-    return stepIndex;
+    return getArgsInRange(info, pos, "Pattern index", 0, ZIC_PATTERN_COUNT - 1);
 }
 
-uint32_t getVoiceIndex(const Napi::CallbackInfo& info, uint32_t pos)
+uint32_t argStepIndex(const Napi::CallbackInfo& info, uint32_t pos)
 {
-    Napi::Env env = info.Env();
-    if (!info[pos].IsNumber()) {
-        throw Napi::Error::New(env, "Voice index must be a number");
-    }
-    uint32_t voiceIndex = info[pos].As<Napi::Number>().Uint32Value();
-    if (voiceIndex > MAX_VOICES_IN_PATTERN - 1) {
-        throw Napi::Error::New(env, "Voice index out of range, max: " + std::to_string(MAX_VOICES_IN_PATTERN - 1));
-    }
-    return voiceIndex;
+    return getArgsInRange(info, pos, "Step index", 0, MAX_STEPS_IN_PATTERN - 1);
 }
 
-uint32_t getNote(const Napi::CallbackInfo& info, uint32_t pos)
+uint32_t argVoiceIndex(const Napi::CallbackInfo& info, uint32_t pos)
 {
-    Napi::Env env = info.Env();
-    if (!info[pos].IsNumber()) {
-        throw Napi::Error::New(env, "Note must be a number");
-    }
-    uint32_t note = info[pos].As<Napi::Number>().Uint32Value();
-    if (note > Zic::_NOTE_END || note < Zic::_NOTE_START) {
-        throw Napi::Error::New(env, "Note out of range (" + std::to_string(Zic::_NOTE_START) + "-" + std::to_string(Zic::_NOTE_END) + ")");
-    }
-    return note;
+    return getArgsInRange(info, pos, "Voice index", 0, MAX_VOICES_IN_PATTERN - 1);
+}
+
+uint32_t argTrackIndex(const Napi::CallbackInfo& info, uint32_t pos)
+{
+    return getArgsInRange(info, pos, "Track index", 0, TRACK_COUNT - 1);
+}
+
+uint32_t argNote(const Napi::CallbackInfo& info, uint32_t pos)
+{
+    return getArgsInRange(info, pos, "Note", Zic::_NOTE_START, Zic::_NOTE_END);
 }
 
 #endif

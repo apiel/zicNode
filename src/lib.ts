@@ -37,3 +37,10 @@ interface PatternStep {
     tie: boolean;
 }
 export const getPattern: (index: number) => PatternStep[][] = bindings('zic').getPattern;
+export const setSequencerState: (
+    trackIndex: number,
+    patternIndex: number,
+    detune: number,
+    playing: boolean,
+    next?: boolean, // false for current playing pattern, true for up coming pattern (wait till the end of it)
+) => void = bindings('zic').setSequencerState;
