@@ -1,5 +1,5 @@
 import { exit } from 'process';
-import { getAudoDeviceInfo, getBpm, getPattern, getPatternLength, isAudioRunning, setBpm, setPatternLength, setPatternStep, setSequencerState, start } from './lib';
+import { getAudoDeviceInfo, getBpm, getPattern, getPatternLength, getSequencerStates, isAudioRunning, setBpm, setPatternLength, setPatternStep, setSequencerState, start } from './lib';
 
 console.log('Zic node');
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
@@ -22,6 +22,7 @@ setPatternStep(1, 2, 70, 100, false);
 setPatternStep(1, 6, 80, 100, false);
 console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(1, 1, 0, true);
+console.log('Get sequencer state track 2', getSequencerStates(1));
 
 try {
     console.log('pattern length', getPatternLength(2000));    
@@ -35,3 +36,4 @@ setInterval(() => {
     }
     console.log('keep alive');
 }, 1000);
+

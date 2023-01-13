@@ -13,6 +13,7 @@ class Zic_Server {
 protected:
     Zic_Server()
     {
+        zic_state_init();
         tracks = &Zic_Audio_Tracks::getInstance();
         Zic_Midi::getInstance();
     }
