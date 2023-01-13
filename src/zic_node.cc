@@ -294,6 +294,28 @@ Napi::Value trackNoteOff(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Value trackCc(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 3 || !info[0].IsNumber() || !info[1].IsNumber()
+            || !info[2].IsNumber() || (info.Length() > 3 && !info[3].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, cc, value, (voice=0)");
+        }
+        uint32_t trackIndex = argTrackIndex(info, 0);
+        uint32_t cc = info[1].As<Napi::Number>().Uint32Value();
+        uint32_t value = info[2].As<Napi::Number>().Uint32Value();
+        uint32_t voice = 0;
+        if (info.Length() > 3) {
+            voice = argVoiceIndex(info, 3);
+        }
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->cc(cc, value, voice);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
@@ -310,6 +332,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getSequencerStates"), Napi::Function::New(env, getSequencerStates));
     exports.Set(Napi::String::New(env, "trackNoteOn"), Napi::Function::New(env, trackNoteOn));
     exports.Set(Napi::String::New(env, "trackNoteOff"), Napi::Function::New(env, trackNoteOff));
+    exports.Set(Napi::String::New(env, "trackCc"), Napi::Function::New(env, trackCc));
     return exports;
 }
 

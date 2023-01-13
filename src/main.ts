@@ -38,11 +38,12 @@ console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(1, 1, 0, true);
 console.log('Get sequencer state track 2', getSequencerStates(1));
 
-try {
-    console.log('pattern length', getPatternLength(2000));
-} catch (error) {
-    console.log('error', error);
-}
+// Test error handling
+// try {
+//     console.log('pattern length', getPatternLength(2000));
+// } catch (error) {
+//     console.log('error', error);
+// }
 
 setInterval(() => {
     if (!isAudioRunning()) {

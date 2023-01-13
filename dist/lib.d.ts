@@ -29,5 +29,6 @@ export declare const setSequencerState: (trackIndex: number, patternIndex: numbe
 export declare const getSequencerStates: (trackIndex: number) => void;
 export declare const trackNoteOn: (trackIndex: number, note: number, velocity: number, voice?: number) => void;
 export declare const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void;
+export declare const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void;
 export {};
 //# sourceMappingURL=lib.d.ts.map

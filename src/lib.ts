@@ -55,3 +55,5 @@ export const trackNoteOn: (
 ) => void = bindings('zic').trackNoteOn;
 export const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void =
     bindings('zic').trackNoteOff;
+export const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void =
+    bindings('zic').trackCc;
