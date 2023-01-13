@@ -57,3 +57,9 @@ export const trackNoteOff: (trackIndex: number, note: number, voice?: number) =>
     bindings('zic').trackNoteOff;
 export const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void =
     bindings('zic').trackCc;
+export const trackSetPath: (
+    trackIndex: number,
+    path: string,
+    pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
+    voice?: number,
+) => void = bindings('zic').trackSetPath;

@@ -22,7 +22,6 @@ public:
         if (!pd.init(0, APP_CHANNELS, SAMPLE_RATE)) {
             APP_LOG("Could not init pd\n");
         }
-        loadPatch();
         pd.setReceiver(&pdObject);
         pd.setMidiReceiver(&pdObject);
     }
@@ -55,37 +54,20 @@ public:
         pd.sendControlChange(voice + 1, num, val);
     }
 
-    void loadPatch()
+    void setPath(const char* path, uint8_t num = 0, uint8_t voice = 0) override
     {
-        // TODO skip if different... valid if last one
-        // or if changing of row
-        if (patch.isValid()) {
-            pd.closePatch(patch);
+        switch (num) {
+        case 0:
+            // TODO skip if different... valid if last one
+            // or if changing of row
+            if (patch.isValid()) {
+                pd.closePatch(patch);
+            }
+            pd.computeAudio(true);
+            patch = pd.openPatch("main.pd", path);
+            // FIXME if patch does not exist then crash!!
+            break;
         }
-
-        // uint8_t currentState = looper.getCurrentComponent();
-        // if (state[currentState].isPatchEmpty()) {
-        //     pd.computeAudio(false);
-        //     return;
-        // }
-
-        char path[256];
-        // sprintf(path, "%s/%s", getPatchDirectory(), state[currentState].patchFilename);
-        if (id == 1) {
-            sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
-        } else {
-            sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
-        }
-        // sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth");
-        // sprintf(path, "/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick");
-        pd.computeAudio(true);
-        patch = pd.openPatch("main.pd", path);
-        // patch = pd.openPatch("main.pd", "instruments/pd/02_kick");
-        // pd.openPatch("main.pd", "instruments/pd/01_synth");
-
-        // FIXME if patch does not exist then crash!!
-
-        // TODO load preset!!
     }
 };
 

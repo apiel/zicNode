@@ -13,6 +13,7 @@ import {
     start,
     trackNoteOff,
     trackNoteOn,
+    trackSetPath,
 } from './lib';
 
 console.log('Zic node');
@@ -25,6 +26,8 @@ console.log('New Bpm', getBpm());
 start(123);
 
 console.log('next Bpm', getBpm());
+
+trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick')
 
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));

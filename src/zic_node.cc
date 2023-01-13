@@ -316,6 +316,31 @@ Napi::Value trackCc(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Value trackSetPath(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsString()
+            || (info.Length() > 2 && !info[2].IsNumber()) || (info.Length() > 3 && !info[3].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, path, (pathId=0), (voice=0)");
+        }
+        uint32_t trackIndex = argTrackIndex(info, 0);
+        std::string path = info[1].As<Napi::String>().Utf8Value();
+        uint32_t pathId = 0;
+        if (info.Length() > 2) {
+            pathId = info[2].As<Napi::Number>().Uint32Value();
+        }
+        uint32_t voice = 0;
+        if (info.Length() > 3) {
+            voice = argVoiceIndex(info, 3);
+        }
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->setPath(path.c_str(), pathId, voice);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
@@ -333,6 +358,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "trackNoteOn"), Napi::Function::New(env, trackNoteOn));
     exports.Set(Napi::String::New(env, "trackNoteOff"), Napi::Function::New(env, trackNoteOff));
     exports.Set(Napi::String::New(env, "trackCc"), Napi::Function::New(env, trackCc));
+    exports.Set(Napi::String::New(env, "trackSetPath"), Napi::Function::New(env, trackSetPath));
     return exports;
 }
 
