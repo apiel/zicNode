@@ -251,6 +251,49 @@ Napi::Value getSequencerStates(const Napi::CallbackInfo& info)
     }
 }
 
+Napi::Value trackNoteOn(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 3 || !info[0].IsNumber() || !info[1].IsNumber()
+            || !info[2].IsNumber() || (info.Length() > 3 && !info[3].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, note, velocity, (voice=0)");
+        }
+        uint32_t trackIndex = argTrackIndex(info, 0);
+        uint32_t note = argNote(info, 1);
+        uint32_t velocity = info[2].As<Napi::Number>().Uint32Value();
+        uint32_t voice = 0;
+        if (info.Length() > 3) {
+            voice = argVoiceIndex(info, 3);
+        }
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->noteOn(note, velocity, voice);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
+Napi::Value trackNoteOff(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsNumber()
+            || (info.Length() > 2 && !info[2].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, note, (voice=0)");
+        }
+        uint32_t trackIndex = argTrackIndex(info, 0);
+        uint32_t note = argNote(info, 1);
+        uint32_t voice = 0;
+        if (info.Length() > 2) {
+            voice = argVoiceIndex(info, 2);
+        }
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->noteOff(note, voice);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
@@ -265,6 +308,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getPattern"), Napi::Function::New(env, getPattern));
     exports.Set(Napi::String::New(env, "setSequencerState"), Napi::Function::New(env, setSequencerState));
     exports.Set(Napi::String::New(env, "getSequencerStates"), Napi::Function::New(env, getSequencerStates));
+    exports.Set(Napi::String::New(env, "trackNoteOn"), Napi::Function::New(env, trackNoteOn));
+    exports.Set(Napi::String::New(env, "trackNoteOff"), Napi::Function::New(env, trackNoteOff));
     return exports;
 }
 

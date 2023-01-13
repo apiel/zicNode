@@ -45,3 +45,13 @@ export const setSequencerState: (
     next?: boolean, // false for current playing pattern, true for up coming pattern (wait till the end of it)
 ) => void = bindings('zic').setSequencerState;
 export const getSequencerStates: (trackIndex: number) => void = bindings('zic').getSequencerStates;
+
+// trackIndex, note, velocity, (voice=0)
+export const trackNoteOn: (
+    trackIndex: number,
+    note: number,
+    velocity: number,
+    voice?: number,
+) => void = bindings('zic').trackNoteOn;
+export const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void =
+    bindings('zic').trackNoteOff;
