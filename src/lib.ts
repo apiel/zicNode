@@ -1,5 +1,7 @@
 import bindings from 'bindings';
 
+const zic = bindings('zic');
+
 interface AudioDeviceInfo {
     probed: boolean; // true if the device capabilities were successfully probed.
     name: string; // Character string device identifier.
@@ -13,15 +15,14 @@ interface AudioDeviceInfo {
     nativeFormats: number; // Bit mask of supported data formats.
 }
 
-export const getAudoDeviceInfo: () => AudioDeviceInfo[] = bindings('zic').getAudoDeviceInfo;
-export const start: (deviceId: number) => void = bindings('zic').start;
-export const stop: () => void = bindings('zic').stop;
-export const isAudioRunning: () => boolean = bindings('zic').isAudioRunning;
-export const getBpm: () => number = bindings('zic').getBpm;
-export const setBpm: (bpm: number) => void = bindings('zic').setBpm;
-export const setPatternLength: (index: number, length: number) => void =
-    bindings('zic').setPatternLength;
-export const getPatternLength: (index: number) => number = bindings('zic').getPatternLength;
+export const getAudoDeviceInfo: () => AudioDeviceInfo[] = zic.getAudoDeviceInfo;
+export const start: (deviceId: number) => void = zic.start;
+export const stop: () => void = zic.stop;
+export const isAudioRunning: () => boolean = zic.isAudioRunning;
+export const getBpm: () => number = zic.getBpm;
+export const setBpm: (bpm: number) => void = zic.setBpm;
+export const setPatternLength: (index: number, length: number) => void = zic.setPatternLength;
+export const getPatternLength: (index: number) => number = zic.getPatternLength;
 export const setPatternStep: (
     index: number,
     stepIndex: number,
@@ -29,22 +30,22 @@ export const setPatternStep: (
     velocity: number,
     tie: boolean,
     voice?: number,
-) => void = bindings('zic').setPatternStep;
+) => void = zic.setPatternStep;
 
 interface PatternStep {
     note: number;
     velocity: number;
     tie: boolean;
 }
-export const getPattern: (index: number) => PatternStep[][] = bindings('zic').getPattern;
+export const getPattern: (index: number) => PatternStep[][] = zic.getPattern;
 export const setSequencerState: (
     trackIndex: number,
     patternIndex: number,
     detune: number,
     playing: boolean,
     next?: boolean, // false for current playing pattern, true for up coming pattern (wait till the end of it)
-) => void = bindings('zic').setSequencerState;
-export const getSequencerStates: (trackIndex: number) => void = bindings('zic').getSequencerStates;
+) => void = zic.setSequencerState;
+export const getSequencerStates: (trackIndex: number) => void = zic.getSequencerStates;
 
 // trackIndex, note, velocity, (voice=0)
 export const trackNoteOn: (
@@ -52,11 +53,11 @@ export const trackNoteOn: (
     note: number,
     velocity: number,
     voice?: number,
-) => void = bindings('zic').trackNoteOn;
+) => void = zic.trackNoteOn;
 export const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void =
-    bindings('zic').trackNoteOff;
+    zic.trackNoteOff;
 export const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void =
-    bindings('zic').trackCc;
+    zic.trackCc;
 
 export enum PdPathIds {
     Patch = 0,
@@ -73,4 +74,4 @@ export const trackSetPath: (
     path: string,
     pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
     voice?: number,
-) => void = bindings('zic').trackSetPath;
+) => void = zic.trackSetPath;
