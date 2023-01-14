@@ -47,8 +47,7 @@ public:
     uint8_t TRACK_AUDIO_COUNT = 0;
     uint8_t TRACK_MIDI_COUNT = 0;
 
-    Zic_Audio_TrackPd track0; // TODO fix puredata multi instance
-    // Zic_Audio_TrackSynth track0;
+    Zic_Audio_TrackPd track0; // TODO fix puredata multi instance, right now having issue with nodejs thread and puredata also mixing instances...
     Zic_Audio_TrackSynth track1, track2, track3;
 
     Zic_Audio_TrackMidi track4, track5, track6, track7;

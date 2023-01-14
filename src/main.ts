@@ -11,6 +11,7 @@ import {
     setPatternStep,
     setSequencerState,
     start,
+    SynthPathIds,
     trackNoteOff,
     trackNoteOn,
     trackSetPath,
@@ -27,7 +28,11 @@ start(123);
 
 console.log('next Bpm', getBpm());
 
-trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick')
+trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick');
+
+trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
+trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
+trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
 
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));

@@ -32,7 +32,6 @@ public:
             buf[i] = synth.sample();
 #if APP_CHANNELS == 2
             // TODO
-            // FIXME
             // or not ?? if sample is mono, then it's ok
             // but if it's stereo, then it's not :p
             buf[i + 1] = buf[i];
@@ -79,6 +78,21 @@ public:
         } else if (num == 17) {
 
         } else if (num == 18) {
+        }
+    }
+
+    void setPath(const char* path, uint8_t num = 0, uint8_t voice = 0)
+    {
+        switch (num) {
+        case 0:
+            synth.osc.open(path);
+            break;
+        case 1:
+            synth.lfo[0].open(path);
+            break;
+        case 2:
+            synth.lfo[1].open(path);
+            break;
         }
     }
 };

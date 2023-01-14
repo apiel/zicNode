@@ -57,6 +57,17 @@ export const trackNoteOff: (trackIndex: number, note: number, voice?: number) =>
     bindings('zic').trackNoteOff;
 export const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void =
     bindings('zic').trackCc;
+
+export enum PdPathIds {
+    Patch = 0,
+}
+
+export enum SynthPathIds {
+    Osc = 0,
+    Lfo1 = 1,
+    Lfo2 = 2,
+}
+
 export const trackSetPath: (
     trackIndex: number,
     path: string,

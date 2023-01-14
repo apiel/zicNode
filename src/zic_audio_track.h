@@ -21,6 +21,8 @@ public:
         id = _id;
     }
 
+    // TODO might want to implement more midi interface (but is it really needed?)
+    // or make more generic varaible setter like setString, setInt, setFloat, setBool
     virtual void noteOn(uint8_t note, uint8_t velocity, uint8_t voice) = 0;
     virtual void noteOff(uint8_t note, uint8_t voice) = 0;
     virtual void cc(uint8_t num, uint8_t val, uint8_t voice) { }
