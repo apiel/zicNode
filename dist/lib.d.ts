@@ -1,3 +1,10 @@
+export declare const PATTERN_COUNT: number;
+export declare const MAX_STEPS_IN_PATTERN: number;
+export declare const MAX_VOICES_IN_PATTERN: number;
+export declare const TRACK_COUNT: number;
+export declare const SAMPLE_RATE: number;
+export declare const NOTE_START: number;
+export declare const NOTE_END: number;
 interface AudioDeviceInfo {
     probed: boolean;
     name: string;

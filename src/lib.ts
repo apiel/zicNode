@@ -2,6 +2,14 @@ import bindings from 'bindings';
 
 const zic = bindings('zic');
 
+export const PATTERN_COUNT: number = zic.PATTERN_COUNT;
+export const MAX_STEPS_IN_PATTERN: number = zic.MAX_STEPS_IN_PATTERN;
+export const MAX_VOICES_IN_PATTERN: number = zic.MAX_VOICES_IN_PATTERN;
+export const TRACK_COUNT: number = zic.TRACK_COUNT;
+export const SAMPLE_RATE: number = zic.SAMPLE_RATE;
+export const NOTE_START: number = zic.NOTE_START;
+export const NOTE_END: number = zic.NOTE_END;
+
 interface AudioDeviceInfo {
     probed: boolean; // true if the device capabilities were successfully probed.
     name: string; // Character string device identifier.

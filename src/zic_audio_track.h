@@ -7,7 +7,7 @@
 
 class Zic_Audio_Track {
 protected:
-    Zic_Seq_Step* stepOff[VOICE_COUNT];
+    Zic_Seq_Step* stepOff[MAX_VOICES_IN_PATTERN];
 
 public:
     uint8_t id = 0;
@@ -46,7 +46,7 @@ public:
         looper.next();
 
         // TODO need to handle tie
-        for (uint8_t i = 0; i < VOICE_COUNT; i++) {
+        for (uint8_t i = 0; i < MAX_VOICES_IN_PATTERN; i++) {
             if (stepOff[i] && !stepOff[i]->tie) {
                 // printf("note off %d\n", stepOff[i]->note);
                 noteOff(stepOff[i]->note, i);

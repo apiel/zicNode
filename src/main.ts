@@ -15,9 +15,35 @@ import {
     trackNoteOff,
     trackNoteOn,
     trackSetPath,
+    PATTERN_COUNT,
+    MAX_STEPS_IN_PATTERN,
+    MAX_VOICES_IN_PATTERN,
+    TRACK_COUNT,
+    SAMPLE_RATE,
+    NOTE_START,
+    NOTE_END,
 } from './lib';
 
 console.log('Zic node');
+
+// export const PATTERN_COUNT: number = zic.PATTERN_COUNT;
+// export const MAX_STEPS_IN_PATTERN: number = zic.MAX_STEPS_IN_PATTERN;
+// export const MAX_VOICES_IN_PATTERN: number = zic.MAX_VOICES_IN_PATTERN;
+// export const TRACK_COUNT: number = zic.TRACK_COUNT;
+// export const SAMPLE_RATE: number = zic.SAMPLE_RATE;
+// export const NOTE_START: number = zic.NOTE_START;
+// export const NOTE_END: number = zic.NOTE_END;
+
+console.log('DEFINE VAR', {
+    PATTERN_COUNT,
+    MAX_STEPS_IN_PATTERN,
+    MAX_VOICES_IN_PATTERN,
+    TRACK_COUNT,
+    SAMPLE_RATE,
+    NOTE_START,
+    NOTE_END,
+});
+
 console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 
 console.log('Current Bpm', getBpm());

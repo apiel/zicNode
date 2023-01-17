@@ -17,12 +17,4 @@ enum {
     TRACK_COUNT
 };
 
-enum {
-    VOICE_1,
-    VOICE_2,
-    VOICE_3,
-    VOICE_4,
-    VOICE_COUNT
-};
-
 #endif

@@ -343,6 +343,14 @@ Napi::Value trackSetPath(const Napi::CallbackInfo& info)
 
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
+    exports.Set(Napi::String::New(env, "PATTERN_COUNT"), Napi::Number::New(env, ZIC_PATTERN_COUNT));
+    exports.Set(Napi::String::New(env, "MAX_STEPS_IN_PATTERN"), Napi::Number::New(env, MAX_STEPS_IN_PATTERN));
+    exports.Set(Napi::String::New(env, "MAX_VOICES_IN_PATTERN"), Napi::Number::New(env, MAX_VOICES_IN_PATTERN));
+    exports.Set(Napi::String::New(env, "TRACK_COUNT"), Napi::Number::New(env, TRACK_COUNT));
+    exports.Set(Napi::String::New(env, "SAMPLE_RATE"), Napi::Number::New(env, SAMPLE_RATE));
+    exports.Set(Napi::String::New(env, "NOTE_START"), Napi::Number::New(env, Zic::_NOTE_START));
+    exports.Set(Napi::String::New(env, "NOTE_END"), Napi::Number::New(env, Zic::_NOTE_END));
+
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
