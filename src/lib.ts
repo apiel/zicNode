@@ -24,7 +24,7 @@ interface AudioDeviceInfo {
 }
 
 export const getAudoDeviceInfo: () => AudioDeviceInfo[] = zic.getAudoDeviceInfo;
-export const start: (deviceId: number) => void = zic.start;
+export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;
 export const isAudioRunning: () => boolean = zic.isAudioRunning;
 export const getBpm: () => number = zic.getBpm;

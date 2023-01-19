@@ -18,7 +18,7 @@ interface AudioDeviceInfo {
     nativeFormats: number;
 }
 export declare const getAudoDeviceInfo: () => AudioDeviceInfo[];
-export declare const start: (deviceId: number) => void;
+export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;
 export declare const getBpm: () => number;
