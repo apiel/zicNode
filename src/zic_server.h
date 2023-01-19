@@ -33,8 +33,8 @@ public:
     {
         // printf("sample time %ld\n", timeMs());
         // std::cout << "sample time " << timeMs() << std::endl;
-        if (tempo.next(timeMs()))
-        // if (tempo.next()) // Using sample rate instead of time
+        // if (tempo.next(timeMs()))
+        if (tempo.next()) // Using sample rate instead of time
         {
             tracks->next();
         }
