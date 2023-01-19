@@ -53,7 +53,19 @@ export const setSequencerState: (
     playing: boolean,
     next?: boolean, // false for current playing pattern, true for up coming pattern (wait till the end of it)
 ) => void = zic.setSequencerState;
-export const getSequencerStates: (trackIndex: number) => void = zic.getSequencerStates;
+
+export interface SequencerState {
+    patternIndex: number;
+    detune: number;
+    playing: boolean;
+}
+export interface SequencerStates {
+    current: SequencerState;
+    next: SequencerState;
+    currentStep: number;
+}
+export const getSequencerStates: (trackIndex: number) => SequencerStates = zic.getSequencerStates;
+export const getAllSequencerStates: () => SequencerStates[] = zic.getAllSequencerStates;
 
 // trackIndex, note, velocity, (voice=0)
 export const trackNoteOn: (

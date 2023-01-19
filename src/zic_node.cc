@@ -241,6 +241,24 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Object __getSequencerStates(Napi::Env& env, uint32_t trackIndex)
+{
+    Napi::Object states = Napi::Object::New(env);
+    Zic_Seq_Loop& looper = Zic_Audio_Tracks::getInstance().tracks[trackIndex]->looper;
+    Napi::Object state = Napi::Object::New(env);
+    state.Set("patternIndex", looper.state.pattern ? Napi::Number::New(env, looper.state.pattern->id) : env.Null());
+    state.Set("detune", Napi::Number::New(env, looper.state.detune));
+    state.Set("playing", Napi::Boolean::New(env, looper.state.playing));
+    states.Set("current", state);
+    state = Napi::Object::New(env);
+    state.Set("patternIndex", looper.nextState.pattern ? Napi::Number::New(env, looper.nextState.pattern->id) : env.Null());
+    state.Set("detune", Napi::Number::New(env, looper.nextState.detune));
+    state.Set("playing", Napi::Boolean::New(env, looper.nextState.playing));
+    states.Set("next", state);
+    states.Set("currentStep", Napi::Number::New(env, looper.currentStep));
+    return states;
+}
+
 Napi::Value getSequencerStates(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -249,19 +267,21 @@ Napi::Value getSequencerStates(const Napi::CallbackInfo& info)
             throw Napi::Error::New(env, "Missing trackIndex argument.");
         }
         uint32_t trackIndex = argTrackIndex(info, 0);
+        return __getSequencerStates(env, trackIndex);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+}
 
-        Napi::Object states = Napi::Object::New(env);
-        Zic_Seq_Loop& looper = Zic_Audio_Tracks::getInstance().tracks[trackIndex]->looper;
-        Napi::Object state = Napi::Object::New(env);
-        state.Set("patternIndex", looper.state.pattern ? Napi::Number::New(env, looper.state.pattern->id) : env.Null());
-        state.Set("detune", Napi::Number::New(env, looper.state.detune));
-        state.Set("playing", Napi::Boolean::New(env, looper.state.playing));
-        states.Set("current", state);
-        state = Napi::Object::New(env);
-        state.Set("patternIndex", looper.nextState.pattern ? Napi::Number::New(env, looper.nextState.pattern->id) : env.Null());
-        state.Set("detune", Napi::Number::New(env, looper.nextState.detune));
-        state.Set("playing", Napi::Boolean::New(env, looper.nextState.playing));
-        states.Set("next", state);
+Napi::Value getAllSequencerStates(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        Napi::Array states = Napi::Array::New(env);
+        for (uint32_t i = 0; i < TRACK_COUNT; i++) {
+            states.Set(i, __getSequencerStates(env, i));
+        }
         return states;
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();
@@ -381,6 +401,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getPattern"), Napi::Function::New(env, getPattern));
     exports.Set(Napi::String::New(env, "setSequencerState"), Napi::Function::New(env, setSequencerState));
     exports.Set(Napi::String::New(env, "getSequencerStates"), Napi::Function::New(env, getSequencerStates));
+    exports.Set(Napi::String::New(env, "getAllSequencerStates"), Napi::Function::New(env, getAllSequencerStates));
     exports.Set(Napi::String::New(env, "trackNoteOn"), Napi::Function::New(env, trackNoteOn));
     exports.Set(Napi::String::New(env, "trackNoteOff"), Napi::Function::New(env, trackNoteOff));
     exports.Set(Napi::String::New(env, "trackCc"), Napi::Function::New(env, trackCc));

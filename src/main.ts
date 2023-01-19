@@ -74,7 +74,7 @@ setSequencerState(1, 1, 0, true);
 console.log('Get sequencer state track 2', getSequencerStates(1));
 
 setOnBeatCallback(() => {
-    console.log('new beat from C++');
+    console.log('new beat from C++', getSequencerStates(0));
 });
 
 // Test error handling

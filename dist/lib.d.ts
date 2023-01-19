@@ -33,7 +33,18 @@ interface PatternStep {
 }
 export declare const getPattern: (index: number) => PatternStep[][];
 export declare const setSequencerState: (trackIndex: number, patternIndex: number, detune: number, playing: boolean, next?: boolean) => void;
-export declare const getSequencerStates: (trackIndex: number) => void;
+export interface SequencerState {
+    patternIndex: number;
+    detune: number;
+    playing: boolean;
+}
+export interface SequencerStates {
+    current: SequencerState;
+    next: SequencerState;
+    currentStep: number;
+}
+export declare const getSequencerStates: (trackIndex: number) => SequencerStates;
+export declare const getAllSequencerStates: () => SequencerStates[];
 export declare const trackNoteOn: (trackIndex: number, note: number, velocity: number, voice?: number) => void;
 export declare const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void;
 export declare const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void;
