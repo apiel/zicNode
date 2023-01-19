@@ -6,8 +6,8 @@
 
 #include "./zic_audio_tracks.h"
 #include "./zic_midi.h"
-#include "./zic_util.h"
 #include "./zic_state.h"
+#include "./zic_util.h"
 
 class Zic_Server {
 protected:
@@ -20,6 +20,7 @@ protected:
 
 public:
     Zic_Seq_Tempo<> tempo;
+    void (*onBeat)(void) = NULL;
 
     Zic_Audio_Tracks* tracks;
 
@@ -37,6 +38,9 @@ public:
         if (tempo.next()) // Using sample rate instead of time
         {
             tracks->next();
+            if (onBeat) {
+                onBeat();
+            }
         }
         tracks->sample(buf, len);
     }

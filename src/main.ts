@@ -22,6 +22,7 @@ import {
     SAMPLE_RATE,
     NOTE_START,
     NOTE_END,
+    setOnBeatCallback,
 } from './lib';
 
 console.log('Zic node');
@@ -71,6 +72,10 @@ setPatternStep(1, 6, 80, 100, false);
 console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(1, 1, 0, true);
 console.log('Get sequencer state track 2', getSequencerStates(1));
+
+setOnBeatCallback(() => {
+    console.log('new beat from C++');
+});
 
 // Test error handling
 // try {

@@ -10,6 +10,31 @@ Napi::Value error(Napi::Env& env, const std::string& message)
     return env.Undefined();
 }
 
+Napi::ThreadSafeFunction tsfn;
+void onBeat()
+{
+    tsfn.BlockingCall();
+}
+Napi::Value setOnBeatCallback(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() != 1) {
+        return error(env, "Invalid number of arguments: setOnBeatCallback(callback: () => void)");
+    }
+    if (!info[0].IsFunction()) {
+        return error(env, "callback must be a function.");
+    }
+    tsfn = Napi::ThreadSafeFunction::New(
+        env,
+        info[0].As<Napi::Function>(), // JavaScript function called asynchronously
+        "OnBeat", // Name
+        0, // Unlimited queue
+        1);
+    Zic_Server::getInstance().onBeat = onBeat;
+
+    return env.Undefined();
+}
+
 Napi::Array getAudoDeviceInfo(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -367,6 +392,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "trackNoteOff"), Napi::Function::New(env, trackNoteOff));
     exports.Set(Napi::String::New(env, "trackCc"), Napi::Function::New(env, trackCc));
     exports.Set(Napi::String::New(env, "trackSetPath"), Napi::Function::New(env, trackSetPath));
+    exports.Set(Napi::String::New(env, "setOnBeatCallback"), Napi::Function::New(env, setOnBeatCallback));
     return exports;
 }
 

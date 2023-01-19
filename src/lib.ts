@@ -83,3 +83,5 @@ export const trackSetPath: (
     pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
     voice?: number,
 ) => void = zic.trackSetPath;
+
+export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCallback;

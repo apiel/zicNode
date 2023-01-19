@@ -39,6 +39,9 @@ console.log('pattern length', (0, lib_1.getPatternLength)(0));
 console.log('pattern', JSON.stringify((0, lib_1.getPattern)(1), null, 4));
 (0, lib_1.setSequencerState)(1, 1, 0, true);
 console.log('Get sequencer state track 2', (0, lib_1.getSequencerStates)(1));
+(0, lib_1.setOnBeatCallback)(() => {
+    console.log('new beat from C++');
+});
 // Test error handling
 // try {
 //     console.log('pattern length', getPatternLength(2000));

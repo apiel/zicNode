@@ -47,5 +47,6 @@ export declare enum SynthPathIds {
 }
 export declare const trackSetPath: (trackIndex: number, path: string, pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
 voice?: number) => void;
+export declare const setOnBeatCallback: (callback: () => void) => void;
 export {};
 //# sourceMappingURL=lib.d.ts.map
