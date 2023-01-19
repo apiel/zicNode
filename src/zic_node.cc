@@ -11,10 +11,6 @@ Napi::Value error(Napi::Env& env, const std::string& message)
 }
 
 Napi::ThreadSafeFunction tsfn;
-void onBeat()
-{
-    tsfn.BlockingCall();
-}
 Napi::Value setOnBeatCallback(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -24,13 +20,10 @@ Napi::Value setOnBeatCallback(const Napi::CallbackInfo& info)
     if (!info[0].IsFunction()) {
         return error(env, "callback must be a function.");
     }
-    tsfn = Napi::ThreadSafeFunction::New(
-        env,
-        info[0].As<Napi::Function>(), // JavaScript function called asynchronously
-        "OnBeat", // Name
-        0, // Unlimited queue
-        1);
-    Zic_Server::getInstance().onBeat = onBeat;
+    tsfn = Napi::ThreadSafeFunction::New(env, info[0].As<Napi::Function>(), "OnBeat", 0, 1);
+    Zic_Server::getInstance().onBeat = []() -> void {
+        tsfn.BlockingCall();
+    };
 
     return env.Undefined();
 }
