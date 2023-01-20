@@ -32,16 +32,16 @@ console.log('next Bpm', (0, lib_1.getBpm)());
 (0, lib_1.setPatternLength)(0, 4);
 console.log('pattern length', (0, lib_1.getPatternLength)(0));
 (0, lib_1.setPatternStep)(0, 0, 60, 100, false);
-(0, lib_1.setSequencerState)(0, 0, 0, true);
+(0, lib_1.setSequencerState)(0, 0, true);
 (0, lib_1.setPatternLength)(1, 8);
 (0, lib_1.setPatternStep)(1, 2, 70, 100, false);
 (0, lib_1.setPatternStep)(1, 6, 80, 100, false);
 console.log('pattern', JSON.stringify((0, lib_1.getPattern)(1), null, 4));
-(0, lib_1.setSequencerState)(1, 1, 0, true);
+(0, lib_1.setSequencerState)(1, 1, true, { dataId: 23 });
 console.log('Get sequencer state track 2', (0, lib_1.getSequencerStates)(1));
-(0, lib_1.setOnBeatCallback)(() => {
-    console.log('new beat from C++', (0, lib_1.getSequencerStates)(0));
-});
+// setOnBeatCallback(() => {
+//     console.log('new beat from C++', getSequencerStates(0));
+// });
 // Test error handling
 // try {
 //     console.log('pattern length', getPatternLength(2000));

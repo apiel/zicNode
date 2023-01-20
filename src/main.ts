@@ -64,18 +64,18 @@ trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', Syn
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));
 setPatternStep(0, 0, 60, 100, false);
-setSequencerState(0, 0, 0, true);
+setSequencerState(0, 0, true);
 
 setPatternLength(1, 8);
 setPatternStep(1, 2, 70, 100, false);
 setPatternStep(1, 6, 80, 100, false);
 console.log('pattern', JSON.stringify(getPattern(1), null, 4));
-setSequencerState(1, 1, 0, true);
+setSequencerState(1, 1, true, { dataId: 23 });
 console.log('Get sequencer state track 2', getSequencerStates(1));
 
-setOnBeatCallback(() => {
-    console.log('new beat from C++', getSequencerStates(0));
-});
+// setOnBeatCallback(() => {
+//     console.log('new beat from C++', getSequencerStates(0));
+// });
 
 // Test error handling
 // try {
