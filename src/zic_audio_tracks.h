@@ -5,6 +5,7 @@
 #include "./zic_audio_trackMidi.h"
 #include "./zic_audio_trackPd.h"
 #include "./zic_audio_trackSynth.h"
+#include "./zic_audio_trackKick23.h"
 #include "./zic_audio_track_def.h"
 
 #include <stdlib.h>
@@ -49,8 +50,10 @@ public:
     uint8_t TRACK_AUDIO_COUNT = 0;
     uint8_t TRACK_MIDI_COUNT = 0;
 
-    Zic_Audio_TrackPd track0; // TODO fix puredata multi instance, right now having issue with nodejs thread and puredata also mixing instances...
-    Zic_Audio_TrackSynth track1, track2, track3;
+    Zic_Audio_TrackKick23 track0;
+    // Zic_Audio_TrackSynth track0;
+    Zic_Audio_TrackPd track1; // TODO fix puredata multi instance, right now having issue with nodejs thread and puredata also mixing instances...
+    Zic_Audio_TrackSynth track2, track3;
 
     Zic_Audio_TrackMidi track4, track5, track6, track7;
 

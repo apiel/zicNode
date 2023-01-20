@@ -58,11 +58,13 @@ console.log('next Bpm', getBpm());
 
 console.log('master volume', getMasterVolume());
 
-trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick');
+trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
 
-trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
-trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
-trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
+trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
+
+trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
+trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
+trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
 
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));
@@ -72,9 +74,16 @@ setSequencerState(0, 0, true);
 setPatternLength(1, 8);
 setPatternStep(1, 2, 70, 100, false);
 setPatternStep(1, 6, 80, 100, false);
-console.log('pattern', JSON.stringify(getPattern(1), null, 4));
+// console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(1, 1, true, { dataId: 23 });
-console.log('Get sequencer state track 2', getSequencerStates(1));
+// console.log('Get sequencer state track 2', getSequencerStates(1));
+
+setPatternLength(2, 8);
+setPatternStep(2, 2, 75, 100, false);
+setPatternStep(2, 3, 76, 100, false);
+setPatternStep(2, 4, 77, 100, false);
+// console.log('pattern', JSON.stringify(getPattern(1), null, 4));
+setSequencerState(2, 2, true, { dataId: 23 });
 
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));
