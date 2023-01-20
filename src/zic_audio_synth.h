@@ -3,7 +3,7 @@
 
 #include <zic_effect_filter.h>
 #include <zic_mod_adsr.h>
-#include <zic_wavetable_file.h>
+#include <zic_osc_wavetable.h>
 
 #define ZIC_AUDIO_SYNTH_LFO_COUNT 2
 
@@ -68,8 +68,8 @@ protected:
     }
 
 public:
-    Zic_Wavetable_File osc;
-    Zic_Wavetable_File lfo[ZIC_AUDIO_SYNTH_LFO_COUNT];
+    Zic_Osc_Wavetable osc;
+    Zic_Osc_Wavetable lfo[ZIC_AUDIO_SYNTH_LFO_COUNT];
     Zic_Effect_Filter filter;
     Zic_Mod_Adsr adsr;
 
