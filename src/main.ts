@@ -23,6 +23,7 @@ import {
     NOTE_START,
     NOTE_END,
     setOnBeatCallback,
+    getMasterVolume,
 } from './lib';
 
 console.log('Zic node');
@@ -54,6 +55,8 @@ console.log('New Bpm', getBpm());
 start(123);
 
 console.log('next Bpm', getBpm());
+
+console.log('master volume', getMasterVolume());
 
 trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick');
 

@@ -18,6 +18,7 @@
 class Zic_Audio_Tracks {
 protected:
     float mixerDivider = 0.0f;
+    float volume = 1.0f;
 
     Zic_Audio_Tracks()
         : track0(TRACK_1, "Track1")
@@ -36,7 +37,8 @@ protected:
                 TRACK_MIDI_COUNT++;
             }
         }
-        mixerDivider = 1.0f / TRACK_AUDIO_COUNT;
+        // mixerDivider = 1.0f / TRACK_AUDIO_COUNT;
+        setMasterVolume(volume);
         // APP_LOG("TRACK_AUDIO_COUNT: %d, TRACK_MIDI_COUNT %d, mixerDivider %f\n",
         //     TRACK_AUDIO_COUNT, TRACK_MIDI_COUNT, mixerDivider);
     }
@@ -86,6 +88,17 @@ public:
             }
         }
         delete[] buffer;
+    }
+
+    float getMasterVolume()
+    {
+        return volume;
+    }
+
+    void setMasterVolume(float _volume)
+    {
+        volume = range(_volume, 0.0f, 1.0f);
+        mixerDivider = volume / TRACK_AUDIO_COUNT;
     }
 };
 

@@ -391,6 +391,32 @@ Napi::Value trackSetPath(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Value getMasterVolume(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        return Napi::Number::New(env, Zic_Audio_Tracks::getInstance().getMasterVolume());
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+        return env.Undefined();
+    }
+}
+
+Napi::Value setMasterVolume(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 1 || !info[0].IsNumber()) {
+            throw Napi::Error::New(env, "Invalid arguments: volume");
+        }
+        float volume = info[0].As<Napi::Number>().FloatValue();
+        Zic_Audio_Tracks::getInstance().setMasterVolume(volume);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "PATTERN_COUNT"), Napi::Number::New(env, ZIC_PATTERN_COUNT));
@@ -419,6 +445,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "trackCc"), Napi::Function::New(env, trackCc));
     exports.Set(Napi::String::New(env, "trackSetPath"), Napi::Function::New(env, trackSetPath));
     exports.Set(Napi::String::New(env, "setOnBeatCallback"), Napi::Function::New(env, setOnBeatCallback));
+    exports.Set(Napi::String::New(env, "getMasterVolume"), Napi::Function::New(env, getMasterVolume));
+    exports.Set(Napi::String::New(env, "setMasterVolume"), Napi::Function::New(env, setMasterVolume));
     return exports;
 }
 

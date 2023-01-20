@@ -25,6 +25,7 @@ console.log('Current Bpm', (0, lib_1.getBpm)());
 console.log('New Bpm', (0, lib_1.getBpm)());
 (0, lib_1.start)(123);
 console.log('next Bpm', (0, lib_1.getBpm)());
+console.log('master volume', (0, lib_1.getMasterVolume)());
 (0, lib_1.trackSetPath)(0, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/02_kick');
 (0, lib_1.trackSetPath)(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', lib_1.SynthPathIds.Osc);
 (0, lib_1.trackSetPath)(1, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', lib_1.SynthPathIds.Lfo1);

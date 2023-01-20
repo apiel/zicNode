@@ -101,3 +101,6 @@ export const trackSetPath: (
 ) => void = zic.trackSetPath;
 
 export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCallback;
+
+export const getMasterVolume: () => number = zic.getMasterVolume;
+export const setMasterVolume: (volume: number) => void = zic.setMasterVolume;
