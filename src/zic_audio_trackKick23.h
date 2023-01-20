@@ -41,23 +41,39 @@ public:
 
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
-        // if (num == 1) {
-        //     synth.filter.setCutoff(val / 127.0f);
-        // } else if (num == 2) {
-        //     synth.filter.setResonance(val / 127.0f);
-        // } else if (num == 3) {
-        //     synth.filter.setFilterMode(val / 127.0f * Zic_Effect_Filter::FILTER_MODE_COUNT - 1);
-        // } else if (num == 4) {
-        //     synth.osc.morphPct(val / 127.0f);
-        // } else if (num == 5) {
-        //     synth.osc.setFrequency(Zic::NOTE_FREQ[val]);
-        // } else if (num == 6) {
-        //     synth.osc.setAmplitude(val / 127.0f);
-        // } else if (num == 7) {
-        //     synth.adsr.setAttack(pow(val, 2));
-        // } else if (num == 8) {
-        //     synth.adsr.setDecay(val * 10);
-        // }
+        if (num == 1) {
+            kick.updateVolume(val / 127.0f);
+        } else if (num == 2) {
+            kick.morph(val / 127.0f);
+        } else if (num == 3) {
+            kick.updateDuration(val * val / 3); // FIXME
+        } else if (num == 4) {
+            kick.updateFrequency(Zic::NOTE_FREQ[val]); // FIXME to high
+        } else if (num == 5) {
+            kick.envelopAmp[2][0] = val / 127.0f;
+        } else if (num == 6) {
+            kick.envelopAmp[2][1] = val / 127.0f;
+        } else if (num == 7) {
+            kick.envelopAmp[3][0] = val / 127.0f;
+        } else if (num == 8) {
+            kick.envelopAmp[3][1] = val / 127.0f;
+        } else if (num == 9) {
+            kick.envelopAmp[4][0] = val / 127.0f;
+        } else if (num == 10) {
+            kick.envelopAmp[4][1] = val / 127.0f;
+        } else if (num == 11) {
+            kick.envelopFreq[2][0] = val / 127.0f;
+        } else if (num == 12) {
+            kick.envelopFreq[2][1] = val / 127.0f;
+        } else if (num == 13) {
+            kick.envelopFreq[3][0] = val / 127.0f;
+        } else if (num == 14) {
+            kick.envelopFreq[3][1] = val / 127.0f;
+        } else if (num == 15) {
+            kick.envelopFreq[4][0] = val / 127.0f;
+        } else if (num == 16) {
+            kick.envelopFreq[4][1] = val / 127.0f;
+        }
     }
 
     void setPath(const char* path, uint8_t num = 0, uint8_t voice = 0)
