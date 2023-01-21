@@ -42,42 +42,75 @@ public:
 
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
-        if (num == 1) {
-            synth.filter.setCutoff(val / 127.0f);
-        } else if (num == 2) {
-            synth.filter.setResonance(val / 127.0f);
-        } else if (num == 3) {
-            synth.filter.setFilterMode(val / 127.0f * Zic_Effect_Filter::FILTER_MODE_COUNT - 1);
-        } else if (num == 4) {
-            synth.osc.morphPct(val / 127.0f);
-        } else if (num == 5) {
-            synth.osc.setFrequency(Zic::NOTE_FREQ[val]);
-        } else if (num == 6) {
-            synth.osc.setAmplitude(val / 127.0f);
+        if (num == 5) {
+            setFloat(Zic::NOTE_FREQ[val], num, voice);
         } else if (num == 7) {
-            synth.adsr.setAttack(pow(val, 2));
+            setFloat(pow(val, 2), num, voice);
         } else if (num == 8) {
-            synth.adsr.setDecay(val * 10);
+            setFloat(val * 10, num, voice);
         } else if (num == 9) {
-            synth.adsr.setSustain(val * 0.787402);
+            setFloat(val * 0.787402, num, voice);
         } else if (num == 10) {
-            synth.adsr.setRelease(pow(val, 2));
-        } else if (num == 11) {
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_AMP, val / 127.0f);
-        } else if (num == 12) {
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_PITCH, val / 127.0f);
-        } else if (num == 13) {
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_MORPH, val / 127.0f);
-        } else if (num == 14) {
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val / 127.0f);
-        } else if (num == 15) {
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_RES, val / 127.0f);
+            setFloat(pow(val, 2), num, voice);
         } else if (num == 16) {
             // should there be a map table for LFO frequencies?
-            synth.lfo[0].setFrequency(val / 127.0f * 20 + 0.01);
-        } else if (num == 17) {
+            setFloat(val / 127.0f * 20 + 0.01, num, voice);
+        } else {
+            setFloat(val / 127.0f, num, voice);
+        }
+    }
 
-        } else if (num == 18) {
+    void setFloat(float val, uint8_t num = 0, uint8_t voice = 0)
+    {
+        switch (num) {
+        case 1:
+            synth.filter.setCutoff(val);
+            break;
+        case 2:
+            synth.filter.setResonance(val);
+            break;
+        case 3:
+            synth.filter.setFilterMode(val * Zic_Effect_Filter::FILTER_MODE_COUNT - 1);
+            break;
+        case 4:
+            synth.osc.morphPct(val);
+            break;
+        case 5:
+            synth.osc.setFrequency(val);
+            break;
+        case 6:
+            synth.osc.setAmplitude(val);
+            break;
+        case 7:
+            synth.adsr.setAttack(val);
+            break;
+        case 8:
+            synth.adsr.setDecay(val);
+            break;
+        case 9:
+            synth.adsr.setSustain(val);
+            break;
+        case 10:
+            synth.adsr.setRelease(val);
+            break;
+        case 11:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            break;
+        case 12:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            break;
+        case 13:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            break;
+        case 14:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
+            break;
+        case 15:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_RES, val);
+            break;
+        case 16:
+            synth.lfo[0].setFrequency(val);
+            break;
         }
     }
 
