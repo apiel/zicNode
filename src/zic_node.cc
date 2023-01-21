@@ -442,6 +442,37 @@ Napi::Value setMasterVolume(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Value getWavetable(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 1 || !info[0].IsString() || (info.Length() > 1 && !info[1].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: path morph");
+        }
+        std::string path = info[0].As<Napi::String>().Utf8Value();
+        float morphPosition = 0;
+        if (info.Length() > 1) {
+            morphPosition = info[1].As<Napi::Number>().FloatValue();
+        }
+
+        Zic_Wavetable_File wavetable;
+        wavetable.open(path.c_str());
+        wavetable.morph(morphPosition);
+        uint64_t count = wavetable.getSampleCount();
+
+        Napi::Array result = Napi::Array::New(env, count);
+        for (uint32_t i = 0; i < count; i++) {
+            float value = wavetable.getValueAt(i);
+            result.Set(i, Napi::Number::New(env, value));
+        }
+        wavetable.audioFile.close();
+        return result;
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "PATTERN_COUNT"), Napi::Number::New(env, ZIC_PATTERN_COUNT));
@@ -473,6 +504,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "setOnBeatCallback"), Napi::Function::New(env, setOnBeatCallback));
     exports.Set(Napi::String::New(env, "getMasterVolume"), Napi::Function::New(env, getMasterVolume));
     exports.Set(Napi::String::New(env, "setMasterVolume"), Napi::Function::New(env, setMasterVolume));
+    exports.Set(Napi::String::New(env, "getWavetable"), Napi::Function::New(env, getWavetable));
     return exports;
 }
 

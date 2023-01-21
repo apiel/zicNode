@@ -47,6 +47,7 @@ console.log('pattern length', (0, lib_1.getPatternLength)(0));
 (0, lib_1.setPatternStep)(2, 4, 77, 100, false);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 (0, lib_1.setSequencerState)(2, 2, true, { dataId: 23 });
+console.log('wavetable', (0, lib_1.getWavetable)('/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav'));
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));
 // });

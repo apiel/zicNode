@@ -24,6 +24,7 @@ import {
     NOTE_END,
     setOnBeatCallback,
     getMasterVolume,
+    getWavetable,
 } from './lib';
 
 console.log('Zic node');
@@ -84,6 +85,8 @@ setPatternStep(2, 3, 76, 100, false);
 setPatternStep(2, 4, 77, 100, false);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(2, 2, true, { dataId: 23 });
+
+console.log('wavetable', getWavetable('/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav'));
 
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));
