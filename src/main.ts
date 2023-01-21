@@ -14,7 +14,7 @@ import {
     SynthPathIds,
     trackNoteOff,
     trackNoteOn,
-    trackSetPath,
+    trackSetString,
     PATTERN_COUNT,
     MAX_STEPS_IN_PATTERN,
     MAX_VOICES_IN_PATTERN,
@@ -58,13 +58,13 @@ console.log('next Bpm', getBpm());
 
 console.log('master volume', getMasterVolume());
 
-trackSetPath(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
+trackSetString(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
 
-trackSetPath(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
+trackSetString(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
 
-trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
-trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
-trackSetPath(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
+trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
+trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
+trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
 
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));

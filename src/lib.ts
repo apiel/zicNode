@@ -51,10 +51,10 @@ export const setSequencerState: (
     patternIndex: number,
     playing: boolean,
     options?: {
-        detune?: number,
-        next?: boolean, // false for current playing pattern, true for up coming pattern (wait till the end of it)
-        dataId?: number, // Used to put arbitrary data reference in the sequencer state
-    }
+        detune?: number;
+        next?: boolean; // false for current playing pattern, true for up coming pattern (wait till the end of it)
+        dataId?: number; // Used to put arbitrary data reference in the sequencer state
+    },
 ) => void = zic.setSequencerState;
 
 export interface SequencerState {
@@ -93,12 +93,19 @@ export enum SynthPathIds {
     Lfo2 = 2,
 }
 
-export const trackSetPath: (
+export const trackSetString: (
     trackIndex: number,
-    path: string,
-    pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
+    value: string,
+    stringId?: number,
     voice?: number,
-) => void = zic.trackSetPath;
+) => void = zic.trackSetString;
+
+export const trackSetNumber: (
+    trackIndex: number,
+    value: number,
+    numberId?: number,
+    voice?: number,
+) => void = zic.trackSetNumber;
 
 export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCallback;
 

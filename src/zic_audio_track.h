@@ -11,11 +11,11 @@ protected:
 
 public:
     uint8_t id = 0;
-    const char * name;
+    const char* name;
 
     Zic_Seq_Loop looper;
 
-    Zic_Audio_Track(uint8_t _id = 0, const char * _name = NULL)
+    Zic_Audio_Track(uint8_t _id = 0, const char* _name = NULL)
         : name(_name)
     {
         id = _id;
@@ -24,9 +24,10 @@ public:
     // TODO might want to implement more midi interface (but is it really needed?)
     // or make more generic varaible setter like setString, setInt, setFloat, setBool
     virtual void noteOn(uint8_t note, uint8_t velocity, uint8_t voice) = 0;
-    virtual void noteOff(uint8_t note, uint8_t voice) = 0;
+    virtual void noteOff(uint8_t note, uint8_t voice) { }
     virtual void cc(uint8_t num, uint8_t val, uint8_t voice) { }
-    virtual void setPath(const char * path, uint8_t num = 0, uint8_t voice = 0) { }
+    virtual void setFloat(float val, uint8_t num = 0, uint8_t voice = 0) { }
+    virtual void setString(const char* path, uint8_t num = 0, uint8_t voice = 0) { }
     virtual void sample(float* buf, int len) = 0;
 
     virtual void loadPatch() { }

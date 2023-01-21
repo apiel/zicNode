@@ -61,8 +61,8 @@ export declare enum SynthPathIds {
     Lfo1 = 1,
     Lfo2 = 2
 }
-export declare const trackSetPath: (trackIndex: number, path: string, pathId?: number, // Multiple path can be set for a track, this is the id of path to assign
-voice?: number) => void;
+export declare const trackSetString: (trackIndex: number, value: string, stringId?: number, voice?: number) => void;
+export declare const trackSetNumber: (trackIndex: number, value: number, numberId?: number, voice?: number) => void;
 export declare const setOnBeatCallback: (callback: () => void) => void;
 export declare const getMasterVolume: () => number;
 export declare const setMasterVolume: (volume: number) => void;

@@ -81,7 +81,7 @@ public:
         }
     }
 
-    void setPath(const char* path, uint8_t num = 0, uint8_t voice = 0)
+    void setString(const char* path, uint8_t num = 0, uint8_t voice = 0)
     {
         switch (num) {
         case 0:
