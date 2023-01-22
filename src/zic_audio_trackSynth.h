@@ -73,7 +73,7 @@ public:
             synth.filter.setFilterMode(val * Zic_Effect_Filter::FILTER_MODE_COUNT - 1);
             break;
         case 4:
-            synth.osc.morphPct(val);
+            synth.osc.wavetable.morphPct(val);
             break;
         case 5:
             synth.osc.setFrequency(val);
