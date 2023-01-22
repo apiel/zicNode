@@ -10,7 +10,6 @@
 
 #include <stdlib.h>
 
-#include <wavetables/wavetable_Bank.h>
 #include <zic_seq_loop.h>
 #include <zic_synth_file.h>
 
