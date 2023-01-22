@@ -61,8 +61,8 @@ export declare enum SynthPathIds {
     Lfo1 = 1,
     Lfo2 = 2
 }
-export declare const trackSetString: (trackIndex: number, value: string, stringId?: number, voice?: number) => void;
-export declare const trackSetNumber: (trackIndex: number, value: number, numberId?: number, voice?: number) => void;
+export declare const trackSetString: (trackIndex: number, value: string, stringId?: number) => void;
+export declare const trackSetNumber: (trackIndex: number, value: number, numberId?: number) => void;
 export declare const setOnBeatCallback: (callback: () => void) => void;
 export declare const getMasterVolume: () => number;
 export declare const setMasterVolume: (volume: number) => void;

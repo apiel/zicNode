@@ -26,8 +26,8 @@ public:
     virtual void noteOn(uint8_t note, uint8_t velocity, uint8_t voice) = 0;
     virtual void noteOff(uint8_t note, uint8_t voice) { }
     virtual void cc(uint8_t num, uint8_t val, uint8_t voice) { }
-    virtual void setFloat(float val, uint8_t num = 0, uint8_t voice = 0) { }
-    virtual void setString(const char* path, uint8_t num = 0, uint8_t voice = 0) { }
+    virtual void setFloat(float val, uint16_t num = 0) { }
+    virtual void setString(const char* path, uint16_t num = 0) { }
     virtual void sample(float* buf, int len) = 0;
 
     virtual void loadPatch() { }

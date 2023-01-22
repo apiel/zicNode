@@ -43,24 +43,24 @@ public:
     void cc(uint8_t num, uint8_t val, uint8_t voice) override
     {
         if (num == 5) {
-            setFloat(Zic::NOTE_FREQ[val], num, voice);
+            setFloat(Zic::NOTE_FREQ[val], num);
         } else if (num == 7) {
-            setFloat(pow(val, 2), num, voice);
+            setFloat(pow(val, 2), num);
         } else if (num == 8) {
-            setFloat(val * 10, num, voice);
+            setFloat(val * 10, num);
         } else if (num == 9) {
-            setFloat(val * 0.787402, num, voice);
+            setFloat(val * 0.787402, num);
         } else if (num == 10) {
-            setFloat(pow(val, 2), num, voice);
+            setFloat(pow(val, 2), num);
         } else if (num == 16) {
             // should there be a map table for LFO frequencies?
-            setFloat(val / 127.0f * 20 + 0.01, num, voice);
+            setFloat(val / 127.0f * 20 + 0.01, num);
         } else {
-            setFloat(val / 127.0f, num, voice);
+            setFloat(val / 127.0f, num);
         }
     }
 
-    void setFloat(float val, uint8_t num = 0, uint8_t voice = 0)
+    void setFloat(float val, uint16_t num = 0)
     {
         switch (num) {
         case 1:
@@ -114,7 +114,7 @@ public:
         }
     }
 
-    void setString(const char* path, uint8_t num = 0, uint8_t voice = 0)
+    void setString(const char* path, uint16_t num = 0)
     {
         switch (num) {
         case 0:

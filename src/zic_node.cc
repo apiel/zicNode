@@ -371,8 +371,8 @@ Napi::Value trackSetString(const Napi::CallbackInfo& info)
     Napi::Env env = info.Env();
     try {
         if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsString()
-            || (info.Length() > 2 && !info[2].IsNumber()) || (info.Length() > 3 && !info[3].IsNumber())) {
-            throw Napi::Error::New(env, "Invalid arguments: trackIndex, strValue, (stringId=0), (voice=0)");
+            || (info.Length() > 2 && !info[2].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, strValue, (stringId=0)");
         }
         uint32_t trackIndex = argTrackIndex(info, 0);
         std::string strValue = info[1].As<Napi::String>().Utf8Value();
@@ -380,11 +380,7 @@ Napi::Value trackSetString(const Napi::CallbackInfo& info)
         if (info.Length() > 2) {
             stringId = info[2].As<Napi::Number>().Uint32Value();
         }
-        uint32_t voice = 0;
-        if (info.Length() > 3) {
-            voice = argVoiceIndex(info, 3);
-        }
-        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->setString(strValue.c_str(), stringId, voice);
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->setString(strValue.c_str(), stringId);
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();
     }
@@ -396,8 +392,8 @@ Napi::Value trackSetNumber(const Napi::CallbackInfo& info)
     Napi::Env env = info.Env();
     try {
         if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsNumber()
-            || (info.Length() > 2 && !info[2].IsNumber()) || (info.Length() > 3 && !info[3].IsNumber())) {
-            throw Napi::Error::New(env, "Invalid arguments: trackIndex, value, (floatId=0), (voice=0)");
+            || (info.Length() > 2 && !info[2].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: trackIndex, value, (floatId=0)");
         }
         uint32_t trackIndex = argTrackIndex(info, 0);
         float value = info[1].As<Napi::Number>().FloatValue();
@@ -405,11 +401,7 @@ Napi::Value trackSetNumber(const Napi::CallbackInfo& info)
         if (info.Length() > 2) {
             floatId = info[2].As<Napi::Number>().Uint32Value();
         }
-        uint32_t voice = 0;
-        if (info.Length() > 3) {
-            voice = argVoiceIndex(info, 3);
-        }
-        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->setFloat(value, floatId, voice);
+        Zic_Audio_Tracks::getInstance().tracks[trackIndex]->setFloat(value, floatId);
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();
     }

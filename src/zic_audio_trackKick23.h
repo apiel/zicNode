@@ -39,16 +39,16 @@ public:
     {
         if (num == 2) {
             // kick duration
-            setFloat(val * val / 3, num, voice); // FIXME
+            setFloat(val * val / 3, num); // FIXME
         } else if (num == 3) {
             // kick frequency
-            setFloat(Zic::NOTE_FREQ[val], num, voice); // FIXME to high
+            setFloat(Zic::NOTE_FREQ[val], num); // FIXME to high
         } else {
-            setFloat(val / 127.0f, num, voice);
+            setFloat(val / 127.0f, num);
         }
     }
 
-    void setFloat(float val, uint8_t num = 0, uint8_t voice = 0)
+    void setFloat(float val, uint16_t num = 0)
     {
         switch (num) {
         case 0:
@@ -102,7 +102,7 @@ public:
         }
     }
 
-    void setString(const char* path, uint8_t num = 0, uint8_t voice = 0)
+    void setString(const char* path, uint16_t num = 0)
     {
         switch (num) {
         case 0:

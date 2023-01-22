@@ -97,14 +97,12 @@ export const trackSetString: (
     trackIndex: number,
     value: string,
     stringId?: number,
-    voice?: number,
 ) => void = zic.trackSetString;
 
 export const trackSetNumber: (
     trackIndex: number,
     value: number,
     numberId?: number,
-    voice?: number,
 ) => void = zic.trackSetNumber;
 
 export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCallback;

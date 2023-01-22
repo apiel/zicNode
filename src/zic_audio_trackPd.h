@@ -54,7 +54,7 @@ public:
         pd.sendControlChange(voice + 1, num, val);
     }
 
-    void setString(const char* path, uint8_t num = 0, uint8_t voice = 0) override
+    void setString(const char* path, uint16_t num = 0) override
     {
         switch (num) {
         case 0:
