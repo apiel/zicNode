@@ -55,7 +55,7 @@ public:
             kick.updateVolume(val);
             break;
         case 1:
-            kick.morph(val);
+            kick.wavetable.morph(val);
             break;
         case 2:
             kick.updateDuration(val);
@@ -106,7 +106,7 @@ public:
     {
         switch (num) {
         case 0:
-            kick.open(path);
+            kick.wavetable.open(path);
             break;
         }
     }
