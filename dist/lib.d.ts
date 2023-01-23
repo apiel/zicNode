@@ -1,3 +1,5 @@
+import * as Kick23 from './Tracks/kick23';
+export { Kick23 };
 export declare const PATTERN_COUNT: number;
 export declare const MAX_STEPS_IN_PATTERN: number;
 export declare const MAX_VOICES_IN_PATTERN: number;
@@ -67,5 +69,4 @@ export declare const setOnBeatCallback: (callback: () => void) => void;
 export declare const getMasterVolume: () => number;
 export declare const setMasterVolume: (volume: number) => void;
 export declare const getWavetable: (filepath: string, morph?: number) => number[];
-export {};
 //# sourceMappingURL=lib.d.ts.map
