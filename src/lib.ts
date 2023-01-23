@@ -1,4 +1,7 @@
 import bindings from 'bindings';
+import * as Kick23 from './Tracks/kick23';
+
+export { Kick23 };
 
 const zic = bindings('zic');
 
@@ -93,17 +96,11 @@ export enum SynthPathIds {
     Lfo2 = 2,
 }
 
-export const trackSetString: (
-    trackIndex: number,
-    value: string,
-    stringId?: number,
-) => void = zic.trackSetString;
+export const trackSetString: (trackIndex: number, value: string, stringId?: number) => void =
+    zic.trackSetString;
 
-export const trackSetNumber: (
-    trackIndex: number,
-    value: number,
-    numberId?: number,
-) => void = zic.trackSetNumber;
+export const trackSetNumber: (trackIndex: number, value: number, numberId?: number) => void =
+    zic.trackSetNumber;
 
 export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCallback;
 
