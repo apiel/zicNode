@@ -2,6 +2,7 @@
 #define ZIC_AUDIO_TRACK_KICK23_H_
 
 #include <zic_drum_kick23.h>
+#include <zic_effect_filter.h>
 
 #include "./zic_audio_track.h"
 
@@ -10,10 +11,12 @@
 class Zic_Audio_TrackKick23 : public Zic_Audio_Track {
 public:
     Zic_Drum_Kick23 kick;
+    Zic_Effect_Filter filter;
 
     Zic_Audio_TrackKick23(uint8_t _id = 0, const char* _name = NULL)
         : Zic_Audio_Track(_id, _name)
     {
+        filter.setFilterMode(filter.FILTER_MODE_LOWPASS_12);
     }
 
     void noteOn(uint8_t note, uint8_t velocity, uint8_t voice)
@@ -24,7 +27,7 @@ public:
     void sample(float* buf, int len)
     {
         for (int i = 0; i < len; i++) {
-            buf[i] = kick.sample();
+            buf[i] = filter.next(kick.sample());
 #if APP_CHANNELS == 2
             // TODO
             // or not ?? if sample is mono, then it's ok
@@ -43,6 +46,8 @@ public:
         } else if (num == 3) {
             // kick frequency
             setFloat(Zic::NOTE_FREQ[val], num); // FIXME to high
+        } else if (num == 16) {
+            setFloat(val, num);
         } else {
             setFloat(val / 127.0f, num);
         }
@@ -98,6 +103,12 @@ public:
             break;
         case 15:
             kick.envelopFreq[4][1] = val;
+            break;
+        case 16:
+            filter.setFrequency(val);
+            break;
+        case 17:
+            filter.setResonance(val);
             break;
         }
     }

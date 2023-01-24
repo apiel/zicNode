@@ -14,7 +14,9 @@ export declare enum FloatId {
     envFreq2 = 12,
     envFreq2Time = 13,
     envFreq3 = 14,
-    envFreq3Time = 15
+    envFreq3Time = 15,
+    filterCutoff = 16,
+    filterResonance = 17
 }
 export declare enum StringId {
     Wavetable = 0

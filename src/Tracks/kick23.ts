@@ -15,6 +15,8 @@ export enum FloatId {
     envFreq2Time,
     envFreq3,
     envFreq3Time,
+    filterCutoff,
+    filterResonance,
 }
 
 export enum StringId {

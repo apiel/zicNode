@@ -19,6 +19,8 @@ var FloatId;
     FloatId[FloatId["envFreq2Time"] = 13] = "envFreq2Time";
     FloatId[FloatId["envFreq3"] = 14] = "envFreq3";
     FloatId[FloatId["envFreq3Time"] = 15] = "envFreq3Time";
+    FloatId[FloatId["filterCutoff"] = 16] = "filterCutoff";
+    FloatId[FloatId["filterResonance"] = 17] = "filterResonance";
 })(FloatId = exports.FloatId || (exports.FloatId = {}));
 var StringId;
 (function (StringId) {
