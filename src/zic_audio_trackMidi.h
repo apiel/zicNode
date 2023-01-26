@@ -52,7 +52,7 @@ public:
         midiout->sendMessage(&message);
     }
 
-    void cc(uint8_t num, uint8_t val, uint8_t voice) override
+    void cc(uint8_t num, uint8_t val, uint8_t voice = 0) override
     {
         if (midiout == NULL) {
             return;

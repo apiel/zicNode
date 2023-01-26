@@ -7,6 +7,10 @@ export declare const TRACK_COUNT: number;
 export declare const SAMPLE_RATE: number;
 export declare const NOTE_START: number;
 export declare const NOTE_END: number;
+export declare const ZIC_PATCH_MAX_FLOATS: number;
+export declare const ZIC_PATCH_MAX_STRINGS: number;
+export declare const ZIC_PATCH_STRING_LENGTH: number;
+export declare const ZIC_PATCH_MAX_CC: number;
 interface AudioDeviceInfo {
     probed: boolean;
     name: string;
@@ -39,11 +43,17 @@ export declare const setSequencerState: (trackIndex: number, patternIndex: numbe
     next?: boolean;
     dataId?: number;
 }) => void;
+export interface SequencerPatch {
+    strings: string[];
+    numbers: number[];
+    cc: number[];
+}
 export interface SequencerState {
     patternIndex: number;
     detune: number;
     playing: boolean;
     dataId: number;
+    patch: SequencerPatch;
 }
 export interface SequencerStates {
     current: SequencerState;

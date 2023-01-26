@@ -25,12 +25,24 @@ public:
     // or make more generic varaible setter like setString, setInt, setFloat, setBool
     virtual void noteOn(uint8_t note, uint8_t velocity, uint8_t voice) = 0;
     virtual void noteOff(uint8_t note, uint8_t voice) { }
-    virtual void cc(uint8_t num, uint8_t val, uint8_t voice) { }
+    virtual void cc(uint8_t num, uint8_t val, uint8_t voice = 0) { }
     virtual void setFloat(float val, uint16_t num = 0) { }
     virtual void setString(const char* path, uint16_t num = 0) { }
     virtual void sample(float* buf, int len) = 0;
 
-    virtual void loadPatch() { }
+    virtual void loadPatch()
+    {
+        for (uint16_t i = 0; i < looper.state.patch.floatsCount; i++) {
+            setFloat(looper.state.patch.floats[i], i);
+        }
+        for (uint16_t i = 0; i < looper.state.patch.stringsCount; i++) {
+            setString(looper.state.patch.strings[i], i);
+        }
+        for (uint16_t i = 0; i < looper.state.patch.ccCount; i++) {
+            // Keep it simple for the moment and not have voice/channel for cc
+            cc(i, looper.state.patch.cc[i]);
+        }
+    }
 
     virtual bool isOn()
     {
@@ -44,7 +56,9 @@ public:
 
     void next()
     {
-        looper.next();
+        if (looper.next()) {
+            loadPatch();
+        }
 
         // TODO need to handle tie
         for (uint8_t i = 0; i < MAX_VOICES_IN_PATTERN; i++) {

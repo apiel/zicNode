@@ -49,7 +49,7 @@ public:
         pd.processFloat(ticks, NULL, buf);
     }
 
-    void cc(uint8_t num, uint8_t val, uint8_t voice) override
+    void cc(uint8_t num, uint8_t val, uint8_t voice = 0) override
     {
         pd.sendControlChange(voice + 1, num, val);
     }

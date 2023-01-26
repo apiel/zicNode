@@ -13,6 +13,11 @@ export const SAMPLE_RATE: number = zic.SAMPLE_RATE;
 export const NOTE_START: number = zic.NOTE_START;
 export const NOTE_END: number = zic.NOTE_END;
 
+export const ZIC_PATCH_MAX_FLOATS: number = zic.ZIC_PATCH_MAX_FLOATS;
+export const ZIC_PATCH_MAX_STRINGS: number = zic.ZIC_PATCH_MAX_STRINGS;
+export const ZIC_PATCH_STRING_LENGTH: number = zic.ZIC_PATCH_STRING_LENGTH;
+export const ZIC_PATCH_MAX_CC: number = zic.ZIC_PATCH_MAX_CC;
+
 interface AudioDeviceInfo {
     probed: boolean; // true if the device capabilities were successfully probed.
     name: string; // Character string device identifier.
@@ -60,12 +65,20 @@ export const setSequencerState: (
     },
 ) => void = zic.setSequencerState;
 
+export interface SequencerPatch {
+    strings: string[];
+    numbers: number[];
+    cc: number[];
+}
+
 export interface SequencerState {
     patternIndex: number;
     detune: number;
     playing: boolean;
     dataId: number; // Used to put arbitrary data reference in the sequencer state
+    patch: SequencerPatch;
 }
+
 export interface SequencerStates {
     current: SequencerState;
     next: SequencerState;

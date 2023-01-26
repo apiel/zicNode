@@ -47,7 +47,7 @@ console.log('DEFINE VAR', {
     NOTE_END,
 });
 
-console.log('getAudoDeviceInfo', getAudoDeviceInfo());
+// console.log('getAudoDeviceInfo', getAudoDeviceInfo());
 
 console.log('Current Bpm', getBpm());
 setBpm(90);

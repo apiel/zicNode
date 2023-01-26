@@ -251,6 +251,27 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Object __getSequencerStatePatch(Napi::Env& env, Zic_Seq_LoopState& state)
+{
+    Napi::Object patch = Napi::Object::New(env);
+    Napi::Object floatValues = Napi::Object::New(env);
+    for (uint16_t i = 0; i < state.patch.floatsCount; i++) {
+        floatValues.Set(i, Napi::Number::New(env, state.patch.floats[i]));
+    }
+    Napi::Object strValues = Napi::Object::New(env);
+    for (uint16_t i = 0; i < state.patch.stringsCount; i++) {
+        strValues.Set(i, Napi::String::New(env, state.patch.strings[i]));
+    }
+    Napi::Object ccValues = Napi::Object::New(env);
+    for (uint16_t i = 0; i < state.patch.ccCount; i++) {
+        ccValues.Set(i, Napi::Number::New(env, state.patch.cc[i]));
+    }
+    patch.Set("floats", floatValues);
+    patch.Set("strings", strValues);
+    patch.Set("cc", ccValues);
+    return patch;
+}
+
 Napi::Object __getSequencerStates(Napi::Env& env, uint32_t trackIndex)
 {
     Napi::Object states = Napi::Object::New(env);
@@ -260,12 +281,14 @@ Napi::Object __getSequencerStates(Napi::Env& env, uint32_t trackIndex)
     state.Set("detune", Napi::Number::New(env, looper.state.detune));
     state.Set("playing", Napi::Boolean::New(env, looper.state.playing));
     state.Set("dataId", Napi::Number::New(env, looper.state.dataId));
+    state.Set("patch", __getSequencerStatePatch(env, looper.state));
     states.Set("current", state);
     state = Napi::Object::New(env);
     state.Set("patternIndex", looper.nextState.pattern ? Napi::Number::New(env, looper.nextState.pattern->id) : env.Null());
     state.Set("detune", Napi::Number::New(env, looper.nextState.detune));
     state.Set("playing", Napi::Boolean::New(env, looper.nextState.playing));
     state.Set("dataId", Napi::Number::New(env, looper.nextState.dataId));
+    state.Set("patch", __getSequencerStatePatch(env, looper.nextState));
     states.Set("next", state);
     states.Set("currentStep", Napi::Number::New(env, looper.currentStep));
     return states;
@@ -474,6 +497,10 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "SAMPLE_RATE"), Napi::Number::New(env, SAMPLE_RATE));
     exports.Set(Napi::String::New(env, "NOTE_START"), Napi::Number::New(env, Zic::_NOTE_START));
     exports.Set(Napi::String::New(env, "NOTE_END"), Napi::Number::New(env, Zic::_NOTE_END));
+    exports.Set(Napi::String::New(env, "ZIC_PATCH_MAX_FLOATS"), Napi::Number::New(env, ZIC_PATCH_MAX_FLOATS));
+    exports.Set(Napi::String::New(env, "ZIC_PATCH_MAX_STRINGS"), Napi::Number::New(env, ZIC_PATCH_MAX_STRINGS));
+    exports.Set(Napi::String::New(env, "ZIC_PATCH_STRING_LENGTH"), Napi::Number::New(env, ZIC_PATCH_STRING_LENGTH));
+    exports.Set(Napi::String::New(env, "ZIC_PATCH_MAX_CC"), Napi::Number::New(env, ZIC_PATCH_MAX_CC));
 
     exports.Set(Napi::String::New(env, "getAudoDeviceInfo"), Napi::Function::New(env, getAudoDeviceInfo));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
