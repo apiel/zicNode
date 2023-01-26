@@ -122,4 +122,11 @@ export const setOnBeatCallback: (callback: () => void) => void = zic.setOnBeatCa
 
 export const getMasterVolume: () => number = zic.getMasterVolume;
 export const setMasterVolume: (volume: number) => void = zic.setMasterVolume;
-export const getWavetable: (filepath: string, morph?: number) => number[] = zic.getWavetable;
+
+export interface Wavetable {
+    data: number[];
+    wavetableCount: number;
+    wavetableSampleCount: number;
+    totalSampleCount: number;
+}
+export const getWavetable: (filepath: string, morph?: number) => Wavetable = zic.getWavetable;

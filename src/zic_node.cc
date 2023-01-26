@@ -515,12 +515,19 @@ Napi::Value getWavetable(const Napi::CallbackInfo& info)
         wavetable.morph(morphPosition);
         uint64_t count = wavetable.getSampleCount();
 
-        Napi::Array result = Napi::Array::New(env, count);
+        Napi::Array data = Napi::Array::New(env, count);
         for (uint32_t i = 0; i < count; i++) {
             float value = wavetable.getValueAt(i);
-            result.Set(i, Napi::Number::New(env, value));
+            data.Set(i, Napi::Number::New(env, value));
         }
         wavetable.audioFile.close();
+
+        Napi::Object result = Napi::Object::New(env);
+        result.Set("data", data);
+        result.Set("wavetableCount", Napi::Number::New(env, wavetable.audioFile.wavetableCount));
+        result.Set("totalSampleCount", Napi::Number::New(env, wavetable.audioFile.sampleCount));
+        result.Set("wavetableSampleCount",
+            Napi::Number::New(env, wavetable.audioFile.sampleCount / wavetable.audioFile.wavetableCount));
         return result;
     } catch (const Napi::Error& e) {
         e.ThrowAsJavaScriptException();

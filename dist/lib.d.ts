@@ -86,5 +86,11 @@ export declare const trackSetNumber: (trackIndex: number, value: number, numberI
 export declare const setOnBeatCallback: (callback: () => void) => void;
 export declare const getMasterVolume: () => number;
 export declare const setMasterVolume: (volume: number) => void;
-export declare const getWavetable: (filepath: string, morph?: number) => number[];
+export interface Wavetable {
+    data: number[];
+    wavetableCount: number;
+    wavetableSampleCount: number;
+    totalSampleCount: number;
+}
+export declare const getWavetable: (filepath: string, morph?: number) => Wavetable;
 //# sourceMappingURL=lib.d.ts.map
