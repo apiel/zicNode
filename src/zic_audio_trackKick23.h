@@ -48,6 +48,10 @@ public:
             setFloat(Zic::NOTE_FREQ[val], num); // FIXME to high
         } else if (num == 16) {
             setFloat(val, num);
+        } else if (num == 18) {
+            setFloat(val / 127.0f * 100, num);
+        } else if (num == 19) {
+            setFloat(val, num);
         } else {
             setFloat(val / 127.0f, num);
         }
@@ -109,6 +113,12 @@ public:
             break;
         case 17:
             filter.setResonance(val);
+            break;
+        case 18:
+            kick.distortion.setDistortion(val);
+            break;
+        case 19:
+            kick.distortion.setDistortionRange(val);
             break;
         }
     }
