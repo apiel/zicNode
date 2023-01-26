@@ -214,6 +214,37 @@ Napi::Value getPattern(const Napi::CallbackInfo& info)
     }
 }
 
+void __setSequencerPatch(Zic_Seq_LoopState& state, Napi::Object patch)
+{
+    if (patch.Has("floats")) {
+        Napi::Object floats = patch.Get("floats").As<Napi::Object>();
+        Napi::Array names = floats.GetPropertyNames();
+        for (uint32_t i = 0; i < names.Length(); i++) {
+            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
+            float value = floats.Get(index).As<Napi::Number>().FloatValue();
+            state.patch.setFloat(index, value);
+        }
+    }
+    if (patch.Has("strings")) {
+        Napi::Object strings = patch.Get("strings").As<Napi::Object>();
+        Napi::Array names = strings.GetPropertyNames();
+        for (uint32_t i = 0; i < names.Length(); i++) {
+            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
+            std::string value = strings.Get(index).As<Napi::String>().Utf8Value();
+            state.patch.setString(index, value.c_str());
+        }
+    }
+    if (patch.Has("cc")) {
+        Napi::Object cc = patch.Get("cc").As<Napi::Object>();
+        Napi::Array names = cc.GetPropertyNames();
+        for (uint32_t i = 0; i < names.Length(); i++) {
+            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
+            uint32_t value = cc.Get(index).As<Napi::Number>().Uint32Value();
+            state.patch.setCc(index, value);
+        }
+    }
+}
+
 Napi::Value setSequencerState(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -227,6 +258,10 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
         uint32_t dataId = 0;
         uint32_t detune = 0;
         bool next = true;
+
+        Zic_Seq_Loop& looper = Zic_Audio_Tracks::getInstance().tracks[trackIndex]->looper;
+        Zic_Seq_LoopState& state = next ? looper.nextState : looper.state;
+
         if (info.Length() > 3) {
             Napi::Object options = info[3].As<Napi::Object>();
             if (options.Has("next")) {
@@ -238,9 +273,11 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
             if (options.Has("detune")) {
                 detune = options.Get("detune").As<Napi::Number>().Uint32Value();
             }
+            if (options.Has("patch")) {
+                Napi::Object patch = options.Get("patch").As<Napi::Object>();
+                __setSequencerPatch(state, patch);
+            }
         }
-        Zic_Seq_Loop& looper = Zic_Audio_Tracks::getInstance().tracks[trackIndex]->looper;
-        Zic_Seq_LoopState& state = next ? looper.nextState : looper.state;
         state.pattern = &patterns[patternIndex];
         state.detune = detune;
         state.playing = playing;

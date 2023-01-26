@@ -54,6 +54,13 @@ interface PatternStep {
     tie: boolean;
 }
 export const getPattern: (index: number) => PatternStep[][] = zic.getPattern;
+
+export interface SequencerPatch {
+    strings: { [key: number]: string };
+    numbers: { [key: number]: number };
+    cc: { [key: number]: number };
+}
+
 export const setSequencerState: (
     trackIndex: number,
     patternIndex: number,
@@ -62,14 +69,9 @@ export const setSequencerState: (
         detune?: number;
         next?: boolean; // false for current playing pattern, true for up coming pattern (wait till the end of it)
         dataId?: number; // Used to put arbitrary data reference in the sequencer state
+        patch?: SequencerPatch;
     },
 ) => void = zic.setSequencerState;
-
-export interface SequencerPatch {
-    strings: string[];
-    numbers: number[];
-    cc: number[];
-}
 
 export interface SequencerState {
     patternIndex: number;

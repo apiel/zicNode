@@ -38,16 +38,23 @@ interface PatternStep {
     tie: boolean;
 }
 export declare const getPattern: (index: number) => PatternStep[][];
+export interface SequencerPatch {
+    strings: {
+        [key: number]: string;
+    };
+    numbers: {
+        [key: number]: number;
+    };
+    cc: {
+        [key: number]: number;
+    };
+}
 export declare const setSequencerState: (trackIndex: number, patternIndex: number, playing: boolean, options?: {
     detune?: number;
     next?: boolean;
     dataId?: number;
+    patch?: SequencerPatch;
 }) => void;
-export interface SequencerPatch {
-    strings: string[];
-    numbers: number[];
-    cc: number[];
-}
 export interface SequencerState {
     patternIndex: number;
     detune: number;
