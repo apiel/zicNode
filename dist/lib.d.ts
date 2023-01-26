@@ -42,7 +42,7 @@ export interface SequencerPatch {
     strings: {
         [key: number]: string;
     };
-    numbers: {
+    floats: {
         [key: number]: number;
     };
     cc: {

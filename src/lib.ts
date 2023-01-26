@@ -57,7 +57,7 @@ export const getPattern: (index: number) => PatternStep[][] = zic.getPattern;
 
 export interface SequencerPatch {
     strings: { [key: number]: string };
-    numbers: { [key: number]: number };
+    floats: { [key: number]: number };
     cc: { [key: number]: number };
 }
 
