@@ -11,6 +11,7 @@ protected:
 
 public:
     uint8_t id = 0;
+    uint16_t patchId = -1; // Set to biggest number to make sure it's not loaded
     const char* name;
 
     Zic_Seq_Loop looper;
@@ -32,6 +33,10 @@ public:
 
     virtual void loadPatch()
     {
+        if (looper.state.patch.id == patchId) {
+            return;
+        }
+        patchId = looper.state.patch.id;
         for (uint16_t i = 0; i < looper.state.patch.floatsCount; i++) {
             setFloat(looper.state.patch.floats[i], i);
         }

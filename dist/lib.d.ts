@@ -48,6 +48,7 @@ export interface SequencerPatch {
     cc: {
         [key: number]: number;
     };
+    id: number;
 }
 export declare const setSequencerState: (trackIndex: number, patternIndex: number, playing: boolean, options?: {
     detune?: number;

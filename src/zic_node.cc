@@ -216,31 +216,33 @@ Napi::Value getPattern(const Napi::CallbackInfo& info)
 
 void __setSequencerPatch(Zic_Seq_LoopState& state, Napi::Object patch)
 {
+    state.patch.clear();
+    state.patch.id = patch.Get("id").As<Napi::Number>().Uint32Value();
     if (patch.Has("floats")) {
         Napi::Object floats = patch.Get("floats").As<Napi::Object>();
         Napi::Array names = floats.GetPropertyNames();
         for (uint32_t i = 0; i < names.Length(); i++) {
-            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
-            float value = floats.Get(index).As<Napi::Number>().FloatValue();
-            state.patch.setFloat(index, value);
+            std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+            float value = floats.Get(strIndex).As<Napi::Number>().FloatValue();
+            state.patch.setFloat(std::stoi(strIndex), value);
         }
     }
     if (patch.Has("strings")) {
         Napi::Object strings = patch.Get("strings").As<Napi::Object>();
         Napi::Array names = strings.GetPropertyNames();
         for (uint32_t i = 0; i < names.Length(); i++) {
-            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
-            std::string value = strings.Get(index).As<Napi::String>().Utf8Value();
-            state.patch.setString(index, value.c_str());
+            std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+            std::string value = strings.Get(strIndex).As<Napi::String>().Utf8Value();
+            state.patch.setString(std::stoi(strIndex), value.c_str());
         }
     }
     if (patch.Has("cc")) {
         Napi::Object cc = patch.Get("cc").As<Napi::Object>();
         Napi::Array names = cc.GetPropertyNames();
         for (uint32_t i = 0; i < names.Length(); i++) {
-            uint32_t index = names.Get(i).As<Napi::Number>().Uint32Value();
-            uint32_t value = cc.Get(index).As<Napi::Number>().Uint32Value();
-            state.patch.setCc(index, value);
+            std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+            uint32_t value = cc.Get(strIndex).As<Napi::Number>().Uint32Value();
+            state.patch.setCc(std::stoi(strIndex), value);
         }
     }
 }
@@ -306,6 +308,7 @@ Napi::Object __getSequencerStatePatch(Napi::Env& env, Zic_Seq_LoopState& state)
     patch.Set("floats", floatValues);
     patch.Set("strings", strValues);
     patch.Set("cc", ccValues);
+    patch.Set("id", Napi::Number::New(env, state.patch.id));
     return patch;
 }
 

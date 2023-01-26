@@ -59,6 +59,7 @@ export interface SequencerPatch {
     strings: { [key: number]: string };
     floats: { [key: number]: number };
     cc: { [key: number]: number };
+    id: number;
 }
 
 export const setSequencerState: (
