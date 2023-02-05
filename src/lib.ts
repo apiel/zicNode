@@ -1,7 +1,9 @@
 import bindings from 'bindings';
 import * as Kick23 from './Tracks/kick23';
+import * as ZicSynth from './Tracks/zicSynth';
+export * from './Tracks/filter';
 
-export { Kick23 };
+export { Kick23, ZicSynth };
 
 const zic = bindings('zic');
 

@@ -63,6 +63,9 @@ public:
     void setFloat(float val, uint16_t num = 0)
     {
         switch (num) {
+        case 0:
+            synth.updateVolume(val);
+            break;
         case 1:
             synth.filter.setCutoff(val);
             break;
@@ -110,6 +113,45 @@ public:
             break;
         case 16:
             synth.lfo[0].setFrequency(val);
+            break;
+        case 17:
+            synth.lfo[0].setAmplitude(val);
+            break;
+        case 18:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            break;
+        case 19:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            break;
+        case 20:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            break;
+        case 21:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
+            break;
+        case 22:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_RES, val);
+            break;
+        case 23:
+            synth.lfo[1].setFrequency(val);
+            break;
+        case 24:
+            synth.lfo[1].setAmplitude(val);
+            break;
+        case 25:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            break;
+        case 26:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            break;
+        case 27:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            break;
+        case 28:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
+            break;
+        case 29:
+            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_RES, val);
             break;
         }
     }

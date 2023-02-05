@@ -1,0 +1,38 @@
+export enum FloatId {
+    Volume = 0,
+    filterCutoff,
+    filterResonance,
+    filterMode,
+    Morph,
+    OscFrequency,
+    OscAmplitude, // Kind of duplicated of volume?
+    envAttack,
+    envDecay,
+    envSustain,
+    envRelease,
+    envModAmplitude,
+    envModPitch,
+    envModMorph,
+    envModCutoff,
+    envModResonance,
+    lfo1Frequency,
+    lfo1Amplitude,
+    lfo1ModAmplitude,
+    lfo1ModPitch,
+    lfo1ModMorph,
+    lfo1ModCutoff,
+    lfo1ModResonance,
+    lfo2Frequency,
+    lfo2Amplitude,
+    lfo2ModAmplitude,
+    lfo2ModPitch,
+    lfo2ModMorph,
+    lfo2ModCutoff,
+    lfo2ModResonance,
+}
+
+export enum StringId {
+    oscWavetable = 0,
+    lfo1Wavteable,
+    lfo2Wavetable,
+}

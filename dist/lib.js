@@ -22,14 +22,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.SynthPathIds = exports.PdPathIds = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.getAudoDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATTERN_COUNT = exports.Kick23 = void 0;
+exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.SynthPathIds = exports.PdPathIds = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.getAudoDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATTERN_COUNT = exports.ZicSynth = exports.Kick23 = void 0;
 const bindings_1 = __importDefault(require("bindings"));
 const Kick23 = __importStar(require("./Tracks/kick23"));
 exports.Kick23 = Kick23;
+const ZicSynth = __importStar(require("./Tracks/zicSynth"));
+exports.ZicSynth = ZicSynth;
+__exportStar(require("./Tracks/filter"), exports);
 const zic = (0, bindings_1.default)('zic');
 exports.PATTERN_COUNT = zic.PATTERN_COUNT;
 exports.MAX_STEPS_IN_PATTERN = zic.MAX_STEPS_IN_PATTERN;

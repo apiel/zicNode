@@ -72,6 +72,7 @@ public:
     Zic_Osc_Wavetable lfo[ZIC_AUDIO_SYNTH_LFO_COUNT];
     Zic_Effect_Filter filter;
     Zic_Mod_Adsr adsr;
+    float volume = 1.0f;
 
     Zic_Audio_Synth()
     {
@@ -105,7 +106,7 @@ public:
                        modValue[MOD_TARGET_MORPH] * modSumIntensity[MOD_TARGET_MORPH]),
                    modValue[MOD_TARGET_CUTOFF] * modSumIntensity[MOD_TARGET_CUTOFF],
                    modValue[MOD_TARGET_RES] * modSumIntensity[MOD_TARGET_RES])
-            * envOut;
+            * envOut * volume;
     }
 
     void noteOn(uint8_t note, uint8_t velocity)
@@ -117,6 +118,16 @@ public:
     void noteOff(uint8_t note)
     {
         adsr.off();
+    }
+
+    void updateVolume(float _volume)
+    {
+        volume = _volume;
+        if (volume < 0.0f) {
+            volume = 0.0f;
+        } else if (volume > 1.0f) {
+            volume = 1.0f;
+        }
     }
 };
 

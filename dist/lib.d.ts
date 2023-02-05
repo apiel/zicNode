@@ -1,5 +1,7 @@
 import * as Kick23 from './Tracks/kick23';
-export { Kick23 };
+import * as ZicSynth from './Tracks/zicSynth';
+export * from './Tracks/filter';
+export { Kick23, ZicSynth };
 export declare const PATTERN_COUNT: number;
 export declare const MAX_STEPS_IN_PATTERN: number;
 export declare const MAX_VOICES_IN_PATTERN: number;
