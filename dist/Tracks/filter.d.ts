@@ -13,4 +13,6 @@ export declare enum FilterMode {
     COUNT = 11
 }
 export declare const FilterNames: string[];
+export declare const FilterShortNames: string[];
+export declare const FilterNameMid: string[];
 //# sourceMappingURL=filter.d.ts.map
