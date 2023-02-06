@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FilterMode = void 0;
+exports.FilterNames = exports.FilterMode = void 0;
 var FilterMode;
 (function (FilterMode) {
     FilterMode[FilterMode["OFF"] = 0] = "OFF";
@@ -16,3 +16,16 @@ var FilterMode;
     FilterMode[FilterMode["NOTCH_STATE_VARIABLE"] = 10] = "NOTCH_STATE_VARIABLE";
     FilterMode[FilterMode["COUNT"] = 11] = "COUNT";
 })(FilterMode = exports.FilterMode || (exports.FilterMode = {}));
+exports.FilterNames = [
+    "Off",
+    "Lowpass 12dB",
+    "Lowpass 24dB",
+    "Highpass 12dB",
+    "Highpass 24dB",
+    "Bandpass 12dB",
+    "Bandpass 24dB",
+    "Lowpass State Variable",
+    "Highpass State Variable",
+    "Bandpass State Variable",
+    "Notch State Variable",
+];

@@ -12,3 +12,17 @@ export enum FilterMode {
     NOTCH_STATE_VARIABLE,
     COUNT,
 }
+
+export const FilterNames = [
+    "Off",
+    "Lowpass 12dB",
+    "Lowpass 24dB",
+    "Highpass 12dB",
+    "Highpass 24dB",
+    "Bandpass 12dB",
+    "Bandpass 24dB",
+    "Lowpass State Variable",
+    "Highpass State Variable",
+    "Bandpass State Variable",
+    "Notch State Variable",
+];
