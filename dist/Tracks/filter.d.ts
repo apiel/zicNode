@@ -12,7 +12,7 @@ export declare enum FilterMode {
     NOTCH_STATE_VARIABLE = 10,
     COUNT = 11
 }
-export declare const FilterNames: string[];
+export declare const FilterFullNames: string[];
 export declare const FilterShortNames: string[];
-export declare const FilterNameMid: string[];
+export declare const FilterNames: string[];
 //# sourceMappingURL=filter.d.ts.map

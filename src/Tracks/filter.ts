@@ -13,7 +13,7 @@ export enum FilterMode {
     COUNT,
 }
 
-export const FilterNames = [
+export const FilterFullNames = [
     "Off",
     "Lowpass 12dB",
     "Lowpass 24dB",
@@ -41,7 +41,7 @@ export const FilterShortNames = [
     "Notch SV",
 ];
 
-export const FilterNameMid = [
+export const FilterNames = [
     "Off",
     "Lowpass 12dB",
     "Lowpass 24dB",
