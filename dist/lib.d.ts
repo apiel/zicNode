@@ -1,7 +1,8 @@
 import * as Kick23 from './Tracks/kick23';
 import * as ZicSynth from './Tracks/zicSynth';
+import * as SynthDualOsc from './Tracks/synthDualOsc';
 export * from './Tracks/filter';
-export { Kick23, ZicSynth };
+export { Kick23, ZicSynth, SynthDualOsc };
 export declare const PATTERN_COUNT: number;
 export declare const MAX_STEPS_IN_PATTERN: number;
 export declare const MAX_VOICES_IN_PATTERN: number;
