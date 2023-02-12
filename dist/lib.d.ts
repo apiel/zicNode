@@ -75,14 +75,6 @@ export declare const getAllSequencerStates: () => SequencerStates[];
 export declare const trackNoteOn: (trackIndex: number, note: number, velocity: number, voice?: number) => void;
 export declare const trackNoteOff: (trackIndex: number, note: number, voice?: number) => void;
 export declare const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void;
-export declare enum PdPathIds {
-    Patch = 0
-}
-export declare enum SynthPathIds {
-    Osc = 0,
-    Lfo1 = 1,
-    Lfo2 = 2
-}
 export declare const trackSetString: (trackIndex: number, value: string, stringId?: number) => void;
 export declare const trackSetNumber: (trackIndex: number, value: number, numberId?: number) => void;
 export declare const setOnBeatCallback: (callback: () => void) => void;

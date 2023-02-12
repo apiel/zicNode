@@ -104,16 +104,6 @@ export const trackNoteOff: (trackIndex: number, note: number, voice?: number) =>
 export const trackCc: (trackIndex: number, cc: number, value: number, voice?: number) => void =
     zic.trackCc;
 
-export enum PdPathIds {
-    Patch = 0,
-}
-
-export enum SynthPathIds {
-    Osc = 0,
-    Lfo1 = 1,
-    Lfo2 = 2,
-}
-
 export const trackSetString: (trackIndex: number, value: string, stringId?: number) => void =
     zic.trackSetString;
 

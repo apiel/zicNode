@@ -11,7 +11,6 @@ import {
     setPatternStep,
     setSequencerState,
     start,
-    SynthPathIds,
     trackNoteOff,
     trackNoteOn,
     trackSetString,
@@ -26,6 +25,8 @@ import {
     getMasterVolume,
     getWavetable,
 } from './lib';
+
+import * as SynthDualOsc from './Tracks/synthDualOsc';
 
 console.log('Zic node');
 
@@ -63,9 +64,8 @@ trackSetString(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
 
 trackSetString(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
 
-trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Osc);
-trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo1);
-trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthPathIds.Lfo2);
+trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
+trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
 
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));

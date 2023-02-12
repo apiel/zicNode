@@ -29,7 +29,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.SynthPathIds = exports.PdPathIds = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.getAudoDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATTERN_COUNT = exports.ZicSynth = exports.Kick23 = void 0;
+exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.getAudoDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATTERN_COUNT = exports.ZicSynth = exports.Kick23 = void 0;
 const bindings_1 = __importDefault(require("bindings"));
 const Kick23 = __importStar(require("./Tracks/kick23"));
 exports.Kick23 = Kick23;
@@ -65,16 +65,6 @@ exports.getAllSequencerStates = zic.getAllSequencerStates;
 exports.trackNoteOn = zic.trackNoteOn;
 exports.trackNoteOff = zic.trackNoteOff;
 exports.trackCc = zic.trackCc;
-var PdPathIds;
-(function (PdPathIds) {
-    PdPathIds[PdPathIds["Patch"] = 0] = "Patch";
-})(PdPathIds = exports.PdPathIds || (exports.PdPathIds = {}));
-var SynthPathIds;
-(function (SynthPathIds) {
-    SynthPathIds[SynthPathIds["Osc"] = 0] = "Osc";
-    SynthPathIds[SynthPathIds["Lfo1"] = 1] = "Lfo1";
-    SynthPathIds[SynthPathIds["Lfo2"] = 2] = "Lfo2";
-})(SynthPathIds = exports.SynthPathIds || (exports.SynthPathIds = {}));
 exports.trackSetString = zic.trackSetString;
 exports.trackSetNumber = zic.trackSetNumber;
 exports.setOnBeatCallback = zic.setOnBeatCallback;

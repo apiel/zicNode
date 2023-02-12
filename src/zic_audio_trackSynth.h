@@ -1,14 +1,15 @@
 #ifndef ZIC_AUDIO_TRACK_SYNTH_H_
 #define ZIC_AUDIO_TRACK_SYNTH_H_
 
-#include "./zic_audio_synth.h"
+#include "./zic_audio_synth_dualOsc.h"
 #include "./zic_audio_track.h"
 
 #include <zic_note.h>
 
 class Zic_Audio_TrackSynth : public Zic_Audio_Track {
 public:
-    Zic_Audio_Synth synth;
+    // TODO want to add some "effect" to the synth like bitcrusher, waveshaper, etc
+    Zic_Audio_SynthDualOsc synth;
 
     Zic_Audio_TrackSynth(uint8_t _id = 0, const char* _name = NULL)
         : Zic_Audio_Track(_id, _name)
@@ -42,7 +43,7 @@ public:
 
     void cc(uint8_t num, uint8_t val, uint8_t voice = 0) override
     {
-        if (num == 5) {
+        if (num == 5 || num == 21) {
             setFloat(Zic::NOTE_FREQ[val], num);
         } else if (num == 7) {
             setFloat(pow(val, 2), num);
@@ -52,9 +53,6 @@ public:
             setFloat(val * 0.787402, num);
         } else if (num == 10) {
             setFloat(pow(val, 2), num);
-        } else if (num == 16) {
-            // should there be a map table for LFO frequencies?
-            setFloat(val / 127.0f * 20 + 0.01, num);
         } else {
             setFloat(val / 127.0f, num);
         }
@@ -97,61 +95,58 @@ public:
             synth.adsr.setRelease(val);
             break;
         case 11:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_AMP, val);
             break;
         case 12:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_PITCH, val);
             break;
         case 13:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_MORPH, val);
             break;
         case 14:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_CUTOFF, val);
             break;
         case 15:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_ENV, Zic_Audio_Synth::MOD_TARGET_RES, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_RES, val);
             break;
         case 16:
-            synth.lfo[0].setFrequency(val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_AMP2, val);
             break;
         case 17:
-            synth.lfo[0].setAmplitude(val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_PITCH2, val);
             break;
         case 18:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_MORPH2, val);
             break;
         case 19:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_ENV, Zic_Audio_SynthDualOsc::MOD_TARGET_MIX, val);
             break;
         case 20:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            synth.osc2.wavetable.morphPct(val);
             break;
         case 21:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
+            synth.osc2.setFrequency(val);
             break;
         case 22:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_1, Zic_Audio_Synth::MOD_TARGET_RES, val);
+            synth.osc2.setAmplitude(val);
             break;
         case 23:
-            synth.lfo[1].setFrequency(val);
+            synth.updateMix(val);
             break;
         case 24:
-            synth.lfo[1].setAmplitude(val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_AMP, val);
             break;
         case 25:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_AMP, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_PITCH, val);
             break;
         case 26:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_PITCH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_MORPH, val);
             break;
         case 27:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_MORPH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_CUTOFF, val);
             break;
         case 28:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_CUTOFF, val);
-            break;
-        case 29:
-            synth.setModIntensity(Zic_Audio_Synth::MOD_SRC_LFO_2, Zic_Audio_Synth::MOD_TARGET_RES, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_RES, val);
             break;
         }
     }
@@ -163,10 +158,7 @@ public:
             synth.osc.open(path);
             break;
         case 1:
-            synth.lfo[0].open(path);
-            break;
-        case 2:
-            synth.lfo[1].open(path);
+            synth.osc2.open(path);
             break;
         }
     }

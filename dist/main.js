@@ -1,7 +1,31 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const process_1 = require("process");
 const lib_1 = require("./lib");
+const SynthDualOsc = __importStar(require("./Tracks/synthDualOsc"));
 console.log('Zic node');
 // export const PATTERN_COUNT: number = zic.PATTERN_COUNT;
 // export const MAX_STEPS_IN_PATTERN: number = zic.MAX_STEPS_IN_PATTERN;
@@ -28,9 +52,8 @@ console.log('next Bpm', (0, lib_1.getBpm)());
 console.log('master volume', (0, lib_1.getMasterVolume)());
 (0, lib_1.trackSetString)(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
 (0, lib_1.trackSetString)(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
-(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', lib_1.SynthPathIds.Osc);
-(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', lib_1.SynthPathIds.Lfo1);
-(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', lib_1.SynthPathIds.Lfo2);
+(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
+(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
 (0, lib_1.setPatternLength)(0, 4);
 console.log('pattern length', (0, lib_1.getPatternLength)(0));
 (0, lib_1.setPatternStep)(0, 0, 60, 100, false);
