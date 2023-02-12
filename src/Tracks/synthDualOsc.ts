@@ -22,6 +22,7 @@ export enum FloatId {
     Osc2Morph,
     Osc2Frequency,
     Osc2Amplitude,
+    osc2FreqNoteOn,
     Mix,
     osc2ModAmplitude,
     osc2ModPitch,

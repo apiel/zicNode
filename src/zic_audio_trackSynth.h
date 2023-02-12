@@ -131,21 +131,24 @@ public:
             synth.osc2.setAmplitude(val);
             break;
         case 23:
-            synth.updateMix(val);
+            synth.osc2FreqNoteOn = val != 0.0f;
             break;
         case 24:
-            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_AMP, val);
+            synth.updateMix(val);
             break;
         case 25:
-            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_PITCH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_AMP, val);
             break;
         case 26:
-            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_MORPH, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_PITCH, val);
             break;
         case 27:
-            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_CUTOFF, val);
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_MORPH, val);
             break;
         case 28:
+            synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_CUTOFF, val);
+            break;
+        case 29:
             synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_RES, val);
             break;
         }
