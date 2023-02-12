@@ -67,11 +67,13 @@ trackSetString(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth')
 trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
 trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
 
+// Kick
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));
 setPatternStep(0, 0, 60, 100, false);
 setSequencerState(0, 0, true);
 
+// PD
 setPatternLength(1, 8);
 setPatternStep(1, 2, 70, 100, false);
 setPatternStep(1, 6, 80, 100, false);
@@ -79,6 +81,7 @@ setPatternStep(1, 6, 80, 100, false);
 setSequencerState(1, 1, true, { dataId: 23 });
 // console.log('Get sequencer state track 2', getSequencerStates(1));
 
+// Dual osc synth
 setPatternLength(2, 8);
 setPatternStep(2, 2, 75, 100, false);
 setPatternStep(2, 3, 76, 100, false);
@@ -106,7 +109,7 @@ setInterval(() => {
     console.log('keep alive');
 }, 1000);
 
-trackNoteOn(0, 60, 100);
-setTimeout(() => {
-    trackNoteOff(0, 60);
-}, 1000);
+// trackNoteOn(0, 60, 100);
+// setTimeout(() => {
+//     trackNoteOff(0, 60);
+// }, 1000);
