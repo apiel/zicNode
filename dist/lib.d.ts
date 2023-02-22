@@ -26,7 +26,7 @@ interface AudioDeviceInfo {
     preferredSampleRate: number;
     nativeFormats: number;
 }
-export declare const getAudoDeviceInfo: () => AudioDeviceInfo[];
+export declare const getAudioDeviceInfo: () => AudioDeviceInfo[];
 export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;

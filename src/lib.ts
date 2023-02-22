@@ -34,7 +34,7 @@ interface AudioDeviceInfo {
     nativeFormats: number; // Bit mask of supported data formats.
 }
 
-export const getAudoDeviceInfo: () => AudioDeviceInfo[] = zic.getAudoDeviceInfo;
+export const getAudioDeviceInfo: () => AudioDeviceInfo[] = zic.getAudioDeviceInfo;
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;
 export const isAudioRunning: () => boolean = zic.isAudioRunning;

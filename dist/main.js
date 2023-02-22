@@ -43,7 +43,7 @@ console.log('DEFINE VAR', {
     NOTE_START: lib_1.NOTE_START,
     NOTE_END: lib_1.NOTE_END,
 });
-// console.log('getAudoDeviceInfo', getAudoDeviceInfo());
+// console.log('getAudioDeviceInfo', getAudioDeviceInfo());
 console.log('Current Bpm', (0, lib_1.getBpm)());
 (0, lib_1.setBpm)(90);
 console.log('New Bpm', (0, lib_1.getBpm)());

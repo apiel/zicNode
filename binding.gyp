@@ -4,7 +4,6 @@
       "target_name": "zic",
       "cflags!": [
         "-fno-exceptions",
-        '<!@(pkg-config rtmidi --cflags --libs)',
         '<!@(pkg-config sndfile --cflags --libs)'
       ],
       "cflags_cc!": [ 
@@ -15,12 +14,12 @@
         "zic",
         "<!@(node -p \"require('node-addon-api').include\")",
         'lib/rtaudio',
-        '<!@(pkg-config rtmidi --cflags-only-I | sed s/-I//g)',
+        'lib/rtmidi',
         '<!@(pkg-config sndfile --cflags-only-I | sed s/-I//g)'
       ],
       'libraries': [
           '-lrtaudio',
-          '<!@(pkg-config rtmidi --cflags --libs)',
+          '-lrtmidi',
           '<!@(pkg-config sndfile --cflags --libs)'
       ],
       'defines': [ 

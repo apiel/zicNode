@@ -1,6 +1,6 @@
 import { exit } from 'process';
 import {
-    getAudoDeviceInfo,
+    getAudioDeviceInfo,
     getBpm,
     getPattern,
     getPatternLength,
@@ -48,7 +48,7 @@ console.log('DEFINE VAR', {
     NOTE_END,
 });
 
-// console.log('getAudoDeviceInfo', getAudoDeviceInfo());
+// console.log('getAudioDeviceInfo', getAudioDeviceInfo());
 
 console.log('Current Bpm', getBpm());
 setBpm(90);
