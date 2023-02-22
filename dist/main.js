@@ -51,7 +51,6 @@ console.log('New Bpm', (0, lib_1.getBpm)());
 console.log('next Bpm', (0, lib_1.getBpm)());
 console.log('master volume', (0, lib_1.getMasterVolume)());
 (0, lib_1.trackSetString)(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
-(0, lib_1.trackSetString)(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
 (0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
 (0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
 // Kick

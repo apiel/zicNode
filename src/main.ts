@@ -61,9 +61,6 @@ console.log('next Bpm', getBpm());
 console.log('master volume', getMasterVolume());
 
 trackSetString(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
-
-trackSetString(1, '/home/alex/Music/zicJs/zicNode/data/instruments/pd/01_synth');
-
 trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
 trackSetString(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
 

@@ -13,13 +13,3 @@ Need to install libsndfile, rtaudio and rtmidi.
 ```sh
 apt-get install npm libsndfile1 librtmidi-dev librtmidi6 librtaudio6 librtaudio-dev
 ```
-
-Need to install libpd.
-
-```sh
-git clone --recurse-submodules https://github.com/libpd/libpd.git
-cd libpd
-# make MULTI=true // not working with multi instance/thread
-make
-cd ..
-```
