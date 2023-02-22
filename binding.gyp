@@ -21,8 +21,6 @@
         'lib/libsndfile/include',
       ],
       'libraries': [
-          # '-lrtaudio',
-          # '-lrtmidi',
           '-lasound -lpthread',
           '-lsndfile',
       ],
@@ -30,8 +28,6 @@
         'NAPI_DISABLE_CPP_EXCEPTIONS', 
         'ZIC_USE_LIBSNDFILE=1',
         '__LINUX_ALSA__=1',
-        #'__UNIX_JACK__=1',
-        #'__LINUX_PULSE__=1',
         '_REENTRANT=1',
       ],
     }
