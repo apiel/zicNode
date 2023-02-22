@@ -9,9 +9,13 @@ Download debian version instead of github (https://github.com/thestk/rtaudio)
 
 # rtmidi:
 
-tag 5.0.0
+5.0.0
 
 https://github.com/thestk/rtmidi
 
+# libsndfile
 
+1.2.0
+
+https://github.com/libsndfile/libsndfile
 
