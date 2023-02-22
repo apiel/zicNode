@@ -9,5 +9,9 @@ Download debian version instead of github (https://github.com/thestk/rtaudio)
 
 # rtmidi:
 
-Download debian version instead of github (https://github.com/thestk/rtmidi)
+tag 5.0.0
+
+https://github.com/thestk/rtmidi
+
+
 
