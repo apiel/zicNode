@@ -15,7 +15,9 @@ https://github.com/thestk/rtmidi
 
 # libsndfile
 
-1.2.0
+For the moment don't manage to include it directly in the project, therefor need to install
+libsndfile. Maybe should use another library? Or keep it as it is...
 
+1.2.0
 https://github.com/libsndfile/libsndfile
 

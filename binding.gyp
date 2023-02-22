@@ -4,6 +4,7 @@
       "target_name": "zic",
       "cflags!": [
         "-fno-exceptions",
+        '<!@(pkg-config sndfile --cflags --libs)',
       ],
       "cflags_cc!": [ 
         "-fno-exceptions",
@@ -18,11 +19,11 @@
         "<!@(node -p \"require('node-addon-api').include\")",
         'lib/rtaudio',
         'lib/rtmidi',
-        'lib/libsndfile/include',
+        '<!@(pkg-config sndfile --cflags-only-I | sed s/-I//g)',
       ],
       'libraries': [
           '-lasound -lpthread',
-          '-lsndfile',
+          '<!@(pkg-config sndfile --cflags --libs)',
       ],
       'defines': [ 
         'NAPI_DISABLE_CPP_EXCEPTIONS', 
