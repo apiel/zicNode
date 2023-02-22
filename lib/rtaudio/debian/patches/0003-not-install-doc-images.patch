@@ -1,0 +1,17 @@
+Description: Not install doc images
+Author: Jaromír Mikeš <mira.mikes@seznam.cz>
+Forwarded: no
+
+--- rtaudio.orig/configure.ac
++++ rtaudio/configure.ac
+@@ -146,8 +146,8 @@
+ AC_CONFIG_LINKS( [doc/doxygen/multi.txt:doc/doxygen/multi.txt] )
+ AC_CONFIG_LINKS( [doc/doxygen/recording.txt:doc/doxygen/recording.txt] )
+ AC_CONFIG_LINKS( [doc/doxygen/apinotes.txt:doc/doxygen/apinotes.txt] )
+-AC_CONFIG_LINKS( [doc/images/mcgill.gif:doc/images/mcgill.gif] )
+-AC_CONFIG_LINKS( [doc/images/ccrma.gif:doc/images/ccrma.gif] )
++#AC_CONFIG_LINKS( [doc/images/mcgill.gif:doc/images/mcgill.gif] )
++#AC_CONFIG_LINKS( [doc/images/ccrma.gif:doc/images/ccrma.gif] )
+ 
+ # Checks for package options and external software
+ AC_CANONICAL_HOST

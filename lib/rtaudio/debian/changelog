@@ -1,0 +1,251 @@
+rtaudio (5.2.0~ds1-2) unstable; urgency=medium
+
+  [ Dennis Braun ]
+  * Bump Standards Version to 4.6.1
+  * Add libjack-jackd2-dev to B-D and librtaudio-dev
+
+  [ IOhannes m zmölnig ]
+  * Apply 'wrap-and-sort -ast'
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 28 Sep 2022 18:40:45 +0200
+
+rtaudio (5.2.0~ds1-1) unstable; urgency=medium
+
+  [ IOhannes m zmölnig (Debian/GNU) ]
+  * New upstream version 5.2.0~ds1
+    * Refresh patches
+  * Mark libtool and static libraries as not-installed
+  * Update d/copyright
+  * Bump dh-compat to 13
+  * Bump standards version to 4.6.0
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 24 Nov 2021 17:06:31 +0100
+
+rtaudio (5.1.0~ds1-1) unstable; urgency=medium
+
+  * New upstream version 5.1.0~ds1
+
+  [ IOhannes m zmölnig ]
+  * Refresh d/patches and remove those applied upstream
+  * Install README.md
+  * Fix d/watch
+  * Bump dh-compat to 12
+  * Bump standards-version to 4.5.1
+
+  [ Ondřej Nový ]
+  * Use debhelper-compat instead of debian/compat
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit.
+  * Rely on pre-initialized dpkg-architecture variables.
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 02 Apr 2020 09:16:37 +0200
+
+rtaudio (5.0.0~ds-3) unstable; urgency=medium
+
+  [ Jaromír Mikeš ]
+  * Patch forwarded.
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+  * d/control: Set Vcs-* to salsa.debian.org
+
+  [ Felipe Sateler ]
+  * Change maintainer address to debian-multimedia@lists.debian.org
+
+  [ IOhannes m zmölnig ]
+  * Disable 'debug'-mode when building (Closes: #891709)
+  * Use https:// for upstream homepage
+  * Declare that building the package does not require "root"
+  * Bumped dh compat to 11
+  * Bumped standards version to 4.2.1
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Sun, 02 Dec 2018 20:34:21 +0100
+
+rtaudio (5.0.0~ds-2) unstable; urgency=medium
+
+  * Release to unstable.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 24 Oct 2017 05:09:27 +0200
+
+rtaudio (5.0.0~ds-1~exp2) experimental; urgency=medium
+
+  [ IOhannes m zmölnig (Debian/GNU) ]
+  * Removed patch that was erroneously removing a used function.
+  * Patch to enable kFreeBSD/Hurd builds (Closes: #824114)
+    * Drop "linux-any" from arch-specifier
+  * Refreshed remaining patches
+  * Make doc-package depend on libjs-query
+    * Use .links file rather than creating them manually
+  * Updated Files-Excluded to only exclude non-DFSG-free files
+  * Added myself to copyright holders
+  * Switched d/watch to github
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 24 Oct 2017 05:02:13 +0200
+
+rtaudio (5.0.0~ds-1~exp1) experimental; urgency=medium
+
+  * New upstream version 5.0.0~ds
+
+  [ Jaromír Mikeš ]
+  * Refresh patches
+  * Add patch to prevent privacy-breach in generated doc.
+  * Bump soname.
+  * Introduce librtaudio-doc package.
+  * Remove unknown variable from -dev package.
+  * Install readme file also in librtaudio package.
+  * Use File-Excluded in d/copyright for repacking
+  * Update copyright file.
+  * Introduce postclone.sh script for ease of packaging
+  * Set compat/dh 10.
+  * Bump Standards to 4.1.1
+
+  [ IOhannes m zmölnig ]
+  * Modernize Vcs-* stanza
+  * Drop unneeded Conflicts against librtaudio5
+  * Add myself to uploaders
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Mon, 09 Oct 2017 15:38:05 +0200
+
+rtaudio (4.1.2~ds0-4) unstable; urgency=medium
+
+  * Add libpulse-dev to deps of -dev package. (Closes: #833271)
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Tue, 02 Aug 2016 13:37:39 +0200
+
+rtaudio (4.1.2~ds0-3) unstable; urgency=medium
+
+  [ Jaromír Mikeš ]
+  * Upload to unstable.
+  * Tune .gitignore file.
+
+  [ mira ]
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Mon, 01 Aug 2016 19:19:01 +0200
+
+rtaudio (4.1.2~ds0-2) experimental; urgency=medium
+
+  * Not install rtaudio-config file.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Mon, 27 Jun 2016 14:51:40 +0200
+
+rtaudio (4.1.2~ds0-1) experimental; urgency=medium
+
+  * Imported Upstream version 4.1.2~ds0
+  * Bump Standards.
+  * Fix VCS fields.
+  * Remove patches - not apply anymore.
+  * Add patch to not install doc images.
+  * Add patch comment out unused function.
+  * Disable install override.
+  * Bump soname.
+  * Fix hardening.
+  * Install pkg-config.
+  * Install release.txt file as upstream changelog.
+  * Fix pkg-config-bad-directive.
+  * Rename package to librtaudio5a and add Conflicts for librtaudio5.
+  * Add source.lintian-overrides file.
+  * Droping dbg package.
+
+ -- Jaromír Mikeš <mira.mikes@seznam.cz>  Fri, 17 Jun 2016 19:37:01 +0200
+
+rtaudio (4.1.1~ds0-4) unstable; urgency=medium
+
+  * Team upload
+  * Remove myself from the Uploaders list
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 17 Feb 2016 16:58:48 +0000
+
+rtaudio (4.1.1~ds0-3) unstable; urgency=medium
+
+  * Team upload.
+  * Rename librtaudio5v5 for GCC 5 transition.
+  * debian/control: Bump Standards-Version.
+  * debian/patches/0001-buildsystem.patch: Honor LDFLAGS.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 05 Aug 2015 00:53:56 +0200
+
+rtaudio (4.1.1~ds0-2) unstable; urgency=medium
+
+  * Team upload
+
+  [ Jaromír Mikeš ]
+  * Build with autotools-dev. (Closes: #751097)
+
+  [ Felipe Sateler ]
+  * Bump SONAME due to ABI break. Closes: #751069
+
+ -- Felipe Sateler <fsateler@debian.org>  Tue, 10 Jun 2014 10:20:39 -0400
+
+rtaudio (4.1.1~ds0-1) unstable; urgency=medium
+
+  [ Jaromír Mikeš ]
+  * Added myself as uploader
+
+  [ Alessio Treglia ]
+  * New upstream release:
+    - updates to WASAPI API for MinGW compiling
+    - WASAPI bug fixes for audio INPUT mode
+    - DirectSound bug fix for INPUT mode
+    - Bug fixes in Core, Jack, ASIO and DS for internal draining
+      in INPUT mode
+    - updates to test programs for default device specifiers
+    - CMake buildfile update for WASAPI
+    - new setStreamTime function
+  * Improve repackaging mechanism.
+  * Bump debhelper build-dep.
+  * Refresh patches.
+  * Drop 0002-rtaudio_config.patch, adopted upstream.
+  * Refresh debian/copyright.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Sat, 03 May 2014 22:24:09 +0100
+
+rtaudio (4.0.12~ds0-1) unstable; urgency=low
+
+  * Upload to unstable.
+  * New upstream release.
+  * Refresh patches.
+  * Drop 0003-ppc64_support.patchm, applied upstream.
+  * Fix VCS canonical URLs.
+  * Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 08 May 2013 08:31:35 +0200
+
+rtaudio (4.0.11~ds0-2) experimental; urgency=low
+
+  * Add support for powerpc64 builds.
+    Thanks to Hiroyuki Yamamoto for the patch. (Closes: #693590)
+
+ -- Alessio Treglia <alessio@debian.org>  Sun, 18 Nov 2012 10:52:15 +0000
+
+rtaudio (4.0.11~ds0-1) experimental; urgency=low
+
+  * Imported Upstream version 4.0.11~ds0:
+    - Fix memory leak with ALSA
+    - Avoid hung state with JACK.
+    - Add PulseAudio support.
+  * Refresh 0001-buildsystem.patch.
+  * Enable PulseAudio support.
+  * debian/control:
+    - Build on linux only.
+    - Build-Depends on libpulse-dev.
+    - Bump Standards.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 18 Jul 2012 11:38:58 +0200
+
+rtaudio (4.0.10~ds0-2) unstable; urgency=low
+
+  * Don't build static library at all; this change should also fix FTBFS
+    on most architectures.
+
+ -- Alessio Treglia <alessio@debian.org>  Wed, 18 Jan 2012 00:14:38 +0100
+
+rtaudio (4.0.10~ds0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #609240)
+
+ -- Alessio Treglia <alessio@debian.org>  Tue, 17 Jan 2012 09:26:55 +0100

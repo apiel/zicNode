@@ -1,0 +1,14 @@
+Description: Remove privacy-breach-logo from documentation,
+Author: Jaromír Mikeš <mira.mikes@seznam.cz>
+Forwarded: no
+
+--- rtaudio.orig/doc/doxygen/header.html
++++ rtaudio/doc/doxygen/header.html
+@@ -2,7 +2,6 @@
+ <HEAD>
+ <TITLE>The RtAudio Home Page</TITLE>
+ <LINK HREF="doxygen.css" REL="stylesheet" TYPE="text/css">
+-<LINK REL="SHORTCUT ICON" HREF="http://www.music.mcgill.ca/~gary/favicon.ico">
+ </HEAD>
+ <BODY BGCOLOR="#FFFFFF">
+ <CENTER>

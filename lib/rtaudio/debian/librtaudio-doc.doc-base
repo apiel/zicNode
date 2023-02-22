@@ -1,0 +1,9 @@
+Document: librtaudio-doc
+Title: Debian librtaudio Manual
+Author: Gary P. Schiavone <gary@music.mcgill.ca>
+Abstract: This is a programming manual for the librtaudio library.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/librtaudio-dev/api_ref/index.html
+Files: /usr/share/doc/librtaudio-dev/api_ref/*
