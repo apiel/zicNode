@@ -1,5 +1,7 @@
 # rtaudio: 
 
+http://web.mit.edu/carrien/Public/speechlab/marc_code/ADAPT_VC/rtaudio/doc/html/index.html
+
 Download debian version instead of github (https://github.com/thestk/rtaudio)
 
 (5.2.0~ds1)
@@ -8,6 +10,8 @@ Download debian version instead of github (https://github.com/thestk/rtaudio)
 
 
 # rtmidi:
+
+https://www.music.mcgill.ca/~gary/rtmidi/
 
 5.0.0
 
