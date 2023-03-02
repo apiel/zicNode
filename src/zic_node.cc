@@ -214,6 +214,54 @@ Napi::Value getPattern(const Napi::CallbackInfo& info)
     }
 }
 
+Napi::Value setPatch(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 1 || !info[0].IsObject()) {
+            throw Napi::Error::New(env, "Invalid arguments: patch");
+        }
+        Napi::Object patch = info[0].As<Napi::Object>();
+        uint32_t id = patch.Get("id").As<Napi::Number>().Uint32Value();
+        if (id >= ZIC_PATCH_COUNT) {
+            throw Napi::Error::New(env, "Invalid patch id");
+        }
+        Zic_Seq_Patch p;
+        if (patch.Has("floats")) {
+            Napi::Object floats = patch.Get("floats").As<Napi::Object>();
+            Napi::Array names = floats.GetPropertyNames();
+            for (uint32_t i = 0; i < names.Length(); i++) {
+                std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+                float value = floats.Get(strIndex).As<Napi::Number>().FloatValue();
+                p.setFloat(std::stoi(strIndex), value);
+            }
+        }
+        if (patch.Has("strings")) {
+            Napi::Object strings = patch.Get("strings").As<Napi::Object>();
+            Napi::Array names = strings.GetPropertyNames();
+            for (uint32_t i = 0; i < names.Length(); i++) {
+                std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+                std::string value = strings.Get(strIndex).As<Napi::String>().Utf8Value();
+                p.setString(std::stoi(strIndex), value.c_str());
+            }
+        }
+        if (patch.Has("cc")) {
+            Napi::Object cc = patch.Get("cc").As<Napi::Object>();
+            Napi::Array names = cc.GetPropertyNames();
+            for (uint32_t i = 0; i < names.Length(); i++) {
+                std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
+                uint32_t value = cc.Get(strIndex).As<Napi::Number>().Uint32Value();
+                p.setCc(std::stoi(strIndex), value);
+            }
+        }
+        patches[id].set(p);
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
+// FIXME to remove!!
 void __setSequencerPatch(Zic_Seq_LoopState& state, Napi::Object patch)
 {
     state.patch.clear();
@@ -538,6 +586,7 @@ Napi::Value getWavetable(const Napi::CallbackInfo& info)
 Napi::Object Init(Napi::Env env, Napi::Object exports)
 {
     exports.Set(Napi::String::New(env, "PATTERN_COUNT"), Napi::Number::New(env, ZIC_PATTERN_COUNT));
+    exports.Set(Napi::String::New(env, "PATCH_COUNT"), Napi::Number::New(env, ZIC_PATCH_COUNT));
     exports.Set(Napi::String::New(env, "MAX_STEPS_IN_PATTERN"), Napi::Number::New(env, MAX_STEPS_IN_PATTERN));
     exports.Set(Napi::String::New(env, "MAX_VOICES_IN_PATTERN"), Napi::Number::New(env, MAX_VOICES_IN_PATTERN));
     exports.Set(Napi::String::New(env, "TRACK_COUNT"), Napi::Number::New(env, TRACK_COUNT));
@@ -555,6 +604,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));
     exports.Set(Napi::String::New(env, "getBpm"), Napi::Function::New(env, getBpm));
     exports.Set(Napi::String::New(env, "setBpm"), Napi::Function::New(env, setBpm));
+    exports.Set(Napi::String::New(env, "setPatch"), Napi::Function::New(env, setPatch));
     exports.Set(Napi::String::New(env, "setPatternLength"), Napi::Function::New(env, setPatternLength));
     exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
     exports.Set(Napi::String::New(env, "setPatternStep"), Napi::Function::New(env, setPatternStep));

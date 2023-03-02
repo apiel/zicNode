@@ -9,6 +9,7 @@ export { Kick23, ZicSynth, SynthDualOsc };
 const zic = bindings('zic');
 
 export const PATTERN_COUNT: number = zic.PATTERN_COUNT;
+export const PATCH_COUNT: number = zic.PATCH_COUNT;
 export const MAX_STEPS_IN_PATTERN: number = zic.MAX_STEPS_IN_PATTERN;
 export const MAX_VOICES_IN_PATTERN: number = zic.MAX_VOICES_IN_PATTERN;
 export const TRACK_COUNT: number = zic.TRACK_COUNT;
@@ -58,12 +59,14 @@ interface PatternStep {
 }
 export const getPattern: (index: number) => PatternStep[][] = zic.getPattern;
 
-export interface SequencerPatch {
+export interface Patch {
     strings: { [key: number]: string };
     floats: { [key: number]: number };
     cc: { [key: number]: number };
     id: number;
 }
+
+export const setPatch: (patch: Patch) => void = zic.setSequencerState;
 
 export const setSequencerState: (
     trackIndex: number,
@@ -73,7 +76,7 @@ export const setSequencerState: (
         detune?: number;
         next?: boolean; // false for current playing pattern, true for up coming pattern (wait till the end of it)
         dataId?: number; // Used to put arbitrary data reference in the sequencer state
-        patch?: SequencerPatch;
+        patch?: Patch;
     },
 ) => void = zic.setSequencerState;
 
@@ -82,7 +85,7 @@ export interface SequencerState {
     detune: number;
     playing: boolean;
     dataId: number; // Used to put arbitrary data reference in the sequencer state
-    patch: SequencerPatch;
+    patch: Patch;
 }
 
 export interface SequencerStates {

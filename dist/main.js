@@ -50,9 +50,9 @@ console.log('New Bpm', (0, lib_1.getBpm)());
 (0, lib_1.start)(123);
 console.log('next Bpm', (0, lib_1.getBpm)());
 console.log('master volume', (0, lib_1.getMasterVolume)());
-(0, lib_1.trackSetString)(0, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav');
-(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.oscWavetable);
-(0, lib_1.trackSetString)(2, '/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav', SynthDualOsc.StringId.osc2Wavetable);
+(0, lib_1.trackSetString)(0, `${__dirname}/../data/wavetables/0_test.wav`);
+(0, lib_1.trackSetString)(2, `${__dirname}/../data/wavetables/0_test.wav`, SynthDualOsc.StringId.oscWavetable);
+(0, lib_1.trackSetString)(2, `${__dirname}/../data/wavetables/0_test.wav`, SynthDualOsc.StringId.osc2Wavetable);
 // Kick
 (0, lib_1.setPatternLength)(0, 4);
 console.log('pattern length', (0, lib_1.getPatternLength)(0));
@@ -72,7 +72,7 @@ console.log('pattern length', (0, lib_1.getPatternLength)(0));
 (0, lib_1.setPatternStep)(2, 4, 77, 100, false);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 (0, lib_1.setSequencerState)(2, 2, true, { dataId: 23 });
-console.log('wavetable', (0, lib_1.getWavetable)('/home/alex/Music/zicJs/zicNode/data/wavetables/0_test.wav'));
+console.log('wavetable', (0, lib_1.getWavetable)(`${__dirname}/../data/wavetables/0_test.wav`));
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));
 // });

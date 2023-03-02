@@ -4,6 +4,7 @@ import * as SynthDualOsc from './Tracks/synthDualOsc';
 export * from './Tracks/filter';
 export { Kick23, ZicSynth, SynthDualOsc };
 export declare const PATTERN_COUNT: number;
+export declare const PATCH_COUNT: number;
 export declare const MAX_STEPS_IN_PATTERN: number;
 export declare const MAX_VOICES_IN_PATTERN: number;
 export declare const TRACK_COUNT: number;
@@ -41,7 +42,7 @@ interface PatternStep {
     tie: boolean;
 }
 export declare const getPattern: (index: number) => PatternStep[][];
-export interface SequencerPatch {
+export interface Patch {
     strings: {
         [key: number]: string;
     };
@@ -53,18 +54,19 @@ export interface SequencerPatch {
     };
     id: number;
 }
+export declare const setPatch: (patch: Patch) => void;
 export declare const setSequencerState: (trackIndex: number, patternIndex: number, playing: boolean, options?: {
     detune?: number;
     next?: boolean;
     dataId?: number;
-    patch?: SequencerPatch;
+    patch?: Patch;
 }) => void;
 export interface SequencerState {
     patternIndex: number;
     detune: number;
     playing: boolean;
     dataId: number;
-    patch: SequencerPatch;
+    patch: Patch;
 }
 export interface SequencerStates {
     current: SequencerState;
