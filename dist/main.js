@@ -56,23 +56,23 @@ console.log('master volume', (0, lib_1.getMasterVolume)());
 // Kick
 (0, lib_1.setPatternLength)(0, 4);
 console.log('pattern length', (0, lib_1.getPatternLength)(0));
-(0, lib_1.setPatternStep)(0, 0, 60, 100, false);
+(0, lib_1.setPatternStep)(0, 0, 60, 100, false, 800);
 (0, lib_1.setSequencerState)(0, 0, true);
-// PD
+// Synth
 (0, lib_1.setPatternLength)(1, 8);
-(0, lib_1.setPatternStep)(1, 2, 70, 100, false);
-(0, lib_1.setPatternStep)(1, 6, 80, 100, false);
+(0, lib_1.setPatternStep)(1, 2, 70, 100, false, 0);
+(0, lib_1.setPatternStep)(1, 6, 80, 100, false, 0);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 (0, lib_1.setSequencerState)(1, 1, true, { dataId: 23 });
 // console.log('Get sequencer state track 2', getSequencerStates(1));
-// Dual osc synth
+// Synth
 (0, lib_1.setPatternLength)(2, 8);
-(0, lib_1.setPatternStep)(2, 2, 75, 100, false);
-(0, lib_1.setPatternStep)(2, 3, 76, 100, false);
-(0, lib_1.setPatternStep)(2, 4, 77, 100, false);
+(0, lib_1.setPatternStep)(2, 2, 75, 100, false, 0);
+(0, lib_1.setPatternStep)(2, 3, 76, 100, false, 0);
+(0, lib_1.setPatternStep)(2, 4, 77, 100, false, 0);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 (0, lib_1.setSequencerState)(2, 2, true, { dataId: 23 });
-console.log('wavetable', (0, lib_1.getWavetable)(`${__dirname}/../data/wavetables/0_test.wav`));
+// console.log('wavetable', getWavetable(`${__dirname}/../data/wavetables/0_test.wav`));
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));
 // });

@@ -49,6 +49,7 @@ export const setPatternStep: (
     note: number,
     velocity: number,
     tie: boolean,
+    patchId: number,
     voice?: number,
 ) => void = zic.setPatternStep;
 
@@ -76,7 +77,6 @@ export const setSequencerState: (
         detune?: number;
         next?: boolean; // false for current playing pattern, true for up coming pattern (wait till the end of it)
         dataId?: number; // Used to put arbitrary data reference in the sequencer state
-        patch?: Patch;
     },
 ) => void = zic.setSequencerState;
 
@@ -85,7 +85,6 @@ export interface SequencerState {
     detune: number;
     playing: boolean;
     dataId: number; // Used to put arbitrary data reference in the sequencer state
-    patch: Patch;
 }
 
 export interface SequencerStates {

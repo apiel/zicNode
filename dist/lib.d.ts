@@ -35,7 +35,7 @@ export declare const getBpm: () => number;
 export declare const setBpm: (bpm: number) => void;
 export declare const setPatternLength: (index: number, length: number) => void;
 export declare const getPatternLength: (index: number) => number;
-export declare const setPatternStep: (index: number, stepIndex: number, note: number, velocity: number, tie: boolean, voice?: number) => void;
+export declare const setPatternStep: (index: number, stepIndex: number, note: number, velocity: number, tie: boolean, patchId: number, voice?: number) => void;
 interface PatternStep {
     note: number;
     velocity: number;
@@ -59,14 +59,12 @@ export declare const setSequencerState: (trackIndex: number, patternIndex: numbe
     detune?: number;
     next?: boolean;
     dataId?: number;
-    patch?: Patch;
 }) => void;
 export interface SequencerState {
     patternIndex: number;
     detune: number;
     playing: boolean;
     dataId: number;
-    patch: Patch;
 }
 export interface SequencerStates {
     current: SequencerState;

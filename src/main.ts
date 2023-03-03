@@ -62,31 +62,35 @@ console.log('master volume', getMasterVolume());
 
 trackSetString(0, `${__dirname}/../data/wavetables/0_test.wav`);
 trackSetString(2, `${__dirname}/../data/wavetables/0_test.wav`, SynthDualOsc.StringId.oscWavetable);
-trackSetString(2, `${__dirname}/../data/wavetables/0_test.wav`, SynthDualOsc.StringId.osc2Wavetable);
+trackSetString(
+    2,
+    `${__dirname}/../data/wavetables/0_test.wav`,
+    SynthDualOsc.StringId.osc2Wavetable,
+);
 
 // Kick
 setPatternLength(0, 4);
 console.log('pattern length', getPatternLength(0));
-setPatternStep(0, 0, 60, 100, false);
+setPatternStep(0, 0, 60, 100, false, 800);
 setSequencerState(0, 0, true);
 
-// PD
+// Synth
 setPatternLength(1, 8);
-setPatternStep(1, 2, 70, 100, false);
-setPatternStep(1, 6, 80, 100, false);
+setPatternStep(1, 2, 70, 100, false, 0);
+setPatternStep(1, 6, 80, 100, false, 0);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(1, 1, true, { dataId: 23 });
 // console.log('Get sequencer state track 2', getSequencerStates(1));
 
-// Dual osc synth
+// Synth
 setPatternLength(2, 8);
-setPatternStep(2, 2, 75, 100, false);
-setPatternStep(2, 3, 76, 100, false);
-setPatternStep(2, 4, 77, 100, false);
+setPatternStep(2, 2, 75, 100, false, 0);
+setPatternStep(2, 3, 76, 100, false, 0);
+setPatternStep(2, 4, 77, 100, false, 0);
 // console.log('pattern', JSON.stringify(getPattern(1), null, 4));
 setSequencerState(2, 2, true, { dataId: 23 });
 
-console.log('wavetable', getWavetable(`${__dirname}/../data/wavetables/0_test.wav`));
+// console.log('wavetable', getWavetable(`${__dirname}/../data/wavetables/0_test.wav`));
 
 // setOnBeatCallback(() => {
 //     console.log('new beat from C++', getSequencerStates(0));

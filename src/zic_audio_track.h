@@ -2,8 +2,10 @@
 #define ZIC_AUDIO_TRACK_H_
 
 #include "./zic_audio_track_def.h"
+#include "./zic_state.h"
 
 #include <zic_seq_loop.h>
+#include <zic_seq_patch.h>
 
 class Zic_Audio_Track {
 protected:
@@ -11,7 +13,7 @@ protected:
 
 public:
     uint8_t id = 0;
-    uint16_t patchId = -1; // Set to biggest number to make sure it's not loaded
+    uint16_t lastPatchUpdatedId = -1; // Set to biggest number to make sure it's not loaded
     const char* name;
 
     Zic_Seq_Loop looper;
@@ -31,21 +33,24 @@ public:
     virtual void setString(const char* path, uint16_t num = 0) { }
     virtual void sample(float* buf, int len) = 0;
 
-    virtual void loadPatch()
+    virtual void loadPatch(uint16_t patchId)
     {
-        if (looper.state.patch.id == patchId) {
+        Zic_Seq_Patch& patch = patches[patchId];
+
+        if (patch.updateId == lastPatchUpdatedId) {
             return;
         }
-        patchId = looper.state.patch.id;
-        for (uint16_t i = 0; i < looper.state.patch.floatsCount; i++) {
-            setFloat(looper.state.patch.floats[i], i);
+        lastPatchUpdatedId = patch.updateId;
+
+        for (uint16_t i = 0; i < patch.floatsCount; i++) {
+            setFloat(patch.floats[i], i);
         }
-        for (uint16_t i = 0; i < looper.state.patch.stringsCount; i++) {
-            setString(looper.state.patch.strings[i], i);
+        for (uint16_t i = 0; i < patch.stringsCount; i++) {
+            setString(patch.strings[i], i);
         }
-        for (uint16_t i = 0; i < looper.state.patch.ccCount; i++) {
+        for (uint16_t i = 0; i < patch.ccCount; i++) {
             // Keep it simple for the moment and not have voice/channel for cc
-            cc(i, looper.state.patch.cc[i]);
+            cc(i, patch.cc[i]);
         }
     }
 
@@ -61,10 +66,6 @@ public:
 
     void next()
     {
-        if (looper.next()) {
-            loadPatch();
-        }
-
         // TODO need to handle tie
         for (uint8_t i = 0; i < MAX_VOICES_IN_PATTERN; i++) {
             if (stepOff[i] && !stepOff[i]->tie) {
@@ -73,8 +74,11 @@ public:
                 stepOff[i] = NULL;
             }
             if (looper.state.playing && looper.stepOn != 255) {
+                // printf("stepOn\n");
                 Zic_Seq_Step* step = &looper.state.pattern->steps[i][looper.stepOn];
                 if (step->note > 0) {
+                    printf("note on %d\n", step->note);
+                    loadPatch(step->patchId);
                     noteOn(step->note, step->velocity, i);
                     stepOff[i] = step;
                 }
