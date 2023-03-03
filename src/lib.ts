@@ -66,7 +66,7 @@ export interface Patch {
     id: number;
 }
 
-export const setPatch: (patch: Patch) => void = zic.setSequencerState;
+export const setPatch: (patch: Patch) => void = zic.setPatch;
 
 export const setSequencerState: (
     trackIndex: number,
