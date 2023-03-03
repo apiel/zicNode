@@ -264,40 +264,6 @@ Napi::Value setPatch(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
-// // FIXME to remove!!
-// void __setSequencerPatch(Zic_Seq_LoopState& state, Napi::Object patch)
-// {
-//     state.patch.clear();
-//     state.patch.id = patch.Get("id").As<Napi::Number>().Uint32Value();
-//     if (patch.Has("floats")) {
-//         Napi::Object floats = patch.Get("floats").As<Napi::Object>();
-//         Napi::Array names = floats.GetPropertyNames();
-//         for (uint32_t i = 0; i < names.Length(); i++) {
-//             std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
-//             float value = floats.Get(strIndex).As<Napi::Number>().FloatValue();
-//             state.patch.setFloat(std::stoi(strIndex), value);
-//         }
-//     }
-//     if (patch.Has("strings")) {
-//         Napi::Object strings = patch.Get("strings").As<Napi::Object>();
-//         Napi::Array names = strings.GetPropertyNames();
-//         for (uint32_t i = 0; i < names.Length(); i++) {
-//             std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
-//             std::string value = strings.Get(strIndex).As<Napi::String>().Utf8Value();
-//             state.patch.setString(std::stoi(strIndex), value.c_str());
-//         }
-//     }
-//     if (patch.Has("cc")) {
-//         Napi::Object cc = patch.Get("cc").As<Napi::Object>();
-//         Napi::Array names = cc.GetPropertyNames();
-//         for (uint32_t i = 0; i < names.Length(); i++) {
-//             std::string strIndex = names.Get(i).As<Napi::String>().Utf8Value();
-//             uint32_t value = cc.Get(strIndex).As<Napi::Number>().Uint32Value();
-//             state.patch.setCc(std::stoi(strIndex), value);
-//         }
-//     }
-// }
-
 Napi::Value setSequencerState(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -326,10 +292,6 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
             if (options.Has("detune")) {
                 detune = options.Get("detune").As<Napi::Number>().Uint32Value();
             }
-            // if (options.Has("patch")) {
-            //     Napi::Object patch = options.Get("patch").As<Napi::Object>();
-            //     __setSequencerPatch(state, patch);
-            // }
         }
         state.pattern = &patterns[patternIndex];
         state.detune = detune;
@@ -341,28 +303,6 @@ Napi::Value setSequencerState(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
-// Napi::Object __getSequencerStatePatch(Napi::Env& env, Zic_Seq_LoopState& state)
-// {
-//     Napi::Object patch = Napi::Object::New(env);
-//     Napi::Object floatValues = Napi::Object::New(env);
-//     for (uint16_t i = 0; i < state.patch.floatsCount; i++) {
-//         floatValues.Set(i, Napi::Number::New(env, state.patch.floats[i]));
-//     }
-//     Napi::Object strValues = Napi::Object::New(env);
-//     for (uint16_t i = 0; i < state.patch.stringsCount; i++) {
-//         strValues.Set(i, Napi::String::New(env, state.patch.strings[i]));
-//     }
-//     Napi::Object ccValues = Napi::Object::New(env);
-//     for (uint16_t i = 0; i < state.patch.ccCount; i++) {
-//         ccValues.Set(i, Napi::Number::New(env, state.patch.cc[i]));
-//     }
-//     patch.Set("floats", floatValues);
-//     patch.Set("strings", strValues);
-//     patch.Set("cc", ccValues);
-//     patch.Set("id", Napi::Number::New(env, state.patch.id));
-//     return patch;
-// }
-
 Napi::Object __getSequencerStates(Napi::Env& env, uint32_t trackIndex)
 {
     Napi::Object states = Napi::Object::New(env);
@@ -372,14 +312,12 @@ Napi::Object __getSequencerStates(Napi::Env& env, uint32_t trackIndex)
     state.Set("detune", Napi::Number::New(env, looper.state.detune));
     state.Set("playing", Napi::Boolean::New(env, looper.state.playing));
     state.Set("dataId", Napi::Number::New(env, looper.state.dataId));
-    // state.Set("patch", __getSequencerStatePatch(env, looper.state));
     states.Set("current", state);
     state = Napi::Object::New(env);
     state.Set("patternIndex", looper.nextState.pattern ? Napi::Number::New(env, looper.nextState.pattern->id) : env.Null());
     state.Set("detune", Napi::Number::New(env, looper.nextState.detune));
     state.Set("playing", Napi::Boolean::New(env, looper.nextState.playing));
     state.Set("dataId", Napi::Number::New(env, looper.nextState.dataId));
-    // state.Set("patch", __getSequencerStatePatch(env, looper.nextState));
     states.Set("next", state);
     states.Set("currentStep", Napi::Number::New(env, looper.currentStep));
     return states;
