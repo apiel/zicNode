@@ -49,6 +49,7 @@ public:
         unsigned int bufferFrames = APP_AUDIO_CHUNK;
         audioParams.deviceId = deviceId;
         audioParams.nChannels = APP_CHANNELS;
+        audio.showWarnings(false);
         try {
             audio.openStream(&audioParams, NULL, FORMAT, SAMPLE_RATE, &bufferFrames, &audioCallback);
             audio.startStream();
