@@ -66,18 +66,17 @@ public:
 
     void next()
     {
+        looper.next();
+
         // TODO need to handle tie
         for (uint8_t i = 0; i < MAX_VOICES_IN_PATTERN; i++) {
             if (stepOff[i] && !stepOff[i]->tie) {
-                // printf("note off %d\n", stepOff[i]->note);
                 noteOff(stepOff[i]->note, i);
                 stepOff[i] = NULL;
             }
             if (looper.state.playing && looper.stepOn != 255) {
-                // printf("stepOn\n");
                 Zic_Seq_Step* step = &looper.state.pattern->steps[i][looper.stepOn];
                 if (step->note > 0) {
-                    printf("note on %d\n", step->note);
                     loadPatch(step->patchId);
                     noteOn(step->note, step->velocity, i);
                     stepOff[i] = step;
