@@ -66,7 +66,7 @@ Napi::Array getAudioDeviceInfo(const Napi::CallbackInfo& info)
     return devices;
 }
 
-Napi::Object getMidiDeviceInfo(const Napi::CallbackInfo& info)
+Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
 
@@ -573,7 +573,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "ZIC_PATCH_MAX_CC"), Napi::Number::New(env, ZIC_PATCH_MAX_CC));
 
     exports.Set(Napi::String::New(env, "getAudioDeviceInfo"), Napi::Function::New(env, getAudioDeviceInfo));
-    exports.Set(Napi::String::New(env, "getMidiDeviceInfo"), Napi::Function::New(env, getMidiDeviceInfo));
+    exports.Set(Napi::String::New(env, "getMidiDevices"), Napi::Function::New(env, getMidiDevices));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));

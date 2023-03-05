@@ -47,7 +47,7 @@ interface MidiDevices {
     output: MidiDeviceInfo[];
 }
 
-export const getMidiDeviceInfo: () => MidiDevices = zic.getMidiDeviceInfo;
+export const getMidiDevices: () => MidiDevices = zic.getMidiDevices;
 
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;
