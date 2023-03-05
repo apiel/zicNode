@@ -113,7 +113,7 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
     if (info.Length() < 2) {
-        return error(env, "Invalid number of arguments: setMidiCallback(inputPort: number, callback: () => void)");
+        return error(env, "Invalid number of arguments: setMidiCallback(inputPort: number, callback: () => void, ignoreTypes?: {midiSysex: boolean, midiTime: boolean, midiSense: boolean})");
     }
     if (!info[0].IsNumber()) {
         return error(env, "inputPort must be a number.");
@@ -126,12 +126,12 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
         struct Data {
             double deltatime;
             std::vector<unsigned char>* message;
-            uint32_t * port;
+            uint32_t* port;
         };
         Data* data = new Data();
         data->deltatime = deltatime;
         data->message = message;
-        data->port = (uint32_t *)userData;
+        data->port = (uint32_t*)userData;
 
         auto callback = [](Napi::Env env, Napi::Function jsCallback, Data* value) {
             Napi::Object obj = Napi::Object::New(env);
@@ -153,7 +153,13 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
     midiin->openPort(port);
     midiin->setCallback(&midiCallback, &port);
 
-    // midiin->ignoreTypes( false, false, false );
+    if (info.Length() > 2 && info[2].IsObject()) {
+        Napi::Object ignoreTypes = info[2].As<Napi::Object>();
+        midiin->ignoreTypes(
+            ignoreTypes.Get("midiSysex").As<Napi::Boolean>().Value(),
+            ignoreTypes.Get("midiTime").As<Napi::Boolean>().Value(),
+            ignoreTypes.Get("midiSense").As<Napi::Boolean>().Value());
+    }
 
     return env.Undefined();
 }
