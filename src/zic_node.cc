@@ -148,6 +148,23 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+struct MidiInput {
+    RtMidiIn* midiin;
+    uint32_t port;
+};
+
+std::vector<MidiInput*> midiInputs;
+
+MidiInput* getMidiInput(uint32_t port)
+{
+    for (unsigned int i = 0; i < midiInputs.size(); i++) {
+        if (midiInputs[i]->port == port) {
+            return midiInputs[i];
+        }
+    }
+    return NULL;
+}
+
 Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -158,20 +175,30 @@ Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
         return error(env, "inputPort must be a number.");
     }
 
-    RtMidiIn* midiin = new RtMidiIn();
     uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+    if (getMidiInput(port) != NULL) {
+        // return error(env, "Already listening to this port.");
+        return env.Undefined();
+    }
 
-    if (port >= midiin->getPortCount()) {
+    MidiInput* midiInput = new MidiInput();
+    midiInputs.push_back(midiInput);
+    midiInput->midiin = new RtMidiIn();
+    midiInput->port = port;
+
+    if (midiInput->port >= midiInput->midiin->getPortCount()) {
         return error(env, "Invalid port number.");
     }
 
-    midiin->openPort(port);
-    // FIXME port userData is not right
-    midiin->setCallback(&midiCallback, &port);
+    midiInput->midiin->openPort(midiInput->port);
+    midiInput->midiin->setCallback(&midiCallback, &midiInput->port);
+
+    // TODO use setErrorCallback
+    // setErrorCallback (RtMidiErrorCallback errorCallback=NULL, void *userData=0)
 
     if (info.Length() > 1 && info[1].IsObject()) {
         Napi::Object ignoreTypes = info[1].As<Napi::Object>();
-        midiin->ignoreTypes(
+        midiInput->midiin->ignoreTypes(
             ignoreTypes.Get("midiSysex").As<Napi::Boolean>().Value(),
             ignoreTypes.Get("midiTime").As<Napi::Boolean>().Value(),
             ignoreTypes.Get("midiSense").As<Napi::Boolean>().Value());
