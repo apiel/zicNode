@@ -100,12 +100,12 @@ Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
 }
 
 Napi::ThreadSafeFunction tsfnMidi;
-void (*onMidi)(double deltatime, std::vector<unsigned char>* message) = NULL;
+void (*onMidi)(double deltatime, std::vector<unsigned char>* message, void* userData) = NULL;
 
 void midiCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
 {
     if (onMidi != NULL) {
-        onMidi(deltatime, message);
+        onMidi(deltatime, message, userData);
     }
 }
 
@@ -122,21 +122,21 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
         return error(env, "callback must be a function.");
     }
     tsfnMidi = Napi::ThreadSafeFunction::New(env, info[1].As<Napi::Function>(), "OnMidi", 0, 1);
-    onMidi = [](double deltatime, std::vector<unsigned char>* message) -> void {
+    onMidi = [](double deltatime, std::vector<unsigned char>* message, void* userData) -> void {
         struct Data {
             double deltatime;
             std::vector<unsigned char>* message;
+            uint32_t * port;
         };
         Data* data = new Data();
         data->deltatime = deltatime;
         data->message = message;
-
-        unsigned int nBytes = message->size();
-        printf("Midi message: %d bytes\n", nBytes);
+        data->port = (uint32_t *)userData;
 
         auto callback = [](Napi::Env env, Napi::Function jsCallback, Data* value) {
             Napi::Object obj = Napi::Object::New(env);
             obj.Set("deltatime", value->deltatime);
+            obj.Set("port", *value->port);
             Napi::Array arr = Napi::Array::New(env);
             for (unsigned int i = 0; i < value->message->size(); i++) {
                 arr.Set(i, value->message->at(i));
@@ -149,8 +149,9 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
     };
 
     RtMidiIn* midiin = new RtMidiIn();
-    midiin->openPort(info[0].As<Napi::Number>().Uint32Value());
-    midiin->setCallback(&midiCallback);
+    uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+    midiin->openPort(port);
+    midiin->setCallback(&midiCallback, &port);
 
     // midiin->ignoreTypes( false, false, false );
 
