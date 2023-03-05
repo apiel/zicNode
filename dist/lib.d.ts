@@ -48,6 +48,7 @@ export declare const subscribeMidiInput: (inputPort: number, ignoreTypes?: {
     midiTime: boolean;
     midiSense: boolean;
 }) => void;
+export declare const unsubscribeMidiInput: (inputPort: number) => void;
 export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;

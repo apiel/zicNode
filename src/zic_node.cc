@@ -168,11 +168,8 @@ MidiInput* getMidiInput(uint32_t port)
 Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    if (info.Length() < 1) {
-        return error(env, "Invalid number of arguments: listenMidi(inputPort: number, ignoreTypes?: {midiSysex: boolean, midiTime: boolean, midiSense: boolean})");
-    }
-    if (!info[0].IsNumber()) {
-        return error(env, "inputPort must be a number.");
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Invalid arguments: listenMidi(inputPort: number, ignoreTypes?: {midiSysex: boolean, midiTime: boolean, midiSense: boolean})");
     }
 
     uint32_t port = info[0].As<Napi::Number>().Uint32Value();
@@ -207,7 +204,27 @@ Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
-// closeMidi ?
+Napi::Value unsubscribeMidiInput(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Invalid arguments: closeMidi(inputPort: number)");
+    }
+
+    uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+    MidiInput* midiInput = getMidiInput(port);
+    if (midiInput == NULL) {
+        // return error(env, "Not listening to this port.");
+        return env.Undefined();
+    }
+
+    midiInput->midiin->closePort();
+    delete midiInput->midiin;
+    midiInputs.erase(std::remove(midiInputs.begin(), midiInputs.end(), midiInput), midiInputs.end());
+    delete midiInput;
+
+    return env.Undefined();
+}
 
 Napi::Number getBpm(const Napi::CallbackInfo& info)
 {
@@ -686,6 +703,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getMidiDevices"), Napi::Function::New(env, getMidiDevices));
     exports.Set(Napi::String::New(env, "setMidiCallback"), Napi::Function::New(env, setMidiCallback));
     exports.Set(Napi::String::New(env, "subscribeMidiInput"), Napi::Function::New(env, subscribeMidiInput));
+    exports.Set(Napi::String::New(env, "unsubscribeMidiInput"), Napi::Function::New(env, unsubscribeMidiInput));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));
