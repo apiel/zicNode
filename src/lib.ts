@@ -48,7 +48,14 @@ interface MidiDevices {
 }
 
 export const getMidiDevices: () => MidiDevices = zic.getMidiDevices;
-export const setMidiCallback: (inputPort: number, callback: () => void) => void = zic.setMidiCallback;
+
+interface MidiMessage {
+    port: number;
+    deltatime: number;
+    message: number[];
+}
+
+export const setMidiCallback: (inputPort: number, callback: (data: MidiMessage) => void) => void = zic.setMidiCallback;
 
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;

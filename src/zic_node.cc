@@ -100,24 +100,17 @@ Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
 }
 
 Napi::ThreadSafeFunction tsfnMidi;
-void (*onMidi)(void) = NULL;
+void (*onMidi)(double deltatime, std::vector<unsigned char>* message) = NULL;
 
 void midiCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
 {
-    unsigned int nBytes = message->size();
-    for (unsigned int i = 0; i < nBytes; i++)
-        std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
-    if (nBytes > 0)
-        std::cout << "stamp = " << deltatime << std::endl;
-
     if (onMidi != NULL) {
-        onMidi();
+        onMidi(deltatime, message);
     }
 }
 
 Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
 {
-    printf("setMidiCallback yoyoyo\n");
     Napi::Env env = info.Env();
     if (info.Length() < 2) {
         return error(env, "Invalid number of arguments: setMidiCallback(inputPort: number, callback: () => void)");
@@ -129,13 +122,35 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
         return error(env, "callback must be a function.");
     }
     tsfnMidi = Napi::ThreadSafeFunction::New(env, info[1].As<Napi::Function>(), "OnMidi", 0, 1);
-    onMidi = []() -> void {
-        tsfnMidi.BlockingCall();
+    onMidi = [](double deltatime, std::vector<unsigned char>* message) -> void {
+        struct Data {
+            double deltatime;
+            std::vector<unsigned char>* message;
+        };
+        Data* data = new Data();
+        data->deltatime = deltatime;
+        data->message = message;
+
+        unsigned int nBytes = message->size();
+        printf("Midi message: %d bytes\n", nBytes);
+
+        auto callback = [](Napi::Env env, Napi::Function jsCallback, Data* value) {
+            Napi::Object obj = Napi::Object::New(env);
+            obj.Set("deltatime", value->deltatime);
+            Napi::Array arr = Napi::Array::New(env);
+            for (unsigned int i = 0; i < value->message->size(); i++) {
+                arr.Set(i, value->message->at(i));
+            }
+            obj.Set("message", arr);
+            jsCallback.Call({ obj });
+            delete value;
+        };
+        tsfnMidi.BlockingCall(data, callback);
     };
 
     RtMidiIn* midiin = new RtMidiIn();
     midiin->openPort(info[0].As<Napi::Number>().Uint32Value());
-    midiin->setCallback( &midiCallback );
+    midiin->setCallback(&midiCallback);
 
     // midiin->ignoreTypes( false, false, false );
 
