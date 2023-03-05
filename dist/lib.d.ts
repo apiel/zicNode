@@ -37,6 +37,7 @@ interface MidiDevices {
     output: MidiDeviceInfo[];
 }
 export declare const getMidiDevices: () => MidiDevices;
+export declare const setMidiCallback: (inputPort: number, callback: () => void) => void;
 export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;

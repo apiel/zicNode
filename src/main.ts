@@ -25,6 +25,7 @@ import {
     getMasterVolume,
     getWavetable,
     getMidiDevices,
+    setMidiCallback,
 } from './lib';
 
 import * as SynthDualOsc from './Tracks/synthDualOsc';
@@ -52,6 +53,9 @@ console.log('DEFINE VAR', {
 // console.log('getAudioDeviceInfo', getAudioDeviceInfo());
 
 console.log('getMidiDevices', getMidiDevices());
+setMidiCallback(1, () => {
+    console.log('midi callback');
+});
 
 console.log('Current Bpm', getBpm());
 setBpm(90);

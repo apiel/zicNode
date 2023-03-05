@@ -99,6 +99,51 @@ Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
     return devices;
 }
 
+Napi::ThreadSafeFunction tsfnMidi;
+void (*onMidi)(void) = NULL;
+
+void midiCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
+{
+    unsigned int nBytes = message->size();
+    for (unsigned int i = 0; i < nBytes; i++)
+        std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
+    if (nBytes > 0)
+        std::cout << "stamp = " << deltatime << std::endl;
+
+    if (onMidi != NULL) {
+        onMidi();
+    }
+}
+
+Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
+{
+    printf("setMidiCallback yoyoyo\n");
+    Napi::Env env = info.Env();
+    if (info.Length() < 2) {
+        return error(env, "Invalid number of arguments: setMidiCallback(inputPort: number, callback: () => void)");
+    }
+    if (!info[0].IsNumber()) {
+        return error(env, "inputPort must be a number.");
+    }
+    if (!info[1].IsFunction()) {
+        return error(env, "callback must be a function.");
+    }
+    tsfnMidi = Napi::ThreadSafeFunction::New(env, info[1].As<Napi::Function>(), "OnMidi", 0, 1);
+    onMidi = []() -> void {
+        tsfnMidi.BlockingCall();
+    };
+
+    RtMidiIn* midiin = new RtMidiIn();
+    midiin->openPort(info[0].As<Napi::Number>().Uint32Value());
+    midiin->setCallback( &midiCallback );
+
+    // midiin->ignoreTypes( false, false, false );
+
+    return env.Undefined();
+}
+
+// closeMidi ?
+
 Napi::Number getBpm(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -195,7 +240,7 @@ Napi::Value setPatternStep(const Napi::CallbackInfo& info)
     Napi::Env env = info.Env();
     try {
         if (info.Length() < 6 || !info[0].IsNumber() || !info[1].IsNumber() || !info[2].IsNumber()
-            || !info[3].IsNumber() || !info[4].IsBoolean() || !info[5].IsNumber() 
+            || !info[3].IsNumber() || !info[4].IsBoolean() || !info[5].IsNumber()
             || (info.Length() > 6 && !info[6].IsNumber())) {
             throw Napi::Error::New(env, "Invalid arguments: patternIndex, stepIndex, note, velocity, tie, (voice=0)");
         }
@@ -574,6 +619,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
 
     exports.Set(Napi::String::New(env, "getAudioDeviceInfo"), Napi::Function::New(env, getAudioDeviceInfo));
     exports.Set(Napi::String::New(env, "getMidiDevices"), Napi::Function::New(env, getMidiDevices));
+    exports.Set(Napi::String::New(env, "setMidiCallback"), Napi::Function::New(env, setMidiCallback));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));
