@@ -55,7 +55,12 @@ interface MidiMessage {
     message: number[];
 }
 
-export const setMidiCallback: (callback: (data: MidiMessage) => void) => void = zic.setMidiCallback;
+interface MidiError {
+    port: number;
+    error: string;
+}
+
+export const setMidiCallback: (callback: (data: MidiMessage | MidiError) => void) => void = zic.setMidiCallback;
 
 export const subscribeMidiInput: (
     inputPort: number,

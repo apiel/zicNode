@@ -101,11 +101,19 @@ Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
 
 Napi::ThreadSafeFunction tsfnMidi;
 void (*onMidi)(double deltatime, std::vector<unsigned char>* message, void* userData) = NULL;
+void (*onMidiError)(RtMidiError::Type type, const std::string& errorText, void* userData) = NULL;
 
 void midiCallback(double deltatime, std::vector<unsigned char>* message, void* userData)
 {
     if (onMidi != NULL) {
         onMidi(deltatime, message, userData);
+    }
+}
+
+void midiErrorCallback(RtMidiError::Type type, const std::string& errorText, void* userData)
+{
+    if (onMidiError != NULL) {
+        onMidiError(type, errorText, userData);
     }
 }
 
@@ -139,6 +147,29 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
                 arr.Set(i, value->message->at(i));
             }
             obj.Set("message", arr);
+            jsCallback.Call({ obj });
+            delete value;
+        };
+        tsfnMidi.BlockingCall(data, callback);
+    };
+
+    onMidiError = [](RtMidiError::Type type, const std::string& errorText, void* userData) -> void {
+        struct  Data
+        {
+            RtMidiError::Type type;
+            std::string errorText;
+            uint32_t* port;
+        };
+        Data* data = new Data();
+        data->type = type;
+        data->errorText = errorText;
+        data->port = (uint32_t*)userData;
+
+        auto callback = [](Napi::Env env, Napi::Function jsCallback, Data* value) {
+            Napi::Object obj = Napi::Object::New(env);
+            // obj.Set("type", value->type);
+            obj.Set("error", value->errorText);
+            obj.Set("port", *value->port);
             jsCallback.Call({ obj });
             delete value;
         };
@@ -189,9 +220,7 @@ Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
 
     midiInput->midiin->openPort(midiInput->port);
     midiInput->midiin->setCallback(&midiCallback, &midiInput->port);
-
-    // TODO use setErrorCallback
-    // setErrorCallback (RtMidiErrorCallback errorCallback=NULL, void *userData=0)
+    midiInput->midiin->setErrorCallback(&midiErrorCallback, &midiInput->port);
 
     if (info.Length() > 1 && info[1].IsObject()) {
         Napi::Object ignoreTypes = info[1].As<Napi::Object>();

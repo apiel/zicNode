@@ -42,7 +42,11 @@ interface MidiMessage {
     deltatime: number;
     message: number[];
 }
-export declare const setMidiCallback: (callback: (data: MidiMessage) => void) => void;
+interface MidiError {
+    port: number;
+    error: string;
+}
+export declare const setMidiCallback: (callback: (data: MidiMessage | MidiError) => void) => void;
 export declare const subscribeMidiInput: (inputPort: number, ignoreTypes?: {
     midiSysex: boolean;
     midiTime: boolean;
