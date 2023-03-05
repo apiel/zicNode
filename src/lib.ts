@@ -36,6 +36,19 @@ interface AudioDeviceInfo {
 }
 
 export const getAudioDeviceInfo: () => AudioDeviceInfo[] = zic.getAudioDeviceInfo;
+
+interface MidiDeviceInfo {
+    name: string;
+    port: number;
+}
+
+interface MidiDevices {
+    input: MidiDeviceInfo[];
+    output: MidiDeviceInfo[];
+}
+
+export const getMidiDeviceInfo: () => MidiDevices = zic.getMidiDeviceInfo;
+
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;
 export const isAudioRunning: () => boolean = zic.isAudioRunning;

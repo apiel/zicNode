@@ -66,6 +66,39 @@ Napi::Array getAudioDeviceInfo(const Napi::CallbackInfo& info)
     return devices;
 }
 
+Napi::Object getMidiDeviceInfo(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+
+    RtMidiIn midiIn;
+    RtMidiOut midiOut;
+
+    Napi::Object devices = Napi::Object::New(env);
+    Napi::Array inDevices = Napi::Array::New(env);
+    Napi::Array outDevices = Napi::Array::New(env);
+
+    unsigned int inDeviceCount = midiIn.getPortCount();
+    unsigned int outDeviceCount = midiOut.getPortCount();
+
+    for (unsigned int i = 0; i < inDeviceCount; i++) {
+        Napi::Object device = Napi::Object::New(env);
+        device.Set("port", i);
+        device.Set("name", midiIn.getPortName(i));
+        inDevices.Set(i, device);
+    }
+    for (unsigned int i = 0; i < outDeviceCount; i++) {
+        Napi::Object device = Napi::Object::New(env);
+        device.Set("port", i);
+        device.Set("name", midiOut.getPortName(i));
+        outDevices.Set(i, device);
+    }
+
+    devices.Set("in", inDevices);
+    devices.Set("out", outDevices);
+
+    return devices;
+}
+
 Napi::Number getBpm(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
@@ -540,6 +573,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "ZIC_PATCH_MAX_CC"), Napi::Number::New(env, ZIC_PATCH_MAX_CC));
 
     exports.Set(Napi::String::New(env, "getAudioDeviceInfo"), Napi::Function::New(env, getAudioDeviceInfo));
+    exports.Set(Napi::String::New(env, "getMidiDeviceInfo"), Napi::Function::New(env, getMidiDeviceInfo));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));

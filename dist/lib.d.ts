@@ -28,6 +28,15 @@ interface AudioDeviceInfo {
     nativeFormats: number;
 }
 export declare const getAudioDeviceInfo: () => AudioDeviceInfo[];
+interface MidiDeviceInfo {
+    name: string;
+    port: number;
+}
+interface MidiDevices {
+    input: MidiDeviceInfo[];
+    output: MidiDeviceInfo[];
+}
+export declare const getMidiDeviceInfo: () => MidiDevices;
 export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;
