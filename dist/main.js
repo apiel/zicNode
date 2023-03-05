@@ -44,12 +44,16 @@ console.log('DEFINE VAR', {
     NOTE_END: lib_1.NOTE_END,
 });
 // console.log('getAudioDeviceInfo', getAudioDeviceInfo());
-console.log('getMidiDevices', (0, lib_1.getMidiDevices)());
+const midiDevices = (0, lib_1.getMidiDevices)();
+console.log('getMidiDevices', midiDevices);
 (0, lib_1.setMidiCallback)((data) => {
     console.log('midi callback', data);
 });
-(0, lib_1.subscribeMidiInput)(1);
-(0, lib_1.subscribeMidiInput)(2);
+midiDevices.input.forEach((input) => {
+    if (input.name.startsWith('APC Key 25')) {
+        (0, lib_1.subscribeMidiInput)(input.port);
+    }
+});
 console.log('Current Bpm', (0, lib_1.getBpm)());
 (0, lib_1.setBpm)(90);
 console.log('New Bpm', (0, lib_1.getBpm)());

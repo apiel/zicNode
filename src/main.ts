@@ -53,12 +53,16 @@ console.log('DEFINE VAR', {
 
 // console.log('getAudioDeviceInfo', getAudioDeviceInfo());
 
-console.log('getMidiDevices', getMidiDevices());
+const midiDevices = getMidiDevices();
+console.log('getMidiDevices', midiDevices);
 setMidiCallback((data) => {
     console.log('midi callback', data);
 });
-subscribeMidiInput(1);
-subscribeMidiInput(2);
+midiDevices.input.forEach((input) => {
+    if (input.name.startsWith('APC Key 25')) {
+        subscribeMidiInput(input.port);
+    }
+});
 
 console.log('Current Bpm', getBpm());
 setBpm(90);

@@ -93,8 +93,8 @@ Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
         outDevices.Set(i, device);
     }
 
-    devices.Set("in", inDevices);
-    devices.Set("out", outDevices);
+    devices.Set("input", inDevices);
+    devices.Set("output", outDevices);
 
     return devices;
 }
@@ -160,6 +160,11 @@ Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
 
     RtMidiIn* midiin = new RtMidiIn();
     uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+
+    if (port >= midiin->getPortCount()) {
+        return error(env, "Invalid port number.");
+    }
+
     midiin->openPort(port);
     // FIXME port userData is not right
     midiin->setCallback(&midiCallback, &port);
