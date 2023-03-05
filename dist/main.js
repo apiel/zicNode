@@ -45,9 +45,11 @@ console.log('DEFINE VAR', {
 });
 // console.log('getAudioDeviceInfo', getAudioDeviceInfo());
 console.log('getMidiDevices', (0, lib_1.getMidiDevices)());
-(0, lib_1.setMidiCallback)(1, (data) => {
+(0, lib_1.setMidiCallback)((data) => {
     console.log('midi callback', data);
 });
+(0, lib_1.subscribeMidiInput)(1);
+(0, lib_1.subscribeMidiInput)(2);
 console.log('Current Bpm', (0, lib_1.getBpm)());
 (0, lib_1.setBpm)(90);
 console.log('New Bpm', (0, lib_1.getBpm)());

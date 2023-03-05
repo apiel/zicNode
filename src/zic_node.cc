@@ -112,16 +112,13 @@ void midiCallback(double deltatime, std::vector<unsigned char>* message, void* u
 Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
-    if (info.Length() < 2) {
-        return error(env, "Invalid number of arguments: setMidiCallback(inputPort: number, callback: () => void, ignoreTypes?: {midiSysex: boolean, midiTime: boolean, midiSense: boolean})");
+    if (info.Length() < 1) {
+        return error(env, "Invalid number of arguments: setMidiCallback(callback: () => void)");
     }
-    if (!info[0].IsNumber()) {
-        return error(env, "inputPort must be a number.");
-    }
-    if (!info[1].IsFunction()) {
+    if (!info[0].IsFunction()) {
         return error(env, "callback must be a function.");
     }
-    tsfnMidi = Napi::ThreadSafeFunction::New(env, info[1].As<Napi::Function>(), "OnMidi", 0, 1);
+    tsfnMidi = Napi::ThreadSafeFunction::New(env, info[0].As<Napi::Function>(), "OnMidi", 0, 1);
     onMidi = [](double deltatime, std::vector<unsigned char>* message, void* userData) -> void {
         struct Data {
             double deltatime;
@@ -148,13 +145,27 @@ Napi::Value setMidiCallback(const Napi::CallbackInfo& info)
         tsfnMidi.BlockingCall(data, callback);
     };
 
+    return env.Undefined();
+}
+
+Napi::Value subscribeMidiInput(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1) {
+        return error(env, "Invalid number of arguments: listenMidi(inputPort: number, ignoreTypes?: {midiSysex: boolean, midiTime: boolean, midiSense: boolean})");
+    }
+    if (!info[0].IsNumber()) {
+        return error(env, "inputPort must be a number.");
+    }
+
     RtMidiIn* midiin = new RtMidiIn();
     uint32_t port = info[0].As<Napi::Number>().Uint32Value();
     midiin->openPort(port);
+    // FIXME port userData is not right
     midiin->setCallback(&midiCallback, &port);
 
-    if (info.Length() > 2 && info[2].IsObject()) {
-        Napi::Object ignoreTypes = info[2].As<Napi::Object>();
+    if (info.Length() > 1 && info[1].IsObject()) {
+        Napi::Object ignoreTypes = info[1].As<Napi::Object>();
         midiin->ignoreTypes(
             ignoreTypes.Get("midiSysex").As<Napi::Boolean>().Value(),
             ignoreTypes.Get("midiTime").As<Napi::Boolean>().Value(),
@@ -642,6 +653,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "getAudioDeviceInfo"), Napi::Function::New(env, getAudioDeviceInfo));
     exports.Set(Napi::String::New(env, "getMidiDevices"), Napi::Function::New(env, getMidiDevices));
     exports.Set(Napi::String::New(env, "setMidiCallback"), Napi::Function::New(env, setMidiCallback));
+    exports.Set(Napi::String::New(env, "subscribeMidiInput"), Napi::Function::New(env, subscribeMidiInput));
     exports.Set(Napi::String::New(env, "start"), Napi::Function::New(env, start));
     exports.Set(Napi::String::New(env, "stop"), Napi::Function::New(env, stop));
     exports.Set(Napi::String::New(env, "isAudioRunning"), Napi::Function::New(env, isAudioRunning));

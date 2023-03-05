@@ -55,11 +55,12 @@ interface MidiMessage {
     message: number[];
 }
 
-export const setMidiCallback: (
+export const setMidiCallback: (callback: (data: MidiMessage) => void) => void = zic.setMidiCallback;
+
+export const subscribeMidiInput: (
     inputPort: number,
-    callback: (data: MidiMessage) => void,
     ignoreTypes?: { midiSysex: boolean; midiTime: boolean; midiSense: boolean },
-) => void = zic.setMidiCallback;
+) => void = zic.subscribeMidiInput;
 
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;
