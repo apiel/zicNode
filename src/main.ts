@@ -27,6 +27,7 @@ import {
     getMidiDevices,
     setMidiCallback,
     subscribeMidiInput,
+    sendMidiMessage,
 } from './lib';
 
 import * as SynthDualOsc from './Tracks/synthDualOsc';
@@ -63,6 +64,11 @@ midiDevices.input.forEach((input) => {
         subscribeMidiInput(input.port);
     }
 });
+
+const midiOutput = midiDevices.output.find((output) => output.name.includes('APC Key 25 mk2 C'));
+if (midiOutput) {
+    sendMidiMessage(midiOutput.port, [0x96, 0x00, 0x05]);
+}
 
 console.log('Current Bpm', getBpm());
 setBpm(90);

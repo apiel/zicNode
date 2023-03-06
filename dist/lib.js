@@ -29,7 +29,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.setPatch = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.unsubscribeMidiInput = exports.subscribeMidiInput = exports.setMidiCallback = exports.getMidiDevices = exports.getAudioDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATCH_COUNT = exports.PATTERN_COUNT = exports.SynthDualOsc = exports.ZicSynth = exports.Kick23 = void 0;
+exports.getWavetable = exports.setMasterVolume = exports.getMasterVolume = exports.setOnBeatCallback = exports.trackSetNumber = exports.trackSetString = exports.trackCc = exports.trackNoteOff = exports.trackNoteOn = exports.getAllSequencerStates = exports.getSequencerStates = exports.setSequencerState = exports.setPatch = exports.getPattern = exports.setPatternStep = exports.getPatternLength = exports.setPatternLength = exports.setBpm = exports.getBpm = exports.isAudioRunning = exports.stop = exports.start = exports.sendMidiMessage = exports.closeMidiOutput = exports.unsubscribeMidiInput = exports.subscribeMidiInput = exports.setMidiCallback = exports.getMidiDevices = exports.getAudioDeviceInfo = exports.ZIC_PATCH_MAX_CC = exports.ZIC_PATCH_STRING_LENGTH = exports.ZIC_PATCH_MAX_STRINGS = exports.ZIC_PATCH_MAX_FLOATS = exports.NOTE_END = exports.NOTE_START = exports.SAMPLE_RATE = exports.TRACK_COUNT = exports.MAX_VOICES_IN_PATTERN = exports.MAX_STEPS_IN_PATTERN = exports.PATCH_COUNT = exports.PATTERN_COUNT = exports.SynthDualOsc = exports.ZicSynth = exports.Kick23 = void 0;
 const bindings_1 = __importDefault(require("bindings"));
 const Kick23 = __importStar(require("./Tracks/kick23"));
 exports.Kick23 = Kick23;
@@ -56,6 +56,8 @@ exports.getMidiDevices = zic.getMidiDevices;
 exports.setMidiCallback = zic.setMidiCallback;
 exports.subscribeMidiInput = zic.subscribeMidiInput;
 exports.unsubscribeMidiInput = zic.unsubscribeMidiInput;
+exports.closeMidiOutput = zic.closeMidiOutput;
+exports.sendMidiMessage = zic.sendMidiMessage;
 exports.start = zic.start;
 exports.stop = zic.stop;
 exports.isAudioRunning = zic.isAudioRunning;

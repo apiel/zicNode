@@ -54,6 +54,10 @@ midiDevices.input.forEach((input) => {
         (0, lib_1.subscribeMidiInput)(input.port);
     }
 });
+const midiOutput = midiDevices.output.find((output) => output.name.includes('APC Key 25 mk2 C'));
+if (midiOutput) {
+    (0, lib_1.sendMidiMessage)(midiOutput.port, [0x96, 0x00, 0x05]);
+}
 console.log('Current Bpm', (0, lib_1.getBpm)());
 (0, lib_1.setBpm)(90);
 console.log('New Bpm', (0, lib_1.getBpm)());

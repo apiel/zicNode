@@ -66,7 +66,9 @@ export const subscribeMidiInput: (
     inputPort: number,
     ignoreTypes?: { midiSysex: boolean; midiTime: boolean; midiSense: boolean },
 ) => void = zic.subscribeMidiInput;
-export const unsubscribeMidiInput: (inputPort: number) => void = zic.unsubscribeMidiInput;
+export const unsubscribeMidiInput: (inputPort: number) => void = zic.unsubscribeMidiInput; 
+export const closeMidiOutput: (outputPort: number) => void = zic.closeMidiOutput;
+export const sendMidiMessage: (outputPort: number, message: number[]) => void = zic.sendMidiMessage;
 
 export const start: (deviceId?: number) => void = zic.start;
 export const stop: () => void = zic.stop;

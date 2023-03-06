@@ -1,7 +1,7 @@
 #ifndef ZIC_NODE_MIDI_H_
 #define ZIC_NODE_MIDI_H_
 
-#include <RtAudio.h>
+#include <RtMidi.h>
 #include <napi.h>
 
 #include "zic_node.h"
@@ -191,6 +191,82 @@ Napi::Value unsubscribeMidiInput(const Napi::CallbackInfo& info)
     delete midiInput->midiin;
     midiInputs.erase(std::remove(midiInputs.begin(), midiInputs.end(), midiInput), midiInputs.end());
     delete midiInput;
+
+    return env.Undefined();
+}
+
+struct MidiOutput {
+    RtMidiOut* midiout;
+    uint32_t port;
+};
+
+std::vector<MidiOutput*> midiOutputs;
+
+MidiOutput* getMidiOutput(uint32_t port)
+{
+    for (unsigned int i = 0; i < midiOutputs.size(); i++) {
+        if (midiOutputs[i]->port == port) {
+            return midiOutputs[i];
+        }
+    }
+
+    RtMidiOut* midiout = new RtMidiOut();
+    if (port >= midiout->getPortCount()) {
+        return NULL;
+    }
+
+    midiout->openPort(port);
+    // midiout->setErrorCallback(&errorCallback, &port);
+
+    MidiOutput* midiOutput = new MidiOutput();
+    midiOutputs.push_back(midiOutput);
+    midiOutput->midiout = midiout;
+    midiOutput->port = port;
+
+    return midiOutput;
+}
+
+Napi::Value closeMidiOutput(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 1 || !info[0].IsNumber()) {
+        return error(env, "Invalid arguments: closeMidiOutput(outputPort: number)");
+    }
+
+    uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+    MidiOutput* midiOutput = getMidiOutput(port);
+    if (midiOutput == NULL) {
+        return env.Undefined();
+    }
+
+    midiOutput->midiout->closePort();
+    delete midiOutput->midiout;
+    midiOutputs.erase(std::remove(midiOutputs.begin(), midiOutputs.end(), midiOutput), midiOutputs.end());
+    delete midiOutput;
+
+    return env.Undefined();
+}
+
+Napi::Value sendMidiMessage(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsArray()) {
+        return error(env, "Invalid arguments: sendMidiMessage(outputPort: number, message: number[])");
+    }
+
+    uint32_t port = info[0].As<Napi::Number>().Uint32Value();
+    MidiOutput* midiOutput = getMidiOutput(port);
+    if (midiOutput == NULL) {
+        return env.Undefined();
+    }
+
+    Napi::Array arr = info[1].As<Napi::Array>();
+    std::vector<unsigned char> message;
+    for (unsigned int i = 0; i < arr.Length(); i++) {
+        message.push_back(arr.Get(i).As<Napi::Number>().Uint32Value());
+    }
+
+    midiOutput->midiout->sendMessage(&message);
 
     return env.Undefined();
 }

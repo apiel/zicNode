@@ -53,6 +53,8 @@ export declare const subscribeMidiInput: (inputPort: number, ignoreTypes?: {
     midiSense: boolean;
 }) => void;
 export declare const unsubscribeMidiInput: (inputPort: number) => void;
+export declare const closeMidiOutput: (outputPort: number) => void;
+export declare const sendMidiMessage: (outputPort: number, message: number[]) => void;
 export declare const start: (deviceId?: number) => void;
 export declare const stop: () => void;
 export declare const isAudioRunning: () => boolean;
