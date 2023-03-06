@@ -6,8 +6,6 @@
 
 #include "zic_node.h"
 
-// #include "zic_node_args.h"
-
 Napi::Object getMidiDevices(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
