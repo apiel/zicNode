@@ -15,7 +15,7 @@ export declare const ZIC_PATCH_MAX_FLOATS: number;
 export declare const ZIC_PATCH_MAX_STRINGS: number;
 export declare const ZIC_PATCH_STRING_LENGTH: number;
 export declare const ZIC_PATCH_MAX_CC: number;
-interface AudioDeviceInfo {
+export interface AudioDeviceInfo {
     probed: boolean;
     name: string;
     outputChannels: number;
@@ -28,21 +28,21 @@ interface AudioDeviceInfo {
     nativeFormats: number;
 }
 export declare const getAudioDeviceInfo: () => AudioDeviceInfo[];
-interface MidiDeviceInfo {
+export interface MidiDeviceInfo {
     name: string;
     port: number;
 }
-interface MidiDevices {
+export interface MidiDevices {
     input: MidiDeviceInfo[];
     output: MidiDeviceInfo[];
 }
 export declare const getMidiDevices: () => MidiDevices;
-interface MidiMessage {
+export interface MidiMessage {
     port: number;
     deltatime: number;
     message: number[];
 }
-interface MidiError {
+export interface MidiError {
     port: number;
     error: string;
 }
@@ -63,7 +63,7 @@ export declare const setBpm: (bpm: number) => void;
 export declare const setPatternLength: (index: number, length: number) => void;
 export declare const getPatternLength: (index: number) => number;
 export declare const setPatternStep: (index: number, stepIndex: number, note: number, velocity: number, tie: boolean, patchId: number, voice?: number) => void;
-interface PatternStep {
+export interface PatternStep {
     note: number;
     velocity: number;
     tie: boolean;

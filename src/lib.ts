@@ -22,7 +22,7 @@ export const ZIC_PATCH_MAX_STRINGS: number = zic.ZIC_PATCH_MAX_STRINGS;
 export const ZIC_PATCH_STRING_LENGTH: number = zic.ZIC_PATCH_STRING_LENGTH;
 export const ZIC_PATCH_MAX_CC: number = zic.ZIC_PATCH_MAX_CC;
 
-interface AudioDeviceInfo {
+export interface AudioDeviceInfo {
     probed: boolean; // true if the device capabilities were successfully probed.
     name: string; // Character string device identifier.
     outputChannels: number; // Maximum output channels supported by device.
@@ -37,25 +37,25 @@ interface AudioDeviceInfo {
 
 export const getAudioDeviceInfo: () => AudioDeviceInfo[] = zic.getAudioDeviceInfo;
 
-interface MidiDeviceInfo {
+export interface MidiDeviceInfo {
     name: string;
     port: number;
 }
 
-interface MidiDevices {
+export interface MidiDevices {
     input: MidiDeviceInfo[];
     output: MidiDeviceInfo[];
 }
 
 export const getMidiDevices: () => MidiDevices = zic.getMidiDevices;
 
-interface MidiMessage {
+export interface MidiMessage {
     port: number;
     deltatime: number;
     message: number[];
 }
 
-interface MidiError {
+export interface MidiError {
     port: number;
     error: string;
 }
@@ -87,7 +87,7 @@ export const setPatternStep: (
     voice?: number,
 ) => void = zic.setPatternStep;
 
-interface PatternStep {
+export interface PatternStep {
     note: number;
     velocity: number;
     tie: boolean;
