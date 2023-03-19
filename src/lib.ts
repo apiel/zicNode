@@ -60,13 +60,14 @@ export interface MidiError {
     error: string;
 }
 
-export const setMidiCallback: (callback: (data: MidiMessage | MidiError) => void) => void = zic.setMidiCallback;
+export const setMidiCallback: (callback: (data: MidiMessage | MidiError) => void) => void =
+    zic.setMidiCallback;
 
 export const subscribeMidiInput: (
     inputPort: number,
     ignoreTypes?: { midiSysex: boolean; midiTime: boolean; midiSense: boolean },
 ) => void = zic.subscribeMidiInput;
-export const unsubscribeMidiInput: (inputPort: number) => void = zic.unsubscribeMidiInput; 
+export const unsubscribeMidiInput: (inputPort: number) => void = zic.unsubscribeMidiInput;
 export const closeMidiOutput: (outputPort: number) => void = zic.closeMidiOutput;
 export const sendMidiMessage: (outputPort: number, message: number[]) => void = zic.sendMidiMessage;
 
@@ -86,6 +87,9 @@ export const setPatternStep: (
     patchId: number,
     voice?: number,
 ) => void = zic.setPatternStep;
+
+export const cleanPatternStep: (index: number, stepIndex: number, voice?: number) => void =
+    zic.cleanPatternStep;
 
 export interface PatternStep {
     note: number;

@@ -4,9 +4,9 @@
 #include "zic_node.h"
 #include "zic_node_args.h"
 #include "zic_node_midi.h"
-#include "zic_node_track.h"
 #include "zic_node_pattern.h"
 #include "zic_node_sequencer.h"
+#include "zic_node_track.h"
 #include "zic_server_audio.h"
 
 Napi::ThreadSafeFunction tsfn;
@@ -266,6 +266,7 @@ Napi::Object Init(Napi::Env env, Napi::Object exports)
     exports.Set(Napi::String::New(env, "setPatternLength"), Napi::Function::New(env, setPatternLength));
     exports.Set(Napi::String::New(env, "getPatternLength"), Napi::Function::New(env, getPatternLength));
     exports.Set(Napi::String::New(env, "setPatternStep"), Napi::Function::New(env, setPatternStep));
+    exports.Set(Napi::String::New(env, "cleanPatternStep"), Napi::Function::New(env, cleanPatternStep));
     exports.Set(Napi::String::New(env, "getPattern"), Napi::Function::New(env, getPattern));
     exports.Set(Napi::String::New(env, "setSequencerState"), Napi::Function::New(env, setSequencerState));
     exports.Set(Napi::String::New(env, "getSequencerStates"), Napi::Function::New(env, getSequencerStates));

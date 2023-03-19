@@ -63,6 +63,7 @@ export declare const setBpm: (bpm: number) => void;
 export declare const setPatternLength: (index: number, length: number) => void;
 export declare const getPatternLength: (index: number) => number;
 export declare const setPatternStep: (index: number, stepIndex: number, note: number, velocity: number, tie: boolean, patchId: number, voice?: number) => void;
+export declare const cleanPatternStep: (index: number, stepIndex: number, voice?: number) => void;
 export interface PatternStep {
     note: number;
     velocity: number;

@@ -65,6 +65,28 @@ Napi::Value setPatternStep(const Napi::CallbackInfo& info)
     return env.Undefined();
 }
 
+Napi::Value cleanPatternStep(const Napi::CallbackInfo& info)
+{
+    Napi::Env env = info.Env();
+    try {
+        if (info.Length() < 2 || !info[0].IsNumber() || !info[1].IsNumber()
+            || (info.Length() > 2 && !info[2].IsNumber())) {
+            throw Napi::Error::New(env, "Invalid arguments: patternIndex, stepIndex, (voice=0)");
+        }
+        uint32_t patternIndex = argPatternIndex(info, 0);
+        uint32_t stepIndex = argStepIndex(info, 1);
+        uint32_t voice = 0;
+        if (info.Length() > 2) {
+            voice = argVoiceIndex(info, 2);
+        }
+        Zic_Seq_Step& step = patterns[patternIndex].steps[voice][stepIndex];
+        step.note = 0;
+    } catch (const Napi::Error& e) {
+        e.ThrowAsJavaScriptException();
+    }
+    return env.Undefined();
+}
+
 Napi::Value getPattern(const Napi::CallbackInfo& info)
 {
     Napi::Env env = info.Env();
