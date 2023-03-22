@@ -9,16 +9,20 @@ export declare enum FloatId {
     envAmp2Time = 7,
     envAmp3 = 8,
     envAmp3Time = 9,
-    envFreq1 = 10,
-    envFreq1Time = 11,
-    envFreq2 = 12,
-    envFreq2Time = 13,
-    envFreq3 = 14,
-    envFreq3Time = 15,
-    filterCutoff = 16,
-    filterResonance = 17,
-    distortion = 18,
-    distortionRange = 19
+    envAmp4 = 10,
+    envAmp4Time = 11,
+    envFreq1 = 12,
+    envFreq1Time = 13,
+    envFreq2 = 14,
+    envFreq2Time = 15,
+    envFreq3 = 16,
+    envFreq3Time = 17,
+    envFreq4 = 18,
+    envFreq4Time = 19,
+    filterCutoff = 20,
+    filterResonance = 21,
+    distortion = 22,
+    distortionRange = 23
 }
 export declare enum StringId {
     Wavetable = 0

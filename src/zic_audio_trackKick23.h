@@ -91,33 +91,45 @@ public:
             kick.envelopAmp[4][1] = val;
             break;
         case 10:
-            kick.envelopFreq[2][0] = val;
+            kick.envelopAmp[5][0] = val;
             break;
         case 11:
-            kick.envelopFreq[2][1] = val;
+            kick.envelopAmp[5][1] = val;
             break;
         case 12:
-            kick.envelopFreq[3][0] = val;
+            kick.envelopFreq[2][0] = val;
             break;
         case 13:
-            kick.envelopFreq[3][1] = val;
+            kick.envelopFreq[2][1] = val;
             break;
         case 14:
-            kick.envelopFreq[4][0] = val;
+            kick.envelopFreq[3][0] = val;
             break;
         case 15:
-            kick.envelopFreq[4][1] = val;
+            kick.envelopFreq[3][1] = val;
             break;
         case 16:
-            filter.setFrequency(val);
+            kick.envelopFreq[4][0] = val;
             break;
         case 17:
-            filter.setResonance(val);
+            kick.envelopFreq[4][1] = val;
             break;
         case 18:
-            kick.distortion.setDistortion(val);
+            kick.envelopFreq[5][0] = val;
             break;
         case 19:
+            kick.envelopFreq[5][1] = val;
+            break;
+        case 20:
+            filter.setFrequency(val);
+            break;
+        case 21:
+            filter.setResonance(val);
+            break;
+        case 22:
+            kick.distortion.setDistortion(val);
+            break;
+        case 23:
             kick.distortion.setDistortionRange(val);
             break;
         }
