@@ -29,6 +29,7 @@ export enum FloatId {
     osc2ModMorph,
     osc2ModCutOff,
     osc2ModResonance,
+    osc2Active,
 }
 
 export enum StringId {

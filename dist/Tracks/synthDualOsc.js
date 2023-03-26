@@ -33,6 +33,7 @@ var FloatId;
     FloatId[FloatId["osc2ModMorph"] = 27] = "osc2ModMorph";
     FloatId[FloatId["osc2ModCutOff"] = 28] = "osc2ModCutOff";
     FloatId[FloatId["osc2ModResonance"] = 29] = "osc2ModResonance";
+    FloatId[FloatId["osc2Active"] = 30] = "osc2Active";
 })(FloatId = exports.FloatId || (exports.FloatId = {}));
 var StringId;
 (function (StringId) {

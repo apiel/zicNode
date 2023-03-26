@@ -151,6 +151,9 @@ public:
         case 29:
             synth.setModIntensity(Zic_Audio_SynthDualOsc::MOD_SRC_OSC_2, Zic_Audio_SynthDualOsc::MOD_TARGET_RES, val);
             break;
+        case 30:
+            synth.osc2Active = val != 0.0f;
+            break;
         }
     }
 

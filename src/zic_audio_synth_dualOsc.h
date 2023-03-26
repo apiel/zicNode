@@ -61,19 +61,23 @@ protected:
 
     float _sample()
     {
-        float osc2Out = osc2.next(
-            modValue[MOD_TARGET_AMP2] * modSumIntensity[MOD_TARGET_AMP2],
-            modValue[MOD_TARGET_PITCH2] * modSumIntensity[MOD_TARGET_PITCH2],
-            modValue[MOD_TARGET_MORPH2] * modSumIntensity[MOD_TARGET_MORPH2]);
+        float osc2Out = 0.0f;
+        float modulatedMix = 0.0f;
+        if (osc2Active) {
+            osc2Out = osc2.next(
+                modValue[MOD_TARGET_AMP2] * modSumIntensity[MOD_TARGET_AMP2],
+                modValue[MOD_TARGET_PITCH2] * modSumIntensity[MOD_TARGET_PITCH2],
+                modValue[MOD_TARGET_MORPH2] * modSumIntensity[MOD_TARGET_MORPH2]);
 
-        updateModValue(MOD_SRC_OSC_2, osc2Out);
+            updateModValue(MOD_SRC_OSC_2, osc2Out);
+            modulatedMix = mix + modValue[MOD_TARGET_MIX] * modSumIntensity[MOD_TARGET_MIX];
+        }
 
         float osc1Out = osc.next(
             modValue[MOD_TARGET_AMP] * modSumIntensity[MOD_TARGET_AMP],
             modValue[MOD_TARGET_PITCH] * modSumIntensity[MOD_TARGET_PITCH],
             modValue[MOD_TARGET_MORPH] * modSumIntensity[MOD_TARGET_MORPH]);
 
-        float modulatedMix = mix + modValue[MOD_TARGET_MIX] * modSumIntensity[MOD_TARGET_MIX];
         float mixedOsc = osc1Out * (1.0f - modulatedMix) + osc2Out * modulatedMix;
 
         return filter.next(
@@ -85,6 +89,7 @@ protected:
 public:
     Zic_Osc_Wavetable osc;
     Zic_Osc_Wavetable osc2;
+    bool osc2Active = false;
     Zic_Effect_Filter filter;
     Zic_Mod_Adsr adsr;
     float volume = 1.0f;

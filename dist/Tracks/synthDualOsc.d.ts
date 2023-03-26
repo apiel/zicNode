@@ -28,7 +28,8 @@ export declare enum FloatId {
     osc2ModPitch = 26,
     osc2ModMorph = 27,
     osc2ModCutOff = 28,
-    osc2ModResonance = 29
+    osc2ModResonance = 29,
+    osc2Active = 30
 }
 export declare enum StringId {
     oscWavetable = 0,
