@@ -65,13 +65,13 @@ public:
             synth.updateVolume(val);
             break;
         case 1:
-            synth.filter.setCutoff(val);
+            synth.filter.setFrequency(val);
             break;
         case 2:
             synth.filter.setResonance(val);
             break;
         case 3:
-            synth.filter.setFilterMode(val * Zic_Effect_Filter::FILTER_MODE_COUNT - 1);
+            synth.filter.setFilterMode(val);
             break;
         case 4:
             synth.osc.wavetable.morphPct(val);
